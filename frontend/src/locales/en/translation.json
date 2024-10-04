@@ -1,1 +1,59 @@
-{}
+{
+  "common": {
+    "button": {
+      "yes": "Yes",
+      "no": "No",
+      "accept": "Accept",
+      "cancel": "Cancel",
+      "submit": "Submit"
+    },
+    "form": {
+      "name": "Name",
+      "description": "Description"
+    }
+  },
+  "header": {
+    "title": "Pointcloud Platform",
+    "profile": {
+      "profile": "Profile",
+      "settings": "Settings",
+      "logout": "Log out"
+    }
+  },
+  "locale": {
+    "en": "English",
+    "hu": "Hungarian"
+  },
+  "error": {
+    "form": {
+      "field_invalid": "Field invalid",
+      "field_required": "Field required",
+      "field_too_long": "Value too long",
+      "field_too_short": "Value too short",
+      "field_too_big": "Value too large",
+      "field_too_small": "Value too small",
+      "too_few_items_in_list": "Too few items selected",
+      "too_many_items_in_list": "Too many items selected",
+      "email_format_invalid": "Invalid e-mail format",
+      "invalid_phone_number": "Invalid phone number",
+      "invalid_project_name": "Invalid jobsite name",
+      "invalid_survey_name": "Invalid survey name",
+      "invalid_version_number": "Invalid version number",
+      "invalid_url": "Invalid URL",
+      "invalid_section": "Invalid section length",
+      "passwords_equal": "Passwords must be identical"
+    }
+  },
+  "tool": {
+    "issue": {
+      "new_issue": "New issue",
+      "edit_issue": "Edit issue",
+      "issue_list": "Issue list"
+    },
+    "tree": {
+      "new_tree": "New tree",
+      "edit_tree": "Edit tree",
+      "tree_list": "Tree list"
+    }
+  }
+}
