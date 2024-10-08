@@ -1,7 +1,6 @@
 {
   "editor.formatOnSave": true,
   "editor.formatOnSaveMode": "file",
-  "typescript.preferences.autoImportFileExcludePatterns": ["@mui/material"],
   "editor.codeActionsOnSave": {
     "source.fixAll": "always"
   },
