@@ -1,0 +1,59 @@
+{
+  "common": {
+    "button": {
+      "yes": "Igen",
+      "no": "Nem",
+      "accept": "Elfogad",
+      "cancel": "Mégse",
+      "submit": "Küldés"
+    },
+    "form": {
+      "name": "Név",
+      "description": "Leírás"
+    }
+  },
+  "header": {
+    "title": "Pointcloud Platform",
+    "profile": {
+      "profile": "Profil",
+      "settings": "Beállítások",
+      "logout": "Kijelentkezés"
+    }
+  },
+  "locale": {
+    "en": "Angol",
+    "hu": "Magyar"
+  },
+  "error": {
+    "form": {
+      "field_invalid": "Helytelen érték",
+      "field_required": "Ez a mező kötelező",
+      "field_too_long": "Érték túl hosszú",
+      "field_too_short": "Érték túl rövid",
+      "field_too_big": "Érték túl nagy",
+      "field_too_small": "Érték túl kicsi",
+      "too_few_items_in_list": "Túl kevés kiválasztott elem",
+      "too_many_items_in_list": "Túl sok kiválasztott elem",
+      "email_format_invalid": "Helytelen e-mail formátum",
+      "invalid_phone_number": "Helytelen telefonszám",
+      "invalid_project_name": "Helytelen munkaterület név",
+      "invalid_survey_name": "Helytelen felmérés név",
+      "invalid_version_number": "Helytelen verziószám",
+      "invalid_url": "Helytelen URL",
+      "invalid_section": "Helytelen szelvényszám",
+      "passwords_equal": "A jelszavaknak meg kell egyezniük"
+    }
+  },
+  "tool": {
+    "issue": {
+      "new_issue": "Új jelentés",
+      "edit_issue": "Jelentés szerkesztése",
+      "issue_list": "Jelentés lista"
+    },
+    "tree": {
+      "new_tree": "Új fa",
+      "edit_tree": "Fa szerkesztése",
+      "tree_list": "Fa lista"
+    }
+  }
+}
