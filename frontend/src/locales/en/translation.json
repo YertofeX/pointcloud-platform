@@ -22,7 +22,8 @@
   },
   "locale": {
     "en": "English",
-    "hu": "Hungarian"
+    "hu": "Hungarian",
+    "jp": "Japanese"
   },
   "error": {
     "form": {
@@ -44,16 +45,28 @@
       "passwords_equal": "Passwords must be identical"
     }
   },
-  "tool": {
-    "issue": {
-      "new_issue": "New issue",
-      "edit_issue": "Edit issue",
-      "issue_list": "Issue list"
+  "project": {
+    "states": {
+      "active": "Active",
+      "preparation": "Preparation",
+      "pending": "Pending",
+      "archived": "Archived"
     },
-    "tree": {
-      "new_tree": "New tree",
-      "edit_tree": "Edit tree",
-      "tree_list": "Tree list"
+    "types": {
+      "construction": "Construction",
+      "maintenance": "Maintenance"
+    }
+  },
+  "dashboard": {
+    "projects": {
+      "filters": {
+        "filter": "Filter",
+        "clear": "Clear",
+        "projectName": "Project name",
+        "starred": "Favourites",
+        "state": "State",
+        "type": "Type"
+      }
     }
   }
 }

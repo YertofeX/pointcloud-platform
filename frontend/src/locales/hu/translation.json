@@ -22,7 +22,8 @@
   },
   "locale": {
     "en": "Angol",
-    "hu": "Magyar"
+    "hu": "Magyar",
+    "jp": "Japán"
   },
   "error": {
     "form": {
@@ -44,16 +45,28 @@
       "passwords_equal": "A jelszavaknak meg kell egyezniük"
     }
   },
-  "tool": {
-    "issue": {
-      "new_issue": "Új jelentés",
-      "edit_issue": "Jelentés szerkesztése",
-      "issue_list": "Jelentés lista"
+  "project": {
+    "states": {
+      "active": "Aktív",
+      "preparation": "Előkészítés alatt",
+      "pending": "Felfüggesztett",
+      "archived": "Archivált"
     },
-    "tree": {
-      "new_tree": "Új fa",
-      "edit_tree": "Fa szerkesztése",
-      "tree_list": "Fa lista"
+    "types": {
+      "construction": "Construction",
+      "maintenance": "Maintenance"
+    }
+  },
+  "dashboard": {
+    "projects": {
+      "filters": {
+        "filter": "Filter",
+        "clear": "Törlés",
+        "projectName": "Projekt név",
+        "starred": "Kedvenceim",
+        "state": "Állapot",
+        "type": "Típus"
+      }
     }
   }
 }

@@ -26,6 +26,7 @@ export const DarkModeSwitch = () => {
       gap={0.5}
       px={1}
       alignItems="center"
+      elevation={3}
     >
       <IconButton
         onClick={handleSwitchToDarkMode}
