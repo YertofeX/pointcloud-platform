@@ -1,11 +1,11 @@
-export type FilterSearchParam = "projectName" | "starred" | "state" | "type";
+export type FilterSearchParam = "name" | "starred" | "state" | "type";
 
 export type FilterComponentProps = {
   paramName: FilterSearchParam;
 };
 
 export const FILTERS: { [key in FilterSearchParam]: FilterSearchParam } = {
-  projectName: "projectName",
+  name: "name",
   starred: "starred",
   state: "state",
   type: "type",

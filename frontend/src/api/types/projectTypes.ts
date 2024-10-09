@@ -1,3 +1,5 @@
+import { User } from "./authTypes";
+
 // Should contain all project states
 export const PROJECT_STATES = [
   "active",
@@ -17,4 +19,13 @@ export type Project = {
   description: string;
   state: ProjectState;
   type: ProjectType;
+  owner: User;
+};
+
+export type ProjectCreateParams = Omit<Project, "id" | "owner"> & {
+  owner: string;
+};
+
+export type ProjectUpdateParams = Omit<Project, "owner"> & {
+  owner: string;
 };

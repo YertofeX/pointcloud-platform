@@ -5,11 +5,15 @@
       "no": "No",
       "accept": "Accept",
       "cancel": "Cancel",
-      "submit": "Submit"
-    },
-    "form": {
-      "name": "Name",
-      "description": "Description"
+      "submit": "Submit",
+      "create": "Create",
+      "modify": "Modify"
+    }
+  },
+  "form": {
+    "autocomplete": {
+      "loading": "Loading...",
+      "no-options": "No options"
     }
   },
   "header": {
@@ -46,6 +50,15 @@
     }
   },
   "project": {
+    "projects": "Projects",
+    "create-new": "Create new project",
+    "edit": "Edit project",
+    "props": {
+      "name": "Name",
+      "description": "Description",
+      "state": "State",
+      "type": "Type"
+    },
     "states": {
       "active": "Active",
       "preparation": "Preparation",
@@ -62,7 +75,7 @@
       "filters": {
         "filter": "Filter",
         "clear": "Clear",
-        "projectName": "Project name",
+        "name": "Project name",
         "starred": "Favourites",
         "state": "State",
         "type": "Type"
