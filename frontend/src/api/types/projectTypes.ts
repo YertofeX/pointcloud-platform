@@ -20,12 +20,20 @@ export type Project = {
   state: ProjectState;
   type: ProjectType;
   owner: User;
+  created: string;
+  updated: string;
 };
 
-export type ProjectCreateParams = Omit<Project, "id" | "owner"> & {
+export type ProjectCreateParams = Omit<
+  Project,
+  "id" | "owner" | "created" | "updated"
+> & {
   owner: string;
 };
 
-export type ProjectUpdateParams = Omit<Project, "owner"> & {
+export type ProjectUpdateParams = Omit<
+  Project,
+  "owner" | "created" | "updated"
+> & {
   owner: string;
 };

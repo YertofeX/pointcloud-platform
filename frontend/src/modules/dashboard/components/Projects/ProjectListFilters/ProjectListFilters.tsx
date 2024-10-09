@@ -15,7 +15,7 @@ import { useTranslation } from "react-i18next";
 const filterComponents: {
   [key in FilterSearchParam]: React.ComponentType<FilterComponentProps>;
 } = {
-  projectName: ProjectNameFilter,
+  name: ProjectNameFilter,
   starred: StarredToggle,
   state: StateFilter,
   type: TypeFilter,

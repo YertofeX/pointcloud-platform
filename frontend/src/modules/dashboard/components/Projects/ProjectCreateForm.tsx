@@ -94,7 +94,11 @@ export const ProjectCreateForm = () => {
   return (
     <Container component={Paper} sx={{ py: 2 }}>
       <Stack direction="row" gap={2} alignItems="center" mb={2}>
-        <IconButton component={Link} to="/dashboard/projects">
+        <IconButton
+          title={t("project.back-to-projects")}
+          component={Link}
+          to="/dashboard/projects"
+        >
           <KeyboardArrowLeft />
         </IconButton>
         <Typography variant="h2" fontSize={24} fontWeight="bold">

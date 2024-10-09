@@ -1,6 +1,6 @@
 import { PropsWithChildren, useState } from "react";
 
-import { ThemeProvider as MUIThemeProvider } from "@mui/material";
+import { CssBaseline, ThemeProvider as MUIThemeProvider } from "@mui/material";
 
 import { THEMES } from "@utils/constants";
 
@@ -16,7 +16,12 @@ export const ThemeProvider = ({ children }: PropsWithChildren) => {
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>
-      <MUIThemeProvider theme={THEMES[theme]}>{children}</MUIThemeProvider>
+      <MUIThemeProvider theme={THEMES[theme]}>
+        <>
+          <CssBaseline enableColorScheme />
+          {children}
+        </>
+      </MUIThemeProvider>
     </ThemeContext.Provider>
   );
 };
