@@ -3,16 +3,19 @@ import { router } from "./routes/router.tsx";
 
 import "./main.css";
 import { QueryClientProvider } from "@tanstack/react-query";
-import { ThemeProvider } from "@components/ThemeManager/ThemeProvider.tsx";
-import { LocalizationProvider } from "@components/LocalizationManager/LocalizationProvider.tsx";
+import { ThemeProvider } from "@components/ThemeManager";
+import { LocalizationProvider } from "@components/LocalizationManager";
 import { queryClient } from "@lib/queryClient.ts";
+import { SnackbarProvider } from "@components/SnackbarManager";
 
 export const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
         <LocalizationProvider>
-          <RouterProvider router={router} />
+          <SnackbarProvider>
+            <RouterProvider router={router} />
+          </SnackbarProvider>
         </LocalizationProvider>
       </ThemeProvider>
     </QueryClientProvider>

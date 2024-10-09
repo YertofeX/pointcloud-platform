@@ -53,6 +53,9 @@
     "projects": "Projektek",
     "create-new": "Új projekt létrehozása",
     "edit": "Projekt szerkesztése",
+    "back-to-projects": "Vissza a projektekhez",
+    "project-created-successfully": "Projekt létrehozása sikeres",
+    "project-updated-successfully": "Projekt módosítása sikeres",
     "props": {
       "name": "Név",
       "description": "Leírás",

@@ -16,9 +16,10 @@ import {
   ControlledAutocomplete,
   ControlledTextField,
 } from "@components/ControlledForm";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { KeyboardArrowLeft } from "@mui/icons-material";
 import LoadingButton from "@mui/lab/LoadingButton";
+import { useSnackbar } from "@components/SnackbarManager";
 
 type FormParams = {
   name: string;
@@ -47,6 +48,10 @@ const schema: ObjectSchema<FormParams> = yup.object({
 export const ProjectCreateForm = () => {
   const { t } = useTranslation();
 
+  const navigate = useNavigate();
+
+  const { openSnackbar } = useSnackbar();
+
   const { mutateAsync: createProject, isPending: isCreateProjectPending } =
     useCreateProject();
 
@@ -66,13 +71,24 @@ export const ProjectCreateForm = () => {
   const { handleSubmit } = form;
 
   const onSubmit = ({ name, description, state, type }: FormParams) => {
-    createProject({
-      name,
-      description,
-      state: state.value,
-      type: type.value,
-      owner: "2bypmingbsspds0",
-    });
+    createProject(
+      {
+        name,
+        description,
+        state: state.value,
+        type: type.value,
+        owner: "2bypmingbsspds0",
+      },
+      {
+        onSuccess: () => {
+          openSnackbar({
+            message: t("project.project-created-successfully"),
+            severity: "success",
+          });
+          navigate("/dashboard/projects");
+        },
+      }
+    );
   };
 
   return (

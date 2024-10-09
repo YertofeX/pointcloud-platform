@@ -53,6 +53,9 @@
     "projects": "Projects",
     "create-new": "Create new project",
     "edit": "Edit project",
+    "back-to-projects": "Back to projects",
+    "project-created-successfully": "Project created successfully",
+    "project-updated-successfully": "Project updated successfully",
     "props": {
       "name": "Name",
       "description": "Description",
