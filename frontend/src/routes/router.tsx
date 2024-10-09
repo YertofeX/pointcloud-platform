@@ -1,3 +1,7 @@
+import { AuthLayout } from "@modules/auth/AuthLayout";
+import { Login } from "@modules/auth/pages/Login";
+import { Register } from "@modules/auth/pages/Register";
+import { ResetPassword } from "@modules/auth/pages/ResetPassword";
 import { ProjectCreateForm } from "@modules/dashboard/components/Projects/ProjectCreateForm";
 import { ProjectList } from "@modules/dashboard/components/Projects/ProjectList";
 import { ProjectsLayout } from "@modules/dashboard/components/Projects/ProjectsLayout";
@@ -29,4 +33,13 @@ export const router = createBrowserRouter([
     ],
   },
   { path: "workspace", element: <WorkspaceModule /> },
+  {
+    path: "auth",
+    element: <AuthLayout />,
+    children: [
+      { path: "login", element: <Login /> },
+      { path: "register", element: <Register /> },
+      { path: "password-reset", element: <ResetPassword /> },
+    ],
+  },
 ]);

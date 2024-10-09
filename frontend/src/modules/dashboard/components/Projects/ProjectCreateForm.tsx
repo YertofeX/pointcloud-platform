@@ -92,7 +92,7 @@ export const ProjectCreateForm = () => {
   };
 
   return (
-    <Container component={Paper} sx={{ py: 2 }}>
+    <Container component={Paper} sx={{ py: 2 }} maxWidth="xs">
       <Stack direction="row" gap={2} alignItems="center" mb={2}>
         <IconButton
           title={t("project.back-to-projects")}

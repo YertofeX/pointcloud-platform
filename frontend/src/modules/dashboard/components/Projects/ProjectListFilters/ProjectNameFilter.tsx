@@ -49,6 +49,7 @@ export const ProjectNameFilter = ({ paramName }: FilterComponentProps) => {
                 onClick={handleClear}
                 sx={{ visibility: Boolean(value) ? "visible" : "hidden" }}
                 size="small"
+                edge="end"
               >
                 <ClearIcon />
               </IconButton>

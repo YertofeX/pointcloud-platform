@@ -9,3 +9,13 @@ export type User = {
   name: string;
   avatar: string;
 };
+
+export type LoginParams = {
+  name: string;
+  password: string;
+};
+
+export type RegisterParams = {
+  name: string;
+  password: string;
+};

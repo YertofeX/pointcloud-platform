@@ -84,5 +84,26 @@
         "type": "Type"
       }
     }
+  },
+  "auth": {
+    "props": {
+      "name": "Username or Email",
+      "email": "Email",
+      "password": "Password",
+      "confirm-password": "Confirm password"
+    },
+    "login": {
+      "login": "Log in",
+      "dont-have-an-account": "Don't have an account?",
+      "forgot-password": "Forgot your password?"
+    },
+    "register": {
+      "register": "Register",
+      "already-have-an-account": "Already have an account?"
+    },
+    "reset-password": {
+      "reset-password": "Reset password",
+      "return-to-login": "Return to login"
+    }
   }
 }
