@@ -1,4 +1,4 @@
-import { Projects } from "@modules/dashboard/components/Projects";
+import { Projects } from "@modules/dashboard/components/Projects/Projects";
 import { DashboardModule } from "@modules/dashboard/DashboardModule";
 import { WorkspaceModule } from "@modules/workspace/WorkspaceModule";
 import { createBrowserRouter, Navigate } from "react-router-dom";
