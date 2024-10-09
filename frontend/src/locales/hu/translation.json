@@ -5,11 +5,15 @@
       "no": "Nem",
       "accept": "Elfogad",
       "cancel": "Mégse",
-      "submit": "Küldés"
-    },
-    "form": {
-      "name": "Név",
-      "description": "Leírás"
+      "submit": "Küldés",
+      "create": "Létrehozás",
+      "modify": "Módosítás"
+    }
+  },
+  "form": {
+    "autocomplete": {
+      "loading": "Betöltés...",
+      "no-options": "Nincs kiválasztható érték"
     }
   },
   "header": {
@@ -46,6 +50,18 @@
     }
   },
   "project": {
+    "projects": "Projektek",
+    "create-new": "Új projekt létrehozása",
+    "edit": "Projekt szerkesztése",
+    "back-to-projects": "Vissza a projektekhez",
+    "project-created-successfully": "Projekt létrehozása sikeres",
+    "project-updated-successfully": "Projekt módosítása sikeres",
+    "props": {
+      "name": "Név",
+      "description": "Leírás",
+      "state": "Állapot",
+      "type": "Típus"
+    },
     "states": {
       "active": "Aktív",
       "preparation": "Előkészítés alatt",
@@ -62,7 +78,7 @@
       "filters": {
         "filter": "Filter",
         "clear": "Törlés",
-        "projectName": "Projekt név",
+        "name": "Projekt név",
         "starred": "Kedvenceim",
         "state": "Állapot",
         "type": "Típus"

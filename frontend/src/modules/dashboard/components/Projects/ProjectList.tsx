@@ -1,12 +1,35 @@
-import { Container, Paper } from "@mui/material";
+import { Container, Grid2, Paper } from "@mui/material";
 import { SkeletonProjectList } from "./SkeletonProjectList";
+import { ProjectListHeader } from "./ProjectListHeader";
+import { useGetProjects } from "@api/hooks";
+import { ProjectListItem } from "./ProjectListItem";
 
-type Props = {};
+export const ProjectList = () => {
+  const { data: projects } = useGetProjects();
 
-export const ProjectList = ({}: Props) => {
   return (
-    <Container component={Paper}>
-      <SkeletonProjectList />
-    </Container>
+    <>
+      <ProjectListHeader />
+      <Container component={Paper}>
+        {!projects ? (
+          <SkeletonProjectList />
+        ) : projects.length === 0 ? (
+          "no projects to display todo"
+        ) : (
+          <Grid2 container spacing={2} columns={2}>
+            {projects.map((project) => (
+              <Grid2
+                size={{ md: 1, xs: 2 }}
+                key={project.id}
+                justifyContent="start"
+                alignItems="start"
+              >
+                <ProjectListItem project={project} />
+              </Grid2>
+            ))}
+          </Grid2>
+        )}
+      </Container>
+    </>
   );
 };
