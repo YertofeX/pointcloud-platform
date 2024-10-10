@@ -8,7 +8,8 @@
       "submit": "Submit",
       "create": "Create",
       "modify": "Modify"
-    }
+    },
+    "loading": "Loading..."
   },
   "form": {
     "autocomplete": {
@@ -95,7 +96,8 @@
     "login": {
       "login": "Log in",
       "dont-have-an-account": "Don't have an account?",
-      "forgot-password": "Forgot your password?"
+      "forgot-password": "Forgot your password?",
+      "login-successful": "You're now logged in"
     },
     "register": {
       "register": "Register",

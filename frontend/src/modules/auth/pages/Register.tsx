@@ -59,7 +59,7 @@ export const Register = () => {
         <Typography variant="body2">
           {t("auth.register.already-have-an-account")}
         </Typography>
-        <Link variant="body2" component={RouterLink} to="/auth/login">
+        <Link variant="body2" component={RouterLink} to="/login">
           {t("auth.login.login")}
         </Link>
       </Stack>

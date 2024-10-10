@@ -8,7 +8,8 @@
       "submit": "Küldés",
       "create": "Létrehozás",
       "modify": "Módosítás"
-    }
+    },
+    "loading": "Betöltés..."
   },
   "form": {
     "autocomplete": {
@@ -83,6 +84,28 @@
         "state": "Állapot",
         "type": "Típus"
       }
+    }
+  },
+  "auth": {
+    "props": {
+      "name": "Felhasználónév vagy Email",
+      "email": "Email",
+      "password": "Jelszó",
+      "confirm-password": "Jelszó megerősítése"
+    },
+    "login": {
+      "login": "Bejelentkezés",
+      "dont-have-an-account": "Még nincs fiókja?",
+      "forgot-password": "Elfelejtette a jelszavát?",
+      "login-successful": "Sikeres bejelentkezés"
+    },
+    "register": {
+      "register": "Regisztráció",
+      "already-have-an-account": "Már van fiókja?"
+    },
+    "reset-password": {
+      "reset-password": "Jelszó visszaállítása",
+      "return-to-login": "Visszatérés a bejelentkezéshez"
     }
   }
 }

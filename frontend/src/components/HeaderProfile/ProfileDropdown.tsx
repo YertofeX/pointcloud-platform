@@ -18,6 +18,8 @@ import {
   styled,
   Typography,
 } from "@mui/material";
+import { useGetUser, useLogout } from "@api/hooks";
+import { pocketBase } from "@lib/pocketbase";
 
 type Props = {
   open: boolean;
@@ -27,6 +29,16 @@ type Props = {
 
 export const ProfileDropdown = ({ open, onClose, anchorEl }: Props) => {
   const { t } = useTranslation();
+
+  const { data: user } = useGetUser();
+
+  const { logout } = useLogout();
+
+  const handleLogout = () => {
+    logout();
+  };
+
+  if (!user) return null;
 
   return (
     <Menu
@@ -40,11 +52,11 @@ export const ProfileDropdown = ({ open, onClose, anchorEl }: Props) => {
         <Avatar
           variant="rounded"
           sx={{ width: 64, height: 64 }}
-          src="https://cataas.com/cat"
+          src={pocketBase.getFileUrl(user, user.avatar, { thumb: "0x64" })}
         />
         <Box>
           <Typography fontWeight="bold" gutterBottom>
-            Test User
+            {user.name}
           </Typography>
           <ChipContainer>
             <Chip size="small" label="Admin" variant="outlined" />
@@ -75,7 +87,7 @@ export const ProfileDropdown = ({ open, onClose, anchorEl }: Props) => {
         <ListItemText>{t("header.profile.settings")}</ListItemText>
       </MenuItem>
       <Divider />
-      <MenuItem>
+      <MenuItem onClick={handleLogout}>
         <ListItemIcon>
           <LogoutIcon />
         </ListItemIcon>

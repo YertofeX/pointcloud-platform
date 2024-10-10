@@ -1,8 +1,8 @@
 import { Container, Grid2, Paper } from "@mui/material";
-import { SkeletonProjectList } from "./SkeletonProjectList";
-import { ProjectListHeader } from "./ProjectListHeader";
+import { SkeletonProjectList } from "../../components/Projects/SkeletonProjectList";
+import { ProjectListHeader } from "../../components/Projects/ProjectListHeader";
 import { useGetProjects } from "@api/hooks";
-import { ProjectListItem } from "./ProjectListItem";
+import { ProjectListItem } from "../../components/Projects/ProjectListItem";
 
 export const ProjectList = () => {
   const { data: projects } = useGetProjects();

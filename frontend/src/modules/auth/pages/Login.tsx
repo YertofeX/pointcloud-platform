@@ -18,7 +18,8 @@ import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { ObjectSchema } from "yup";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { useSnackbar } from "@components/SnackbarManager";
 
 type FormParams = LoginParams;
 
@@ -29,6 +30,10 @@ const schema: ObjectSchema<FormParams> = yup.object({
 
 export const Login = () => {
   const { t } = useTranslation();
+
+  const navigate = useNavigate();
+
+  const { openSnackbar } = useSnackbar();
 
   const { mutate: login, isPending: isLoginPending } = useLogin();
 
@@ -45,7 +50,25 @@ export const Login = () => {
 
   const { handleSubmit } = form;
 
-  const onSubmit = (values: FormParams) => {};
+  const onSubmit = ({ name, password }: FormParams) => {
+    login(
+      {
+        name,
+        password,
+      },
+      {
+        onSuccess: () => {
+          openSnackbar({
+            message: `${t("auth.login.login-successful")}`,
+            severity: "success",
+          });
+          // setTimeout(() => {
+          navigate("/dashboard");
+          // }, 1000);
+        },
+      }
+    );
+  };
 
   return (
     <Container component={Paper} maxWidth="xs" sx={{ p: 2 }}>
@@ -56,7 +79,7 @@ export const Login = () => {
         <Typography variant="body2">
           {t("auth.login.dont-have-an-account")}
         </Typography>
-        <Link variant="body2" component={RouterLink} to="/auth/register">
+        <Link variant="body2" component={RouterLink} to="/register">
           {t("auth.register.register")}
         </Link>
       </Stack>
@@ -97,11 +120,7 @@ export const Login = () => {
             maxLength={255}
           />
           <Stack mb={2}>
-            <Link
-              variant="body2"
-              component={RouterLink}
-              to="/auth/password-reset"
-            >
+            <Link variant="body2" component={RouterLink} to="/password-reset">
               {t("auth.login.forgot-password")}
             </Link>
           </Stack>

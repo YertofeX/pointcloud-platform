@@ -48,7 +48,7 @@ export const ResetPassword = () => {
       <Typography variant="h2" fontSize={24} fontWeight="bold" mb={2}>
         {t("auth.reset-password.reset-password")}
       </Typography>
-      <Link variant="body2" component={RouterLink} to="/auth/login">
+      <Link variant="body2" component={RouterLink} to="/login">
         {t("auth.reset-password.return-to-login")}
       </Link>
       <FormProvider {...form}>

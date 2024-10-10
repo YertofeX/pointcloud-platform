@@ -1,13 +1,35 @@
-import { LoginParams, RegisterParams } from "@api/types";
+import { LoginParams, RegisterParams, User } from "@api/types";
 import { pocketBase } from "@lib/pocketbase";
-import { useMutation } from "@tanstack/react-query";
+import { queryClient } from "@lib/queryClient";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { QUERY_KEYS } from "@utils/constants";
+import { RecordAuthResponse } from "pocketbase";
+
+//#region useGetUser
+const getUser = async (): Promise<User> => {
+  const { record } = await pocketBase.collection("users").authRefresh();
+  return record;
+};
+
+export const useGetUser = (props?: { disabled?: boolean }) => {
+  return useQuery({
+    queryFn: getUser,
+    queryKey: [QUERY_KEYS.user],
+    enabled: !props || !props.disabled,
+    retry: false,
+  });
+};
+//#endregion
 
 //#region useLogin
-const login = async ({ name, password }: LoginParams) => {
-  const response = pocketBase
+const login = async ({
+  name,
+  password,
+}: LoginParams): Promise<RecordAuthResponse<User>> => {
+  const response = await pocketBase
     .collection("users")
     .authWithPassword(name, password);
-  console.log({ response });
+  return response;
 };
 
 export const useLogin = () => {
@@ -18,6 +40,14 @@ export const useLogin = () => {
 //#endregion
 
 //#region useLogout
+const logout = () => {
+  pocketBase.authStore.clear();
+  queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.user] });
+};
+
+export const useLogout = () => {
+  return { logout };
+};
 //#endregion
 
 //#region useRegister
