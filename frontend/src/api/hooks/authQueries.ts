@@ -51,11 +51,10 @@ export const useLogout = () => {
 //#endregion
 
 //#region useRegister
-const register = async ({ name, password }: RegisterParams) => {
-  // const response = pocketBase
-  //   .collection("users")
-  //   .authWithPassword(name, password);
-  // console.log({ response });
+const register = async (data: RegisterParams): Promise<User> => {
+  const response = await pocketBase.collection("users").create(data);
+  console.log({ response });
+  return response;
 };
 
 export const useRegister = () => {

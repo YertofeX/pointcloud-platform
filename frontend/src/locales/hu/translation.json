@@ -77,7 +77,7 @@
   "dashboard": {
     "projects": {
       "filters": {
-        "filter": "Filter",
+        "filter": "Szűrő",
         "clear": "Törlés",
         "name": "Projekt név",
         "starred": "Kedvenceim",
@@ -88,7 +88,8 @@
   },
   "auth": {
     "props": {
-      "name": "Felhasználónév vagy Email",
+      "name-or-email": "Felhasználónév vagy Email",
+      "name": "Név",
       "email": "Email",
       "password": "Jelszó",
       "confirm-password": "Jelszó megerősítése"
@@ -97,15 +98,19 @@
       "login": "Bejelentkezés",
       "dont-have-an-account": "Még nincs fiókja?",
       "forgot-password": "Elfelejtette a jelszavát?",
-      "login-successful": "Sikeres bejelentkezés"
+      "login-successful": "Sikeres bejelentkezés",
+      "could-not-log-in": "Nem sikerült bejelentkezni a jelenlegi adatokkal"
     },
     "register": {
       "register": "Regisztráció",
-      "already-have-an-account": "Már van fiókja?"
+      "already-have-an-account": "Már van fiókja?",
+      "registration-successful": "Sikeres regisztráció",
+      "could-not-create-account": "Nem sikerült fiókot létrehozni a jelenlegi adatokkal"
     },
     "reset-password": {
       "reset-password": "Jelszó visszaállítása",
       "return-to-login": "Visszatérés a bejelentkezéshez"
-    }
+    },
+    "logout-successful": "Kilépés sikeres"
   }
 }

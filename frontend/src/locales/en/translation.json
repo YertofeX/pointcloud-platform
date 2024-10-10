@@ -47,7 +47,7 @@
       "invalid_version_number": "Invalid version number",
       "invalid_url": "Invalid URL",
       "invalid_section": "Invalid section length",
-      "passwords_equal": "Passwords must be identical"
+      "passwords_equal": "Passwords must match"
     }
   },
   "project": {
@@ -88,7 +88,8 @@
   },
   "auth": {
     "props": {
-      "name": "Username or Email",
+      "name-or-email": "Username or Email",
+      "name": "Name",
       "email": "Email",
       "password": "Password",
       "confirm-password": "Confirm password"
@@ -97,15 +98,19 @@
       "login": "Log in",
       "dont-have-an-account": "Don't have an account?",
       "forgot-password": "Forgot your password?",
-      "login-successful": "You're now logged in"
+      "login-successful": "You're now logged in",
+      "could-not-log-in": "Could not log in with current credentials"
     },
     "register": {
       "register": "Register",
-      "already-have-an-account": "Already have an account?"
+      "already-have-an-account": "Already have an account?",
+      "registration-successful": "Registration successful",
+      "could-not-create-account": "Could not create account with current credentials"
     },
     "reset-password": {
       "reset-password": "Reset password",
       "return-to-login": "Return to login"
-    }
+    },
+    "logout-successful": "You're now logged out"
   }
 }

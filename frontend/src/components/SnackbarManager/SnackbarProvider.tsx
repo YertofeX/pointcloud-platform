@@ -7,15 +7,18 @@ export const SnackbarProvider = ({ children }: PropsWithChildren) => {
   const [snackbar, setSnackbar] = useState<SnackbarOptions | null>(null);
 
   const openSnackbar = (options: SnackbarOptions) => {
-    setOpen(true);
-    setSnackbar({ autoHideDuration: 5000, ...options });
+    if (open) clearSnackbar();
+    setTimeout(() => {
+      setOpen(true);
+      setSnackbar({ autoHideDuration: 5000, ...options });
+    }, 400);
   };
 
   const clearSnackbar = () => {
     setOpen(false);
     setTimeout(() => {
       setSnackbar(null);
-    }, 400);
+    }, 300);
   };
 
   return (

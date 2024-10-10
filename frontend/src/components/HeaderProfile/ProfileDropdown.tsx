@@ -20,6 +20,7 @@ import {
 } from "@mui/material";
 import { useGetUser, useLogout } from "@api/hooks";
 import { pocketBase } from "@lib/pocketbase";
+import { useSnackbar } from "@components/SnackbarManager";
 
 type Props = {
   open: boolean;
@@ -30,12 +31,18 @@ type Props = {
 export const ProfileDropdown = ({ open, onClose, anchorEl }: Props) => {
   const { t } = useTranslation();
 
+  const { openSnackbar } = useSnackbar();
+
   const { data: user } = useGetUser();
 
   const { logout } = useLogout();
 
   const handleLogout = () => {
     logout();
+    openSnackbar({
+      message: t("auth.logout-successful"),
+      severity: "success",
+    });
   };
 
   if (!user) return null;
@@ -56,7 +63,7 @@ export const ProfileDropdown = ({ open, onClose, anchorEl }: Props) => {
         />
         <Box>
           <Typography fontWeight="bold" gutterBottom>
-            {user.name}
+            {user.username}
           </Typography>
           <ChipContainer>
             <Chip size="small" label="Admin" variant="outlined" />

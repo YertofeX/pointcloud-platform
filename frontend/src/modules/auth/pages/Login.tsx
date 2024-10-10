@@ -1,6 +1,9 @@
 import { useLogin } from "@api/hooks";
 import { LoginParams } from "@api/types";
-import { ControlledTextField } from "@components/ControlledForm";
+import {
+  ControlledError,
+  ControlledTextField,
+} from "@components/ControlledForm";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { yup } from "@lib/yup";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
@@ -21,11 +24,12 @@ import { ObjectSchema } from "yup";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { useSnackbar } from "@components/SnackbarManager";
 
-type FormParams = LoginParams;
+type FormParams = LoginParams & { generalError?: string | null };
 
 const schema: ObjectSchema<FormParams> = yup.object({
   name: yup.string().required().max(255),
   password: yup.string().required().max(255),
+  generalError: yup.string(),
 });
 
 export const Login = () => {
@@ -48,7 +52,7 @@ export const Login = () => {
     resolver: yupResolver(schema),
   });
 
-  const { handleSubmit } = form;
+  const { handleSubmit, setError } = form;
 
   const onSubmit = ({ name, password }: FormParams) => {
     login(
@@ -62,9 +66,12 @@ export const Login = () => {
             message: `${t("auth.login.login-successful")}`,
             severity: "success",
           });
-          // setTimeout(() => {
           navigate("/dashboard");
-          // }, 1000);
+        },
+        onError: () => {
+          setError("generalError", {
+            message: t("auth.login.could-not-log-in"),
+          });
         },
       }
     );
@@ -87,7 +94,7 @@ export const Login = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <ControlledTextField
             name="name"
-            label={t("auth.props.name")}
+            label={t("auth.props.name-or-email")}
             maxLength={255}
             requiredStar
           />
@@ -119,6 +126,7 @@ export const Login = () => {
             requiredStar
             maxLength={255}
           />
+          <ControlledError />
           <Stack mb={2}>
             <Link variant="body2" component={RouterLink} to="/password-reset">
               {t("auth.login.forgot-password")}
