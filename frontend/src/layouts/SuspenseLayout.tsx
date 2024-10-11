@@ -39,4 +39,6 @@ export const SuspenseLayout = () => {
         <CircularProgress size={32} sx={{ color: "text.disabled" }} />
       </Stack>
     );
+
+  return <Outlet />;
 };
