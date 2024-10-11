@@ -1,7 +1,8 @@
 import { DarkModeSwitch } from "@components/DarkModeSwitch";
 import { HeaderProfile } from "@components/HeaderProfile";
-import { Link, Paper, Stack, Typography } from "@mui/material";
+import { Divider, Link, Paper, Stack, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
+import { PageSelector } from "./PageSelector";
 
 export const Header = () => {
   return (
@@ -13,10 +14,12 @@ export const Header = () => {
           color="inherit"
           underline="none"
         >
-          <Typography variant="h1" fontSize={24} fontWeight="bold" mt={0.2}>
+          <Typography variant="h1" fontSize={24} fontWeight="bold" mt={0.4}>
             Pointcloud Platform
           </Typography>
         </Link>
+        <Divider orientation="vertical" sx={{ borderRightWidth: 2 }} />
+        <PageSelector />
       </Stack>
       <Stack direction="row" gap={2}>
         <DarkModeSwitch />

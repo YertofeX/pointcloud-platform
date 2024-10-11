@@ -28,7 +28,7 @@ export const LanguageSelector = () => {
 
   return (
     <>
-      <IconButton onClick={handleClick}>
+      <IconButton size="small" onClick={handleClick}>
         <TranslateIcon />
       </IconButton>
       <LanguageSelectorDropdown

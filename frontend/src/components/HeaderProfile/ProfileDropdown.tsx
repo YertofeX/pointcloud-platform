@@ -18,6 +18,10 @@ import {
   styled,
   Typography,
 } from "@mui/material";
+import { useGetUser, useLogout } from "@api/hooks";
+import { pocketBase } from "@lib/pocketbase";
+import { useSnackbar } from "@components/SnackbarManager";
+import { Link } from "react-router-dom";
 
 type Props = {
   open: boolean;
@@ -28,54 +32,59 @@ type Props = {
 export const ProfileDropdown = ({ open, onClose, anchorEl }: Props) => {
   const { t } = useTranslation();
 
+  const { openSnackbar } = useSnackbar();
+
+  const { data: user } = useGetUser();
+
+  const { logout } = useLogout();
+
+  const handleLogout = () => {
+    logout();
+    openSnackbar({
+      message: t("auth.logout-successful"),
+      severity: "success",
+    });
+  };
+
+  if (!user) return null;
+
   return (
     <Menu
       open={open}
       onClose={onClose}
       anchorEl={anchorEl}
       anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-      sx={{ marginTop: 1 }}
+      sx={{ mt: 1.5 }}
     >
       <DropdownInfoContainer>
         <Avatar
           variant="rounded"
           sx={{ width: 64, height: 64 }}
-          src="https://cataas.com/cat"
+          src={pocketBase.getFileUrl(user, user.avatar, { thumb: "0x64" })}
         />
         <Box>
-          <Typography fontWeight="bold" gutterBottom>
-            Test User
+          <Typography fontWeight="bold" gutterBottom noWrap width={200}>
+            {user.username}
           </Typography>
-          <ChipContainer>
-            <Chip size="small" label="Admin" variant="outlined" />
-            <Chip size="small" label="General User" variant="outlined" />
-            <Chip
-              size="small"
-              label="Global Project Manager"
-              variant="outlined"
-            />
-            <Chip
-              size="small"
-              label="Global Survey Manager"
-              variant="outlined"
-            />
-          </ChipContainer>
+          <Typography color="textSecondary" variant="body2" noWrap width={200}>
+            {user.email}
+          </Typography>
         </Box>
       </DropdownInfoContainer>
-      <MenuItem>
+      <MenuItem component={Link} to="/dashboard/profile" onClick={onClose}>
         <ListItemIcon>
           <PersonIcon />
         </ListItemIcon>
         <ListItemText>{t("header.profile.profile")}</ListItemText>
       </MenuItem>
-      <MenuItem>
+      <MenuItem component={Link} to="/dashboard/settings" onClick={onClose}>
         <ListItemIcon>
           <SettingsIcon />
         </ListItemIcon>
         <ListItemText>{t("header.profile.settings")}</ListItemText>
       </MenuItem>
       <Divider />
-      <MenuItem>
+      <MenuItem onClick={handleLogout}>
         <ListItemIcon>
           <LogoutIcon />
         </ListItemIcon>

@@ -4,7 +4,14 @@ import { useTranslation } from "react-i18next";
 
 type Props<T extends FieldValues> = Pick<
   TextFieldProps,
-  "variant" | "type" | "sx" | "fullWidth" | "multiline" | "rows" | "placeholder"
+  | "variant"
+  | "type"
+  | "sx"
+  | "fullWidth"
+  | "multiline"
+  | "rows"
+  | "placeholder"
+  | "slotProps"
 > &
   Required<Pick<TextFieldProps, "label">> &
   Pick<ControllerProps<T>, "control" | "defaultValue" | "rules" | "disabled"> &
@@ -29,6 +36,7 @@ export const ControlledTextField = <T extends FieldValues>({
   rows,
   maxLength,
   requiredStar,
+  slotProps,
 }: Props<T>) => {
   const { t } = useTranslation();
 
@@ -69,7 +77,10 @@ export const ControlledTextField = <T extends FieldValues>({
       fullWidth={fullWidth}
       multiline={multiline}
       rows={rows}
-      slotProps={{ htmlInput: { maxLength } }}
+      slotProps={{
+        ...slotProps,
+        htmlInput: { ...slotProps?.htmlInput, maxLength },
+      }}
     />
   );
 };

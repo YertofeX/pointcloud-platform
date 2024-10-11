@@ -1,4 +1,9 @@
-import { Project, ProjectCreateParams, ProjectUpdateParams } from "@api/types";
+import {
+  Project,
+  ProjectCreateParams,
+  ProjectUpdateParams,
+  User,
+} from "@api/types";
 import { pocketBase } from "@lib/pocketbase";
 import { queryClient } from "@lib/queryClient";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -20,8 +25,12 @@ export const useGetProjects = () => {
 // #endregion
 
 // #region useCreateProject
-const createProject = async (data: ProjectCreateParams): Promise<Project> => {
-  const response = await pocketBase.collection("projects").create(data);
+const createProject = async (
+  data: Omit<ProjectCreateParams, "owner">
+): Promise<Project> => {
+  const response = await pocketBase
+    .collection("projects")
+    .create({ ...data, owner: (pocketBase.authStore.model as User).id });
   return response;
 };
 

@@ -8,7 +8,8 @@
       "submit": "Küldés",
       "create": "Létrehozás",
       "modify": "Módosítás"
-    }
+    },
+    "loading": "Betöltés..."
   },
   "form": {
     "autocomplete": {
@@ -46,7 +47,9 @@
       "invalid_version_number": "Helytelen verziószám",
       "invalid_url": "Helytelen URL",
       "invalid_section": "Helytelen szelvényszám",
-      "passwords_equal": "A jelszavaknak meg kell egyezniük"
+      "passwords_equal": "A jelszavaknak meg kell egyezniük",
+      "validation_invalid_email": "Az email helytelen vagy már használatban van",
+      "validation_invalid_username": "A felhasználónév helytelen vagy már használatban van"
     }
   },
   "project": {
@@ -69,20 +72,48 @@
       "archived": "Archivált"
     },
     "types": {
-      "construction": "Construction",
-      "maintenance": "Maintenance"
+      "construction": "Építkezés",
+      "maintenance": "Felújítás"
     }
   },
   "dashboard": {
     "projects": {
       "filters": {
-        "filter": "Filter",
+        "filter": "Szűrő",
         "clear": "Törlés",
         "name": "Projekt név",
         "starred": "Kedvenceim",
         "state": "Állapot",
         "type": "Típus"
       }
+    },
+    "profile": {
+      "profile": "Profil",
+      "profile-picture": "Profilkép",
+      "change-profile-picture": "Profilkép megváltoztatása",
+      "upload-image": "Kép feltöltése"
     }
+  },
+  "auth": {
+    "props": {
+      "name-or-email": "Felhasználónév vagy Email",
+      "name": "Név",
+      "email": "Email",
+      "password": "Jelszó",
+      "confirm-password": "Jelszó megerősítése"
+    },
+    "login": {
+      "login": "Bejelentkezés",
+      "dont-have-an-account": "Még nincs fiókja?",
+      "login-successful": "Sikeres bejelentkezés",
+      "could-not-log-in": "Nem sikerült bejelentkezni a jelenlegi adatokkal"
+    },
+    "register": {
+      "register": "Regisztráció",
+      "already-have-an-account": "Már van fiókja?",
+      "registration-successful": "Sikeres regisztráció",
+      "could-not-create-account": "Nem sikerült fiókot létrehozni a jelenlegi adatokkal"
+    },
+    "logout-successful": "Kilépés sikeres"
   }
 }

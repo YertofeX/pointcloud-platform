@@ -4,8 +4,19 @@ export type User = {
   updated: string;
   username: string;
   email: string;
-  emailVisibility: string;
+  emailVisibility: boolean;
   verified: boolean;
-  name: string;
   avatar: string;
+};
+
+export type LoginParams = {
+  name: string;
+  password: string;
+};
+
+export type RegisterParams = {
+  username: string;
+  email: string;
+  password: string;
+  passwordConfirm: string;
 };

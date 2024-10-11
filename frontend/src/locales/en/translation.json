@@ -8,7 +8,8 @@
       "submit": "Submit",
       "create": "Create",
       "modify": "Modify"
-    }
+    },
+    "loading": "Loading..."
   },
   "form": {
     "autocomplete": {
@@ -46,7 +47,9 @@
       "invalid_version_number": "Invalid version number",
       "invalid_url": "Invalid URL",
       "invalid_section": "Invalid section length",
-      "passwords_equal": "Passwords must be identical"
+      "passwords_equal": "Passwords must match",
+      "validation_invalid_email": "The email is invalid or already in use",
+      "validation_invalid_username": "The username is invalid or already in use"
     }
   },
   "project": {
@@ -83,6 +86,34 @@
         "state": "State",
         "type": "Type"
       }
+    },
+    "profile": {
+      "profile": "Profile",
+      "profile-picture": "Profile picture",
+      "change-profile-picture": "Change profile picture",
+      "upload-image": "Upload image"
     }
+  },
+  "auth": {
+    "props": {
+      "name-or-email": "Username or Email",
+      "name": "Name",
+      "email": "Email",
+      "password": "Password",
+      "confirm-password": "Confirm password"
+    },
+    "login": {
+      "login": "Log in",
+      "dont-have-an-account": "Don't have an account?",
+      "login-successful": "You're now logged in",
+      "could-not-log-in": "Could not log in with current credentials"
+    },
+    "register": {
+      "register": "Register",
+      "already-have-an-account": "Already have an account?",
+      "registration-successful": "Registration successful",
+      "could-not-create-account": "Could not create account with current credentials"
+    },
+    "logout-successful": "You're now logged out"
   }
 }

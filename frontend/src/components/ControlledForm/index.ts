@@ -3,4 +3,4 @@ export {
   createAutocompleteOptions,
 } from "./ControlledAutocomplete";
 export { ControlledTextField } from "./ControlledTextField";
-export { setupFormErrors } from "./setupFormErrors";
+export { ControlledError } from "./ControlledError";
