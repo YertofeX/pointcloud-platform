@@ -43,10 +43,11 @@ export const Register = () => {
   const schema: ObjectSchema<FormParams> = yup.object({
     username: yup.string().required().max(255),
     email: yup.string().email().required(),
-    password: yup.string().required().max(255),
+    password: yup.string().required().min(8).max(255),
     passwordConfirm: yup
       .string()
       .required()
+      .min(8)
       .max(255)
       .test((value, ctx) => {
         if (value !== ctx.parent.password) {
@@ -104,10 +105,26 @@ export const Register = () => {
             }
           );
         },
-        onError: () => {
+        onError: (error: any) => {
           setError("generalError", {
             message: t("auth.register.could-not-create-account"),
           });
+
+          const emailError: string | undefined =
+            error.response.data?.email?.code;
+          if (emailError !== undefined) {
+            setError("email", {
+              message: t(`error.form.${emailError}` as unknown as any),
+            });
+          }
+
+          const usernameError: string | undefined =
+            error.response.data?.username?.code;
+          if (usernameError !== undefined) {
+            setError("username", {
+              message: t(`error.form.${usernameError}` as unknown as any),
+            });
+          }
         },
       }
     );

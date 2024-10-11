@@ -127,11 +127,6 @@ export const Login = () => {
             maxLength={255}
           />
           <ControlledError />
-          <Stack mb={2}>
-            <Link variant="body2" component={RouterLink} to="/password-reset">
-              {t("auth.login.forgot-password")}
-            </Link>
-          </Stack>
           <LoadingButton
             type="submit"
             variant="contained"

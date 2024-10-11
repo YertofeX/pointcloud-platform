@@ -47,7 +47,9 @@
       "invalid_version_number": "Helytelen verziószám",
       "invalid_url": "Helytelen URL",
       "invalid_section": "Helytelen szelvényszám",
-      "passwords_equal": "A jelszavaknak meg kell egyezniük"
+      "passwords_equal": "A jelszavaknak meg kell egyezniük",
+      "validation_invalid_email": "Az email helytelen vagy már használatban van",
+      "validation_invalid_username": "A felhasználónév helytelen vagy már használatban van"
     }
   },
   "project": {
@@ -103,7 +105,6 @@
     "login": {
       "login": "Bejelentkezés",
       "dont-have-an-account": "Még nincs fiókja?",
-      "forgot-password": "Elfelejtette a jelszavát?",
       "login-successful": "Sikeres bejelentkezés",
       "could-not-log-in": "Nem sikerült bejelentkezni a jelenlegi adatokkal"
     },
@@ -112,10 +113,6 @@
       "already-have-an-account": "Már van fiókja?",
       "registration-successful": "Sikeres regisztráció",
       "could-not-create-account": "Nem sikerült fiókot létrehozni a jelenlegi adatokkal"
-    },
-    "reset-password": {
-      "reset-password": "Jelszó visszaállítása",
-      "return-to-login": "Visszatérés a bejelentkezéshez"
     },
     "logout-successful": "Kilépés sikeres"
   }
