@@ -21,6 +21,7 @@ import {
 import { useGetUser, useLogout } from "@api/hooks";
 import { pocketBase } from "@lib/pocketbase";
 import { useSnackbar } from "@components/SnackbarManager";
+import { Link } from "react-router-dom";
 
 type Props = {
   open: boolean;
@@ -62,32 +63,21 @@ export const ProfileDropdown = ({ open, onClose, anchorEl }: Props) => {
           src={pocketBase.getFileUrl(user, user.avatar, { thumb: "0x64" })}
         />
         <Box>
-          <Typography fontWeight="bold" gutterBottom>
+          <Typography fontWeight="bold" gutterBottom noWrap width={200}>
             {user.username}
           </Typography>
-          <ChipContainer>
-            <Chip size="small" label="Admin" variant="outlined" />
-            <Chip size="small" label="General User" variant="outlined" />
-            <Chip
-              size="small"
-              label="Global Project Manager"
-              variant="outlined"
-            />
-            <Chip
-              size="small"
-              label="Global Survey Manager"
-              variant="outlined"
-            />
-          </ChipContainer>
+          <Typography color="textSecondary" variant="body2" noWrap width={200}>
+            {user.email}
+          </Typography>
         </Box>
       </DropdownInfoContainer>
-      <MenuItem>
+      <MenuItem component={Link} to="/dashboard/profile" onClick={onClose}>
         <ListItemIcon>
           <PersonIcon />
         </ListItemIcon>
         <ListItemText>{t("header.profile.profile")}</ListItemText>
       </MenuItem>
-      <MenuItem>
+      <MenuItem component={Link} to="/dashboard/settings" onClick={onClose}>
         <ListItemIcon>
           <SettingsIcon />
         </ListItemIcon>

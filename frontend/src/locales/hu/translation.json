@@ -84,6 +84,12 @@
         "state": "Állapot",
         "type": "Típus"
       }
+    },
+    "profile": {
+      "profile": "Profil",
+      "profile-picture": "Profilkép",
+      "change-profile-picture": "Profilkép megváltoztatása",
+      "upload-image": "Kép feltöltése"
     }
   },
   "auth": {

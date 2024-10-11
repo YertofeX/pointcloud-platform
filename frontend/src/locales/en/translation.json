@@ -84,6 +84,12 @@
         "state": "State",
         "type": "Type"
       }
+    },
+    "profile": {
+      "profile": "Profile",
+      "profile-picture": "Profile picture",
+      "change-profile-picture": "Change profile picture",
+      "upload-image": "Upload image"
     }
   },
   "auth": {

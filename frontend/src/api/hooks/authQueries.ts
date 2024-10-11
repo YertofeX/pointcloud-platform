@@ -63,3 +63,27 @@ export const useRegister = () => {
   });
 };
 //#endregion
+
+//#region useUpdateProfilePicture
+const updateProfilePicture = async ({
+  userID,
+  file,
+}: {
+  userID: string;
+  file: File;
+}): Promise<User> => {
+  const data = new FormData();
+  data.append("avatar", file);
+  const response = await pocketBase.collection("users").update(userID, data);
+  return response;
+};
+
+export const useUpdateProfilePicture = () => {
+  return useMutation({
+    mutationFn: updateProfilePicture,
+    onSuccess: (response) => {
+      queryClient.setQueriesData({ queryKey: [QUERY_KEYS.user] }, response);
+    },
+  });
+};
+//#endregion
