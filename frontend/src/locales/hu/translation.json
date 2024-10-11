@@ -72,8 +72,8 @@
       "archived": "Archivált"
     },
     "types": {
-      "construction": "Construction",
-      "maintenance": "Maintenance"
+      "construction": "Építkezés",
+      "maintenance": "Felújítás"
     }
   },
   "dashboard": {

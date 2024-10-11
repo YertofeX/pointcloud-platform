@@ -77,7 +77,6 @@ export const ProjectCreateForm = () => {
         description,
         state: state.value,
         type: type.value,
-        owner: "2bypmingbsspds0",
       },
       {
         onSuccess: () => {
@@ -92,7 +91,7 @@ export const ProjectCreateForm = () => {
   };
 
   return (
-    <Container component={Paper} sx={{ py: 2 }} maxWidth="xs">
+    <Container component={Paper} sx={{ py: 2, mt: 1 }} maxWidth="xs">
       <Stack direction="row" gap={2} alignItems="center" mb={2}>
         <IconButton
           title={t("project.back-to-projects")}

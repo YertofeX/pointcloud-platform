@@ -14,7 +14,7 @@ export const Header = () => {
           color="inherit"
           underline="none"
         >
-          <Typography variant="h1" fontSize={24} fontWeight="bold" mt={0.2}>
+          <Typography variant="h1" fontSize={24} fontWeight="bold" mt={0.4}>
             Pointcloud Platform
           </Typography>
         </Link>

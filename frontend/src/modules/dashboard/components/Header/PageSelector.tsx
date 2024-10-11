@@ -46,9 +46,10 @@ export const PageSelector = () => {
 
   const open = Boolean(anchorEl);
 
-  const selectedIndex = navigation.findIndex((item) =>
-    item.path.includes(pathname)
+  const foundIndex = navigation.findIndex((item) =>
+    pathname.includes(item.path)
   );
+  const selectedIndex = foundIndex === -1 ? 0 : foundIndex;
 
   const handleButtonClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);

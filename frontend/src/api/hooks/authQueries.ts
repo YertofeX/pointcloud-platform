@@ -43,6 +43,9 @@ export const useLogin = () => {
 const logout = () => {
   pocketBase.authStore.clear();
   queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.user] });
+  setTimeout(() => {
+    queryClient.clear();
+  }, 1000);
 };
 
 export const useLogout = () => {

@@ -1,4 +1,5 @@
 import { useGetUser, useUpdateProfilePicture } from "@api/hooks";
+import { LanguageSelector } from "@components/LanguageSelector";
 import { pocketBase } from "@lib/pocketbase";
 import {
   CloudUpload as CloudUploadIcon,
@@ -10,6 +11,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import {
   Avatar,
   Container,
+  Divider,
   Paper,
   Stack,
   styled,
@@ -70,7 +72,8 @@ export const UserProfile = () => {
             </LoadingButton>
           </Stack>
         </Stack>
-        <Stack>
+        <Divider />
+        <Stack gap={1}>
           <Stack direction="row" gap={1} alignItems="center">
             <PersonIcon />
             <Typography fontSize={20} fontWeight="bold">
@@ -81,6 +84,10 @@ export const UserProfile = () => {
             <EmailIcon />
             <Typography>{user.email}</Typography>
           </Stack>
+        </Stack>
+        <Divider />
+        <Stack alignItems="center">
+          <LanguageSelector />
         </Stack>
       </Stack>
     </Container>
