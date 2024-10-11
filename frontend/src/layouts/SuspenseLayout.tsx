@@ -1,7 +1,7 @@
 import { useGetUser } from "@api/hooks";
+import { PointcloudPlatformLogoColor } from "@components/Icons/PointcloudPlatformLogoColor";
 import { pocketBase } from "@lib/pocketbase";
-import { ThreeDRotation } from "@mui/icons-material";
-import { Box, CircularProgress, Stack, Typography } from "@mui/material";
+import { CircularProgress, Stack, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { Outlet } from "react-router-dom";
 
@@ -21,34 +21,22 @@ export const SuspenseLayout = () => {
         justifyContent="center"
         gap={4}
       >
-        <Typography
-          variant="h1"
-          fontSize={46}
-          fontWeight="bold"
-          color="textDisabled"
-          gutterBottom
-          textAlign="center"
-        >
-          {t("header.title")}
-        </Typography>
-        <Box sx={{ position: "relative" }}>
-          <ThreeDRotation aria-label="save" color="primary" fontSize="large" />
-          <CircularProgress
-            size={48}
-            color="primary"
-            sx={{
-              position: "absolute",
-              top: -7,
-              left: -6,
-              zIndex: 1,
-            }}
+        <Stack direction="row" alignItems="center" gap={2} mb={1}>
+          <PointcloudPlatformLogoColor
+            sx={{ width: { xs: 66, md: 100 }, height: { xs: 66, md: 100 } }}
           />
-        </Box>
-        <Typography fontSize={20} fontWeight="bold" color="textDisabled">
-          {t("common.loading")}
-        </Typography>
+          <Typography
+            variant="h1"
+            fontSize={{ xs: 32, md: 48 }}
+            fontWeight="900"
+            fontFamily="Red Hat Display Variable"
+            flexWrap="wrap"
+            width={{ xs: 170, md: 250 }}
+          >
+            {t("title")}
+          </Typography>
+        </Stack>
+        <CircularProgress size={32} sx={{ color: "text.disabled" }} />
       </Stack>
     );
-
-  return <Outlet />;
 };

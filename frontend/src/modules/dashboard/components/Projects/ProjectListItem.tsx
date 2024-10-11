@@ -1,6 +1,7 @@
 import { Project } from "@api/types";
 import { dayjs } from "@lib/dayjs";
 import {
+  CalendarMonth,
   Settings as SettingsIcon,
   ViewInAr as ViewInArIcon,
 } from "@mui/icons-material";
@@ -17,8 +18,10 @@ export const ProjectListItem = ({ project }: Props) => {
       }}
     >
       <Stack direction="row" alignItems="center" gap={2}>
-        <Avatar variant="rounded">P</Avatar>
-        <Stack flexGrow={1}>
+        <Avatar variant="rounded" sx={{ width: 48, height: 48 }}>
+          P
+        </Avatar>
+        <Stack flexGrow={1} gap={1}>
           <Typography
             fontSize={16}
             fontWeight="bold"
@@ -28,9 +31,12 @@ export const ProjectListItem = ({ project }: Props) => {
           >
             {project.name}
           </Typography>
-          <Typography variant="caption" color="textSecondary">
-            created: {dayjs(project.created).format("L LT")}
-          </Typography>
+          <Stack direction="row" alignItems="center" gap={1}>
+            <CalendarMonth fontSize="small" sx={{ color: "text.disabled" }} />
+            <Typography variant="caption" color="textSecondary">
+              {dayjs(project.created).format("L LT")}
+            </Typography>
+          </Stack>
         </Stack>
         <Stack direction="row" alignItems="center" gap={1}>
           <IconButton>

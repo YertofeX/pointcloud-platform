@@ -11,4 +11,7 @@ export const lightTheme = createTheme({
       main: green[800],
     },
   },
+  typography: {
+    fontFamily: ["Inter Variable", "sans-serif"].join(","),
+  },
 });
