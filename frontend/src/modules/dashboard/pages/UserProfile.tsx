@@ -39,7 +39,7 @@ export const UserProfile = () => {
   if (!user) return null;
 
   return (
-    <Container component={Paper} sx={{ p: 2 }} maxWidth="sm">
+    <Container component={Paper} sx={{ mt: 1, p: 2 }} maxWidth="sm">
       <Typography variant="h2" fontSize={24} fontWeight="bold" gutterBottom>
         {t("dashboard.profile.profile")}
       </Typography>

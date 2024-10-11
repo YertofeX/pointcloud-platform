@@ -10,7 +10,7 @@ export const ProjectList = () => {
   return (
     <>
       <ProjectListHeader />
-      <Container component={Paper}>
+      <Container component={Paper} sx={{ mt: 1, p: 2 }}>
         {!projects ? (
           <SkeletonProjectList />
         ) : projects.length === 0 ? (

@@ -54,7 +54,7 @@ export const ProfileDropdown = ({ open, onClose, anchorEl }: Props) => {
       onClose={onClose}
       anchorEl={anchorEl}
       anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-      sx={{ marginTop: 1 }}
+      sx={{ mt: 1.5 }}
     >
       <DropdownInfoContainer>
         <Avatar
