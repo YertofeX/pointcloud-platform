@@ -116,5 +116,9 @@
       "could-not-create-account": "Could not create account with current credentials"
     },
     "logout-successful": "You're now logged out"
+  },
+  "not-found": {
+    "page-not-found": "The page you're looking for does not exist.",
+    "go-back": "Go back"
   }
 }

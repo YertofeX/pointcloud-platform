@@ -7,12 +7,14 @@ import { RootLayout } from "@layouts/RootLayout";
 import { dashboardRoutes } from "./dashboardRoutes";
 import { DashboardModule } from "@modules/dashboard/DashboardModule";
 import { workspaceRoutes } from "./workspaceRoutes";
+import { MissingPageLayout } from "@layouts/MissingPageLayout";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <SuspenseLayout />,
     children: [
+      { path: "404", element: <MissingPageLayout /> },
       {
         element: <RootLayout />,
         children: [

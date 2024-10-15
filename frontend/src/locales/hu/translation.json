@@ -116,5 +116,9 @@
       "could-not-create-account": "Nem sikerült fiókot létrehozni a jelenlegi adatokkal"
     },
     "logout-successful": "Kilépés sikeres"
+  },
+  "not-found": {
+    "page-not-found": "A keresett oldal nem található.",
+    "go-back": "Vissza"
   }
 }

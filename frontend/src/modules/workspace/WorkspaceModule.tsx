@@ -9,9 +9,13 @@ export const WorkspaceModule = () => {
 
   const { id } = useParams<{ id: string }>();
 
-  const { data: project } = useGetProject({ projectID: id });
+  const { data: project, error } = useGetProject({ projectID: id });
 
   if (!id) return <Navigate to="/dashboard/projects" />;
+
+  if (error && (error as unknown as any).response.code === 404) {
+    return <Navigate to="/404" replace />;
+  }
 
   if (!project) return <LogoLoader loaderText={t("project.loading-project")} />;
 
