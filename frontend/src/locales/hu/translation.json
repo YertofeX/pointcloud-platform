@@ -59,6 +59,7 @@
     "back-to-projects": "Vissza a projektekhez",
     "project-created-successfully": "Projekt létrehozása sikeres",
     "project-updated-successfully": "Projekt módosítása sikeres",
+    "loading-project": "Projekt betöltése...",
     "props": {
       "name": "Név",
       "description": "Leírás",

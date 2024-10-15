@@ -6,6 +6,7 @@ import {
   ViewInAr as ViewInArIcon,
 } from "@mui/icons-material";
 import { Avatar, IconButton, Paper, Stack, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 
 type Props = { project: Project };
 
@@ -39,10 +40,10 @@ export const ProjectListItem = ({ project }: Props) => {
           </Stack>
         </Stack>
         <Stack direction="row" alignItems="center" gap={1}>
-          <IconButton>
+          <IconButton component={Link} to={`/projects/${project.id}`}>
             <ViewInArIcon />
           </IconButton>
-          <IconButton>
+          <IconButton component={Link} to={`/projects/${project.id}/settings`}>
             <SettingsIcon />
           </IconButton>
         </Stack>

@@ -24,6 +24,25 @@ export const useGetProjects = () => {
 };
 // #endregion
 
+//#region useGetProject
+const getProject = async ({
+  projectID,
+}: {
+  projectID: string;
+}): Promise<Project> => {
+  const response = await pocketBase.collection("projects").getOne(projectID);
+  return response;
+};
+
+export const useGetProject = ({ projectID }: { projectID?: string }) => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.project, projectID],
+    queryFn: () => getProject({ projectID: projectID ?? "" }),
+    enabled: Boolean(projectID),
+  });
+};
+//#endregion
+
 // #region useCreateProject
 const createProject = async (
   data: Omit<ProjectCreateParams, "owner">

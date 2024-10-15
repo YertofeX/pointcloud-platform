@@ -6,6 +6,7 @@ import { authRoutes } from "./authRoutes";
 import { RootLayout } from "@layouts/RootLayout";
 import { dashboardRoutes } from "./dashboardRoutes";
 import { DashboardModule } from "@modules/dashboard/DashboardModule";
+import { workspaceRoutes } from "./workspaceRoutes";
 
 export const router = createBrowserRouter([
   {
@@ -20,7 +21,11 @@ export const router = createBrowserRouter([
             element: <DashboardModule />,
             children: dashboardRoutes,
           },
-          { path: "workspace", element: <WorkspaceModule /> },
+          {
+            path: "projects/:id",
+            element: <WorkspaceModule />,
+            children: workspaceRoutes,
+          },
         ],
       },
       {
