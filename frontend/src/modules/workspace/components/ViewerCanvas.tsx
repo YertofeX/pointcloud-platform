@@ -43,7 +43,7 @@ export const ViewerCanvas = () => {
         <GizmoViewport labelColor="white" axisHeadScale={1} />
       </GizmoHelper>
 
-      <Stats />
+      {/* <Stats /> */}
       <Bounds observe margin={1}>
         <BoundsSetter>
           <Box args={[1, 1, 1]}>

@@ -27,7 +27,7 @@ export const ProjectListItem = ({ project }: Props) => {
             fontSize={16}
             fontWeight="bold"
             noWrap
-            maxWidth={367}
+            maxWidth={{ xs: 200, sm: 340, md: 220, lg: 360 }}
             title={project.name}
           >
             {project.name}
