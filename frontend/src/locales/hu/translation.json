@@ -77,6 +77,13 @@
     "types": {
       "construction": "Építkezés",
       "maintenance": "Felújítás"
+    },
+    "tools": {
+      "select-tooltip": "Kijelölés (s)",
+      "distance-tooltip": "Távolságmérés (d)",
+      "area-tooltip": "2D Területmérés (a)",
+      "measuring-tooltip": "Kattintás a folytatáshoz vagy dupla kattintás a befejezéshez",
+      "start-measure-tooltip": "Kattintás a méréshez"
     }
   },
   "dashboard": {

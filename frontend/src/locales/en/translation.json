@@ -77,6 +77,13 @@
     "types": {
       "construction": "Construction",
       "maintenance": "Maintenance"
+    },
+    "tools": {
+      "select-tooltip": "Select (s)",
+      "distance-tooltip": "Distance Measure (d)",
+      "area-tooltip": "2D Area Measure (a)",
+      "measuring-tooltip": "Click to continue or double click to finsh",
+      "start-measure-tooltip": "Click to measure"
     }
   },
   "dashboard": {
