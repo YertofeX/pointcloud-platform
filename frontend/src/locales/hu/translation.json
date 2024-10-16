@@ -60,6 +60,8 @@
     "project-created-successfully": "Projekt létrehozása sikeres",
     "project-updated-successfully": "Projekt módosítása sikeres",
     "loading-project": "Projekt betöltése...",
+    "project-settings": "Projekt beállítások",
+    "project-files": "Projekt fájlok",
     "props": {
       "name": "Név",
       "description": "Leírás",

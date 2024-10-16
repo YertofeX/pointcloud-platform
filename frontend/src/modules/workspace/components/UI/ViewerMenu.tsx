@@ -15,8 +15,15 @@ import {
   styled,
 } from "@mui/material";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
+import { useWorkspaceContext } from "../WorkspaceContext/WorkspaceContext";
 
 export const ViewerMenu = () => {
+  const { t } = useTranslation();
+
+  const { project } = useWorkspaceContext();
+
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
   const open = Boolean(anchorEl);
@@ -44,24 +51,24 @@ export const ViewerMenu = () => {
         // anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
         sx={{ mt: 1.5 }}
       >
-        <MenuItem>
+        <MenuItem component={Link} to={`/projects/${project.id}/settings`}>
           <ListItemIcon>
             <SettingsIcon />
           </ListItemIcon>
-          <ListItemText>project settings todo</ListItemText>
+          <ListItemText>{t("project.project-settings")}</ListItemText>
         </MenuItem>
-        <MenuItem>
+        <MenuItem component={Link} to={`/projects/${project.id}/files`}>
           <ListItemIcon>
             <FolderIcon />
           </ListItemIcon>
-          <ListItemText>project files todo</ListItemText>
+          <ListItemText>{t("project.project-files")}</ListItemText>
         </MenuItem>
         <Divider />
-        <MenuItem>
+        <MenuItem component={Link} to="/dashboard/projects">
           <ListItemIcon>
             <DashboardIcon />
           </ListItemIcon>
-          <ListItemText>back to projects todo</ListItemText>
+          <ListItemText>{t("project.back-to-projects")}</ListItemText>
         </MenuItem>
       </Menu>
     </>

@@ -60,6 +60,8 @@
     "project-created-successfully": "Project created successfully",
     "project-updated-successfully": "Project updated successfully",
     "loading-project": "Loading project...",
+    "project-settings": "Project settings",
+    "project-files": "Project files",
     "props": {
       "name": "Name",
       "description": "Description",
