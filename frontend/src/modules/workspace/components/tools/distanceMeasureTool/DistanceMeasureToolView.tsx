@@ -82,6 +82,7 @@ export const DistanceMeasureToolView = () => {
       setCursorPos(intersection.position);
     }
   });
+
   useCanvasEvent(
     "pointerup",
     useCallback(

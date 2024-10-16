@@ -22,10 +22,13 @@ const SelectToZoom = () => {
   const { camera, raycaster, pointer, gl } = useThree();
 
   useCanvasEvent("dblclick", (event) => {
+    console.log("dblclick");
+
     if (pointCloudsRef.current) {
       raycaster.setFromCamera(pointer, camera);
       const picker = new CustomPointCloudOctreePicker();
       const intersection = picker.pick(gl, camera, raycaster.ray, visiblePcos);
+      console.log({ intersection, position: intersection?.position });
       if (intersection && intersection.position) {
         const point = intersection.position;
         if (spaceCursorRef.current && point) {

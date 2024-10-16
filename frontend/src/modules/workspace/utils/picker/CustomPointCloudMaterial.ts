@@ -222,7 +222,7 @@ export class CustomPointCloudMaterial extends RawShaderMaterial {
   );
 
   uniforms: IPointCloudMaterialUniforms & Record<string, IUniform<any>> = {
-    bbSize: makeUniform("fv", [0, 0, 0] as [number, number, number]),
+  bbSize: makeUniform("fv", [0, 0, 0] as [number, number, number]),
     blendDepthSupplement: makeUniform("f", 0.0),
     blendHardness: makeUniform("f", 2.0),
     classificationLUT: makeUniform("t", this.classificationTexture || new Texture()),

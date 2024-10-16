@@ -10,6 +10,8 @@ import { useControlsContext } from "../contexts/ControlsContext";
 import { BoundsSetter } from "./BoundsSetter";
 import { Lights } from "./Lights";
 import { PotreeScene } from "./PotreeScene";
+import { PermObjects } from "./objects/PermObjects";
+import { ToolHandler } from "./ToolHandler";
 
 export const ViewerCanvas = () => {
   const { enabled, setMoving } = useControlsContext();
@@ -45,10 +47,9 @@ export const ViewerCanvas = () => {
 
       <Bounds observe margin={1}>
         <BoundsSetter>
-          <Box args={[1, 1, 1]}>
-            <meshStandardMaterial color="hotpink" />
-          </Box>
+          <ToolHandler />
           <PotreeScene />
+          <PermObjects />
         </BoundsSetter>
       </Bounds>
     </Canvas>
