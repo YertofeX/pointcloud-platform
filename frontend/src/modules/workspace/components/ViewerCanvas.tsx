@@ -4,12 +4,12 @@ import {
   GizmoHelper,
   GizmoViewport,
   OrbitControls,
-  Stats,
 } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { useControlsContext } from "../contexts/ControlsContext";
 import { BoundsSetter } from "./BoundsSetter";
 import { Lights } from "./Lights";
+import { PotreeScene } from "./PotreeScene";
 
 export const ViewerCanvas = () => {
   const { enabled, setMoving } = useControlsContext();
@@ -43,12 +43,12 @@ export const ViewerCanvas = () => {
         <GizmoViewport labelColor="white" axisHeadScale={1} />
       </GizmoHelper>
 
-      {/* <Stats /> */}
       <Bounds observe margin={1}>
         <BoundsSetter>
           <Box args={[1, 1, 1]}>
             <meshStandardMaterial color="hotpink" />
           </Box>
+          <PotreeScene />
         </BoundsSetter>
       </Bounds>
     </Canvas>
