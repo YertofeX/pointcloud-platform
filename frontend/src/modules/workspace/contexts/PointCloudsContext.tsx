@@ -23,6 +23,7 @@ export type PointCloud = {
 export type PointCloudsContextProps = {
   pointCloudsRef: React.RefObject<Group>;
   pointClouds: PointCloud[];
+  visiblePcos: PointCloudOctree[];
   setPointClouds: React.Dispatch<React.SetStateAction<PointCloud[]>>;
   potree: Potree;
   loadPco: (baseUrl: string, filename: string, name?: string) => void;
@@ -32,6 +33,7 @@ export type PointCloudsContextProps = {
 export const PointCloudsContext = createContext<PointCloudsContextProps>({
   pointCloudsRef: { current: null },
   pointClouds: [],
+  visiblePcos: [],
   setPointClouds: () => {},
   potree: new Potree(),
   loadPco: () => {},
@@ -95,6 +97,9 @@ export const PointCloudsProvider = ({ children }: PropsWithChildren) => {
       value={{
         pointCloudsRef,
         pointClouds,
+        visiblePcos: pointClouds
+          .filter(({ visible }) => visible)
+          .map(({ pco }) => pco),
         setPointClouds,
         potree,
         loadPco,

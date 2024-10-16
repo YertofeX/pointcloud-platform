@@ -1,9 +1,9 @@
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import { useFrame } from "@react-three/fiber";
 import { usePointCloudsContext } from "../contexts/PointCloudsContext";
 
 export const PotreeScene = () => {
-  const { pointClouds, pointCloudsRef, potree, loadPco, unloadPcos } =
+  const { visiblePcos, pointCloudsRef, potree, loadPco, unloadPcos } =
     usePointCloudsContext();
 
   useEffect(() => {
@@ -35,18 +35,13 @@ export const PotreeScene = () => {
     };
   }, []);
 
-  const pcos = useMemo(
-    () => pointClouds.filter(({ visible }) => visible).map(({ pco }) => pco),
-    [pointClouds]
-  );
-
   useFrame(({ camera, gl }) => {
-    potree.updatePointClouds(pcos, camera, gl);
+    potree.updatePointClouds(visiblePcos, camera, gl);
   });
 
   return (
     <group ref={pointCloudsRef}>
-      {pcos.map((pco) => (
+      {visiblePcos.map((pco) => (
         <primitive key={pco.id} object={pco} />
       ))}
     </group>
