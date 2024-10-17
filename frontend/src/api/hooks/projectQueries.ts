@@ -79,10 +79,13 @@ export const useCreateProject = () => {
 // #endregion
 
 //#region useUpdateProject
-const updateProject = async (data: ProjectUpdateParams): Promise<Project> => {
-  const response = await pocketBase
-    .collection("projects")
-    .update(data.id, data);
+const updateProject = async (
+  data: Omit<ProjectUpdateParams, "owner">
+): Promise<Project> => {
+  const response = await pocketBase.collection("projects").update(data.id, {
+    ...data,
+    owner: (pocketBase.authStore.model as User).id,
+  });
   return response;
 };
 
@@ -98,6 +101,46 @@ export const useUpdateProject = () => {
         { queryKey: [QUERY_KEYS.projects] },
         produce((draft) => {
           if (draft === undefined) return;
+          const index = draft.findIndex(
+            (project) => project.id === response.id
+          );
+          if (index < 0) return;
+          draft[index] = response;
+        })
+      );
+    },
+  });
+};
+//#endregion
+
+//#region useUpdateProjectThumbnail
+const updateProjectThumbnail = async ({
+  projectID,
+  file,
+}: {
+  projectID: string;
+  file: File;
+}): Promise<Project> => {
+  const data = new FormData();
+  data.append("thumbnail", file);
+  const response = await pocketBase
+    .collection("projects")
+    .update(projectID, data);
+  return response;
+};
+
+export const useUpdateProjectThumbnail = () => {
+  return useMutation({
+    mutationFn: updateProjectThumbnail,
+    onSuccess: (response) => {
+      queryClient.setQueriesData<Project>(
+        { queryKey: [QUERY_KEYS.project] },
+        response
+      );
+      queryClient.setQueriesData<Project[]>(
+        { queryKey: [QUERY_KEYS.projects] },
+        produce((draft) => {
+          if (!draft) return;
           const index = draft.findIndex(
             (project) => project.id === response.id
           );
