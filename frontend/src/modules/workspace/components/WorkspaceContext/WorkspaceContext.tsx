@@ -22,6 +22,7 @@ export const WorkspaceContext = createContext<WorkspaceContextType>({
       created: "",
       updated: "",
     },
+    thumbnail: "",
     created: "",
     updated: "",
   },

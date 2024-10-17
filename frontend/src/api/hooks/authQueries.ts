@@ -85,7 +85,10 @@ export const useUpdateProfilePicture = () => {
   return useMutation({
     mutationFn: updateProfilePicture,
     onSuccess: (response) => {
-      queryClient.setQueriesData({ queryKey: [QUERY_KEYS.user] }, response);
+      queryClient.setQueriesData<User>(
+        { queryKey: [QUERY_KEYS.user] },
+        response
+      );
     },
   });
 };

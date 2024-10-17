@@ -1,7 +1,9 @@
 import { Project } from "@api/types";
 import { dayjs } from "@lib/dayjs";
+import { pocketBase } from "@lib/pocketbase";
 import {
-  CalendarMonth,
+  CalendarMonth as CalendarMonthIcon,
+  Construction as ConstructionIcon,
   Settings as SettingsIcon,
   ViewInAr as ViewInArIcon,
 } from "@mui/icons-material";
@@ -19,8 +21,16 @@ export const ProjectListItem = ({ project }: Props) => {
       }}
     >
       <Stack direction="row" alignItems="center" gap={2}>
-        <Avatar variant="rounded" sx={{ width: 48, height: 48 }}>
-          P
+        <Avatar
+          variant="rounded"
+          sx={{ width: 48, height: 48 }}
+          src={
+            project.thumbnail !== ""
+              ? pocketBase.getFileUrl(project, project.thumbnail)
+              : undefined
+          }
+        >
+          <ConstructionIcon />
         </Avatar>
         <Stack flexGrow={1} gap={1}>
           <Typography
@@ -33,7 +43,10 @@ export const ProjectListItem = ({ project }: Props) => {
             {project.name}
           </Typography>
           <Stack direction="row" alignItems="center" gap={1}>
-            <CalendarMonth fontSize="small" sx={{ color: "text.disabled" }} />
+            <CalendarMonthIcon
+              fontSize="small"
+              sx={{ color: "text.disabled" }}
+            />
             <Typography variant="caption" color="textSecondary">
               {dayjs(project.created).format("L LT")}
             </Typography>

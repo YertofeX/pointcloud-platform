@@ -60,8 +60,10 @@
     "project-created-successfully": "Project created successfully",
     "project-updated-successfully": "Project updated successfully",
     "loading-project": "Loading project...",
+    "project-viewer": "Project viewer",
     "project-settings": "Project settings",
     "project-files": "Project files",
+    "change-thumbnail": "Change thumbnail",
     "props": {
       "name": "Name",
       "description": "Description",
