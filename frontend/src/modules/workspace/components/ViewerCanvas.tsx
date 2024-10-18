@@ -1,10 +1,4 @@
-import {
-  Bounds,
-  Box,
-  GizmoHelper,
-  GizmoViewport,
-  OrbitControls,
-} from "@react-three/drei";
+import { Bounds, GizmoHelper, GizmoViewport } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { useControlsContext } from "../contexts/ControlsContext";
 import { BoundsSetter } from "./BoundsSetter";
@@ -12,6 +6,7 @@ import { Lights } from "./Lights";
 import { PotreeScene } from "./PotreeScene";
 import { PermObjects } from "./objects/PermObjects";
 import { ToolHandler } from "./ToolHandler";
+import { DelayedOrbitControls } from "./DelayedOrbitControl/DelayedOrbitControl";
 
 export const ViewerCanvas = () => {
   const { enabled, setMoving } = useControlsContext();
@@ -31,7 +26,7 @@ export const ViewerCanvas = () => {
     >
       <Lights />
 
-      <OrbitControls
+      <DelayedOrbitControls
         minDistance={0.0001}
         makeDefault
         dampingFactor={0.4}
