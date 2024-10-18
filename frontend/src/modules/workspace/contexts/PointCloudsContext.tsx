@@ -68,7 +68,7 @@ export const PointCloudsProvider = ({ children }: PropsWithChildren) => {
           { pco: pco, visible: true },
         ]);
 
-        console.log("Cloud loaded", pco);
+        // console.log("Cloud loaded", pco);
 
         // * bounding box for debugging * //
         // const box = pco.pcoGeometry.boundingBox;

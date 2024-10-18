@@ -56,7 +56,6 @@ export const useLogout = () => {
 //#region useRegister
 const register = async (data: RegisterParams): Promise<User> => {
   const response = await pocketBase.collection("users").create(data);
-  console.log({ response });
   return response;
 };
 

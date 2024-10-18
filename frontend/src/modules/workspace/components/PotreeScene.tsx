@@ -13,11 +13,11 @@ export const PotreeScene = () => {
       "lion"
     );
 
-    loadPco(
-      "https://static.thelostmetropolis.org/BigShotCleanV2/",
-      "metadata.json",
-      "facility"
-    );
+    // loadPco(
+    //   "https://static.thelostmetropolis.org/BigShotCleanV2/",
+    //   "metadata.json",
+    //   "facility"
+    // );
 
     // loadPco("/pointclouds/output/banya/", "metadata.json", "bánya");
     // loadPco("/pointclouds/output/teszt/", "metadata.json", "Teszt");

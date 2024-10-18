@@ -4,10 +4,13 @@ import { IUniform, Shader } from "three";
 type ShaderPart = {
   head?: string;
   main?: string;
-}
+};
 
 //https://codesandbox.io/s/depth-buffer-soft-intersection-b94ogs
-export const glsl = (strings: TemplateStringsArray, ...variables: (string | undefined)[]) => {
+export const glsl = (
+  strings: TemplateStringsArray,
+  ...variables: (string | undefined)[]
+) => {
   const str: string[] = [];
 
   strings.forEach((x, i) => {
@@ -16,13 +19,13 @@ export const glsl = (strings: TemplateStringsArray, ...variables: (string | unde
   });
 
   return str.join("");
-}
+};
 
 type UseShaderParams = {
   uniforms?: Record<string, IUniform<any>>;
   vertex?: ShaderPart;
   fragment?: ShaderPart;
-}
+};
 
 export const useShader = ({
   uniforms: incomingUniforms = {},
@@ -81,7 +84,6 @@ export const useShader = ({
                 ${fragment?.main}  
             `
       );
-      console.log(shader);
     },
   };
-}
+};

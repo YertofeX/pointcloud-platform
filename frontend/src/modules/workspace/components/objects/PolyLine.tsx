@@ -188,6 +188,7 @@ export const PolyLineComponent = forwardRef(
           <Paper
             sx={{
               px: 1,
+              transform: "translateY(-1.25rem)",
             }}
           >
             {formatLength(calculateLength(line.points))}
