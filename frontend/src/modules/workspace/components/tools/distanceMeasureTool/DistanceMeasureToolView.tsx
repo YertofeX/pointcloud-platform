@@ -1,31 +1,25 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { useFrame } from "@react-three/fiber";
 import { Vector3 } from "three";
-import { DistanceMeasureToolState } from "./DistanceMeasureToolState";
 import { CustomPointCloudOctreePicker } from "@modules/workspace/utils/picker/CustomPointCloudOctreePicker";
 import { useToolContext } from "@modules/workspace/contexts/ToolContext";
 import { usePointCloudsContext } from "@modules/workspace/contexts/PointCloudsContext";
 import { useCanvasEvent } from "@modules/workspace/utils/useCanvasEvent";
 import { useControlsContext } from "@modules/workspace/contexts/ControlsContext";
-import { useTooltipContext } from "@modules/workspace/contexts/TooltipContext";
-import { useTranslation } from "react-i18next";
 import { PolyLineComponent } from "../../objects/PolyLine";
 import { usePermObjectContext } from "@modules/workspace/contexts/PermObjectContext";
+import { produce } from "immer";
 
 const picker = new CustomPointCloudOctreePicker();
 
 export const DistanceMeasureToolView = () => {
-  const { t } = useTranslation();
-
   const { toolState, setToolState } = useToolContext();
 
-  const { commitLine, editing: permObjectEditing } = usePermObjectContext();
+  const { commitObject, editing: permObjectEditing } = usePermObjectContext();
 
   const { visiblePcos } = usePointCloudsContext();
 
   const { moving } = useControlsContext();
-
-  const { setTooltip } = useTooltipContext();
 
   const [cursorPos, setCursorPos] = useState<Vector3 | null>(null);
 
@@ -33,49 +27,44 @@ export const DistanceMeasureToolView = () => {
     return null;
   }
 
-  useEffect(() => {
-    if (toolState.measuring) {
-      if (toolState.linePoints.length > 0) {
-        setTooltip(t("project.tools.measuring-tooltip"));
-      } else {
-        setTooltip(t("project.tools.start-measure-tooltip"));
-      }
-    } else {
-      setTooltip(null);
-    }
-    return () => {
-      setTooltip(null);
-    };
-  }, [toolState.linePoints, toolState.measuring]);
-
-  const { linePoints } = toolState;
+  const { pointsStack, stackIndex } = toolState;
 
   const addLinePoint = (p: Vector3) => {
-    setToolState((state) =>
-      state.name !== "distance-measure"
-        ? state
-        : ({
-            ...state,
-            linePoints: [...state.linePoints, p],
-          } as DistanceMeasureToolState)
+    setToolState(
+      produce((draft) => {
+        if (draft.name !== "distance-measure") return;
+        // There are no points in the points stack
+        if (draft.stackIndex < 0) {
+          draft.pointsStack = [[p]];
+          draft.stackIndex += 1;
+        } else {
+          console.log("uu", { pointsStack: draft.pointsStack });
+          draft.pointsStack = draft.pointsStack.slice(0, draft.stackIndex + 1);
+          const nextPoints = produce(
+            draft.pointsStack[stackIndex],
+            (points) => {
+              points.push(p);
+            }
+          );
+          console.log({ nextPoints });
+          draft.pointsStack.push(nextPoints);
+          draft.stackIndex += 1;
+        }
+      })
     );
   };
 
-  const clearLinePoints = () => {
-    setToolState((state) =>
-      state.name !== "distance-measure"
-        ? state
-        : ({
-            ...state,
-            linePoints: [],
-          } as DistanceMeasureToolState)
+  const undo = () => {
+    setToolState(
+      produce((draft) => {
+        if (draft.name !== "distance-measure") return;
+        if (draft.stackIndex < 0) return;
+        draft.stackIndex -= 1;
+      })
     );
   };
 
   useFrame(({ raycaster, pointer, camera, gl }) => {
-    if (!toolState.measuring) {
-      return;
-    }
     raycaster.setFromCamera(pointer, camera);
     const intersection = picker.pick(gl, camera, raycaster.ray, visiblePcos);
     if (intersection && intersection.position) {
@@ -87,9 +76,6 @@ export const DistanceMeasureToolView = () => {
     "pointerup",
     useCallback(
       (event) => {
-        if (!toolState.measuring) {
-          return;
-        }
         if (moving) {
           return;
         }
@@ -105,15 +91,10 @@ export const DistanceMeasureToolView = () => {
         } else if (event.button === 2) {
           // Right click
           event.preventDefault();
-          if (linePoints.length >= 2) {
-            commitLine(linePoints);
-            clearLinePoints();
-          } else {
-            clearLinePoints();
-          }
+          undo();
         }
       },
-      [cursorPos, toolState.measuring, linePoints, permObjectEditing]
+      [cursorPos, pointsStack, permObjectEditing]
     )
   );
 
@@ -121,37 +102,32 @@ export const DistanceMeasureToolView = () => {
     "dblclick",
     useCallback(
       (event) => {
-        if (!toolState.measuring) {
-          return;
-        }
         if (moving) {
           return;
         }
-        const commitedPoints = [...linePoints];
+        const commitedPoints = [...pointsStack[stackIndex]];
         if (cursorPos !== null) {
           commitedPoints.pop();
           commitedPoints.push(cursorPos);
         }
         if (commitedPoints.length >= 2) {
           event.stopPropagation();
-          commitLine(commitedPoints);
-          clearLinePoints();
-        } else {
-          //TODO: Alert
+          commitObject("distance-measure", commitedPoints);
         }
       },
-      [linePoints, toolState.measuring]
+      [pointsStack, stackIndex]
     )
   );
 
+  const points = stackIndex < 0 ? [] : pointsStack[stackIndex];
+
   return (
     <mesh>
-      {toolState.measuring && !permObjectEditing && (
+      {!permObjectEditing && (
         <PolyLineComponent
           line={{
             color: "#ff0",
-            points:
-              cursorPos !== null ? [...linePoints, cursorPos] : linePoints,
+            points: cursorPos !== null ? [...points, cursorPos] : points,
             width: 3,
           }}
           hasCursor={cursorPos !== null}

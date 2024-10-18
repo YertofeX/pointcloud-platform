@@ -1,13 +1,13 @@
-import { Vector3 } from "three";
+import { WithPointsStack } from "@modules/workspace/contexts/ToolContext";
 
-export type DistanceMeasureToolState = {
+export type DistanceMeasureToolState = WithPointsStack<{
   name: "distance-measure";
-  measuring: boolean;
-  linePoints: Vector3[];
-};
+  minPoints: number;
+}>;
 
 export const DefaultDistanceMeasureToolState: DistanceMeasureToolState = {
   name: "distance-measure",
-  measuring: true,
-  linePoints: [],
+  minPoints: 2,
+  pointsStack: [],
+  stackIndex: -1,
 };

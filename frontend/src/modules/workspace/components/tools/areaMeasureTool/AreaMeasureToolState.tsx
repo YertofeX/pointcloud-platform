@@ -1,13 +1,13 @@
-import { Vector3 } from "three";
+import { WithPointsStack } from "@modules/workspace/contexts/ToolContext";
 
-export type AreaMeasureToolState = {
+export type AreaMeasureToolState = WithPointsStack<{
   name: "area-measure";
-  measuring: boolean;
-  areaPoints: Vector3[];
-};
+  minPoints: number;
+}>;
 
 export const DefaultAreaMeasureToolState: AreaMeasureToolState = {
   name: "area-measure",
-  measuring: true,
-  areaPoints: [],
+  minPoints: 3,
+  pointsStack: [],
+  stackIndex: -1,
 };

@@ -11,6 +11,12 @@ import {
   AreaMeasureToolState,
   DefaultAreaMeasureToolState,
 } from "../components/tools/areaMeasureTool/AreaMeasureToolState";
+import { Vector3 } from "three";
+
+export type WithPointsStack<T> = T & {
+  pointsStack: Vector3[][];
+  stackIndex: number;
+};
 
 export type ToolState =
   | SelectToolState

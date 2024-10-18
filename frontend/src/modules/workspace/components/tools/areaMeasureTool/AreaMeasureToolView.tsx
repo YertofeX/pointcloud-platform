@@ -1,35 +1,29 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { useFrame } from "@react-three/fiber";
 import { Vector3 } from "three";
-import { AreaMeasureToolState } from "./AreaMeasureToolState";
 import { Html } from "@react-three/drei";
 import { useToolContext } from "@modules/workspace/contexts/ToolContext";
 import { usePermObjectContext } from "@modules/workspace/contexts/PermObjectContext";
 import { usePointCloudsContext } from "@modules/workspace/contexts/PointCloudsContext";
 import { useControlsContext } from "@modules/workspace/contexts/ControlsContext";
-import { useTooltipContext } from "@modules/workspace/contexts/TooltipContext";
 import { CustomPointCloudOctreePicker } from "@modules/workspace/utils/picker/CustomPointCloudOctreePicker";
 import { useCanvasEvent } from "@modules/workspace/utils/useCanvasEvent";
 import { calculateArea } from "@modules/workspace/utils/calculateArea";
 import { calculateCenter } from "@modules/workspace/utils/calculateCenter";
 import { PolyLineComponent } from "../../objects/PolyLine";
 import { Paper } from "@mui/material";
-import { useTranslation } from "react-i18next";
+import { produce } from "immer";
 
 const picker = new CustomPointCloudOctreePicker();
 
 export const AreaMeasureToolView = () => {
-  const { t } = useTranslation();
-
   const { toolState, setToolState } = useToolContext();
 
-  const { commitArea, editing: permObjectEditing } = usePermObjectContext();
+  const { commitObject, editing: permObjectEditing } = usePermObjectContext();
 
   const { visiblePcos } = usePointCloudsContext();
 
   const { moving } = useControlsContext();
-
-  const { setTooltip } = useTooltipContext();
 
   const [cursorPos, setCursorPos] = useState<Vector3 | null>(null);
 
@@ -39,49 +33,40 @@ export const AreaMeasureToolView = () => {
     return null;
   }
 
-  useEffect(() => {
-    if (toolState.measuring) {
-      if (toolState.areaPoints.length > 0) {
-        setTooltip(t("project.tools.measuring-tooltip"));
-      } else {
-        setTooltip(t("project.tools.start-measure-tooltip"));
-      }
-    } else {
-      setTooltip(null);
-    }
-    return () => {
-      setTooltip(null);
-    };
-  }, [toolState.areaPoints, toolState.measuring]);
-
-  const { areaPoints } = toolState;
+  const { pointsStack, stackIndex } = toolState;
 
   const addAreaPoint = (p: Vector3) => {
-    setToolState((state) =>
-      state.name !== "area-measure"
-        ? state
-        : ({
-            ...state,
-            areaPoints: [...state.areaPoints, p],
-          } as AreaMeasureToolState)
+    setToolState(
+      produce((draft) => {
+        if (draft.name !== "distance-measure") return;
+        // There are no points in the points stack
+        if (draft.stackIndex < 0) {
+          draft.pointsStack = [[p]];
+          draft.stackIndex += 1;
+        } else {
+          draft.pointsStack = draft.pointsStack.slice(0, draft.stackIndex + 1);
+          draft.pointsStack.push(
+            produce(draft.pointsStack[stackIndex], (points) => {
+              points.push(p);
+            })
+          );
+          draft.stackIndex += 1;
+        }
+      })
     );
   };
 
-  const clearAreaPoints = () => {
-    setToolState((state) =>
-      state.name !== "area-measure"
-        ? state
-        : ({
-            ...state,
-            areaPoints: [],
-          } as AreaMeasureToolState)
+  const undo = () => {
+    setToolState(
+      produce((draft) => {
+        if (draft.name !== "distance-measure") return;
+        if (draft.stackIndex < 0) return;
+        draft.stackIndex -= 1;
+      })
     );
   };
 
   useFrame(({ raycaster, pointer, camera, gl }) => {
-    if (!toolState.measuring) {
-      return;
-    }
     raycaster.setFromCamera(pointer, camera);
     const intersection = picker.pick(gl, camera, raycaster.ray, visiblePcos);
     if (intersection && intersection.position) {
@@ -96,9 +81,6 @@ export const AreaMeasureToolView = () => {
         //TODO: make this prettier
         if (endLineRef.current) {
           endLineRef.current = false;
-          return;
-        }
-        if (!toolState.measuring) {
           return;
         }
         if (moving) {
@@ -116,41 +98,39 @@ export const AreaMeasureToolView = () => {
         } else if (event.button === 2) {
           // Right click
           event.preventDefault();
-          clearAreaPoints();
+          undo();
         }
       },
-      [cursorPos, toolState.measuring, areaPoints, permObjectEditing]
+      [cursorPos, pointsStack, permObjectEditing]
     )
   );
 
   useCanvasEvent(
     "dblclick",
     useCallback(
-      (ev) => {
-        if (!toolState.measuring) {
-          return;
-        }
+      (event) => {
         if (moving) {
           return;
         }
-        const commitedPoints = [...areaPoints];
+        const commitedPoints = [...pointsStack[stackIndex]];
         if (cursorPos !== null) {
           commitedPoints.pop();
           commitedPoints.push(cursorPos);
         }
         if (commitedPoints.length >= 3) {
-          ev.stopPropagation();
-          commitArea(commitedPoints);
-          clearAreaPoints();
+          event.stopPropagation();
+          commitObject("area-measure", commitedPoints);
         } else {
           //TODO: Alert
         }
       },
-      [areaPoints, toolState.measuring]
+      [pointsStack, stackIndex]
     )
   );
 
-  const cursorAreaPoints = [...areaPoints];
+  const points = stackIndex < 0 ? [] : pointsStack[stackIndex];
+
+  const cursorAreaPoints = [...points];
   let cursorIndex = -1;
 
   if (cursorPos !== null) {
@@ -176,7 +156,7 @@ export const AreaMeasureToolView = () => {
 
   return (
     <mesh>
-      {toolState.measuring && !permObjectEditing && (
+      {!permObjectEditing && (
         <>
           <Html
             transform={false}
@@ -201,11 +181,10 @@ export const AreaMeasureToolView = () => {
               width: 3,
             }}
             firstClick={
-              areaPoints.length >= 2
+              points.length >= 2
                 ? () => {
                     endLineRef.current = true;
-                    commitArea(areaPoints);
-                    clearAreaPoints();
+                    commitObject("area-measure", points);
                   }
                 : undefined
             }

@@ -4,6 +4,7 @@ import { PermLine } from "../components/objects/permLine/PermLineComponent";
 import { PermArea } from "../components/objects/permArea/PermAreaComponent";
 import { getBounds } from "../utils/getBounds";
 import { randomColor } from "../utils/randomColor";
+import { ToolName, useToolContext } from "./ToolContext";
 
 export type PermObjectType = "line" | "area" | "pointcloud";
 
@@ -26,8 +27,7 @@ interface PermObjects {
   >;
   editing: boolean;
   setEditing: React.Dispatch<React.SetStateAction<boolean>>;
-  commitLine: (points: Vector3[]) => void;
-  commitArea: (points: Vector3[]) => void;
+  commitObject: (tool: Exclude<ToolName, "select">, points: Vector3[]) => void;
 }
 
 export const PermObjectContext = createContext<PermObjects>({
@@ -45,13 +45,14 @@ export const PermObjectContext = createContext<PermObjects>({
   setHighlightedType: () => {},
   editing: false,
   setEditing: () => {},
-  commitLine: () => {},
-  commitArea: () => {},
+  commitObject: () => {},
 });
 
 export const usePermObjectContext = () => useContext(PermObjectContext);
 
 export const PermObjectProvider = ({ children }: PropsWithChildren) => {
+  const { setTool } = useToolContext();
+
   const [permLines, setPermLines] = useState<PermLine[]>([]);
   const [permAreas, setPermAreas] = useState<PermArea[]>([]);
 
@@ -113,6 +114,21 @@ export const PermObjectProvider = ({ children }: PropsWithChildren) => {
     });
   };
 
+  const commitObject = (
+    tool: Exclude<ToolName, "select">,
+    points: Vector3[]
+  ) => {
+    switch (tool) {
+      case "distance-measure":
+        commitLine(points);
+        break;
+      case "area-measure":
+        commitArea(points);
+        break;
+    }
+    setTool("select");
+  };
+
   return (
     <PermObjectContext.Provider
       value={{
@@ -124,12 +140,11 @@ export const PermObjectProvider = ({ children }: PropsWithChildren) => {
         setSelectedObjectId,
         selectedObjectType,
         setSelectedObjectType,
-        commitLine,
-        commitArea,
         highlighted,
         setHighlighted,
         highlightedType,
         setHighlightedType,
+        commitObject,
         editing,
         setEditing,
       }}

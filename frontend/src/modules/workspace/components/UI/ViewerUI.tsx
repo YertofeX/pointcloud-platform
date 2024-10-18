@@ -4,6 +4,7 @@ import { ViewerToolbar } from "./ViewerToolbar";
 import { ViewerProfile } from "./ViewerProfile";
 import { ActionBar } from "./ActionBar";
 import { ViewerDataDisplay } from "./ViewerDataDisplay";
+import { ActiveMeasurementControls } from "./ActiveMeasurementControls";
 
 export const ViewerUI = () => {
   return (
@@ -11,6 +12,7 @@ export const ViewerUI = () => {
       <ViewerMenu />
       <ViewerDataDisplay />
       <ViewerToolbar />
+      <ActiveMeasurementControls />
       <ViewerProfile />
       <ActionBar />
       <Outliner />
