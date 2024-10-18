@@ -1,4 +1,4 @@
-import { Paper, styled } from "@mui/material";
+import { Paper, styled, Typography } from "@mui/material";
 import {
   createContext,
   PropsWithChildren,
@@ -30,7 +30,7 @@ export const TooltipProvider = ({ children }: PropsWithChildren) => {
 };
 
 export const Tooltip = () => {
-  const { tooltip } = useContext(TooltipContext);
+  const { tooltip } = useTooltipContext();
 
   const [x, setX] = useState<number>(0);
   const [y, setY] = useState<number>(0);
@@ -50,7 +50,7 @@ export const Tooltip = () => {
 
   return (
     <FloatingTooltip sx={{ top: `${y}px`, left: `${x}px` }}>
-      {tooltip}
+      <Typography noWrap>{tooltip}</Typography>
     </FloatingTooltip>
   );
 };
@@ -61,4 +61,5 @@ const FloatingTooltip = styled(Paper)({
   userSelect: "none",
   pointerEvents: "none",
   p: 1,
+  transform: "translate(-0.5rem)",
 });

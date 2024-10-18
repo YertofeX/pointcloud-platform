@@ -10,6 +10,7 @@ import { getBounds } from "@modules/workspace/utils/getBounds";
 import { PolyLineComponent } from "../PolyLine";
 import { calculateCenter } from "@modules/workspace/utils/calculateCenter";
 import { calculateArea } from "@modules/workspace/utils/calculateArea";
+import { Paper, Typography } from "@mui/material";
 
 export type PermArea = {
   id: number;
@@ -99,17 +100,20 @@ export const PermAreaComponent = ({ area }: Props) => {
         }}
       />
       <Html
-        className="select-none pointer-events-none"
         position={calculateCenter(...points)}
-        style={{ display: cull ? "none" : "inherit" }}
+        style={{
+          display: cull ? "none" : "inherit",
+          userSelect: "none",
+          pointerEvents: "none",
+        }}
         center
       >
-        <div className="flex flex-col items-center">
-          <div className="bg-gray-900 text-sm rounded-md whitespace-nowrap px-1 -my-px">
+        <Paper sx={{ px: 1 }}>
+          <Typography>
             {Math.round(calculateArea(loopAreaPoints) * 100) / 100}&nbsp;m
             <sup>2</sup>
-          </div>
-        </div>
+          </Typography>
+        </Paper>
       </Html>
     </>
   );

@@ -20,7 +20,7 @@ import {
   formatLength,
 } from "@modules/workspace/utils/calculateLength";
 import { calculateCenter } from "@modules/workspace/utils/calculateCenter";
-import { Paper } from "@mui/material";
+import { Paper, Typography } from "@mui/material";
 import { OccludedLine } from "./OccludedLine";
 import { KeepSize } from "./helpers/KeepSize";
 
@@ -156,42 +156,49 @@ export const PolyLineComponent = forwardRef(
           </KeepSize>
         ))}
         {/* Lengths */}
-        {intervals(line.points).map(([from, to], index) => {
-          const length = calculateLength([from, to]);
-          return (
-            <Html
-              key={`${index}`}
-              position={calculateCenter(from, to)}
-              style={{ display: visible ? "inherit" : "none" }}
-              center
-            >
-              <Paper
-                sx={{
-                  px: 1,
-                  minWidth: "max-content",
-                  userSelect: "none",
-                  pointerEvents: "none",
-                }}
+        {intervals(line.points)
+          .filter((points) => calculateLength(points) >= 0.25)
+          .map(([from, to], index) => {
+            const length = calculateLength([from, to]);
+            return (
+              <Html
+                key={`${index}`}
+                position={calculateCenter(from, to)}
+                style={{ display: visible ? "inherit" : "none" }}
+                center
               >
-                {Math.round(length * 100) / 100} m
-              </Paper>
-            </Html>
-          );
-        })}
+                <Paper
+                  sx={{
+                    px: 1,
+                    minWidth: "max-content",
+                    userSelect: "none",
+                    pointerEvents: "none",
+                  }}
+                >
+                  {Math.round(length * 100) / 100} m
+                </Paper>
+              </Html>
+            );
+          })}
         {/* Total length */}
         <Html
-          className="select-none pointer-events-none"
           position={line.points[line.points.length - 1]}
-          style={{ display: visible && showTotalDistance ? "inherit" : "none" }}
+          style={{
+            display: visible && showTotalDistance ? "inherit" : "none",
+            userSelect: "none",
+            pointerEvents: "none",
+          }}
           center
         >
           <Paper
             sx={{
               px: 1,
-              transform: "translateY(-1.25rem)",
+              transform: "translateY(-2rem)",
             }}
           >
-            {formatLength(calculateLength(line.points))}
+            <Typography noWrap>
+              {formatLength(calculateLength(line.points))}
+            </Typography>
           </Paper>
         </Html>
       </mesh>

@@ -93,6 +93,7 @@ export const PermObjectProvider = ({ children }: PropsWithChildren) => {
     if (points.length < 3) {
       return;
     }
+
     setPermAreas((permAreas) => {
       const id =
         permAreas.length > 0 ? Math.max(...permAreas.map((p) => p.id)) + 1 : 0;
