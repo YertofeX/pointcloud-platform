@@ -97,7 +97,8 @@
         "starred": "Kedvenceim",
         "state": "Állapot",
         "type": "Típus"
-      }
+      },
+      "no-projects": "Nincsenek megjeleníthető projektek."
     },
     "profile": {
       "profile": "Profil",

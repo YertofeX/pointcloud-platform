@@ -1,10 +1,13 @@
-import { Container, Grid2, Paper } from "@mui/material";
+import { Container, Grid2, Paper, Typography } from "@mui/material";
 import { SkeletonProjectList } from "../../components/Projects/SkeletonProjectList";
 import { ProjectListHeader } from "../../components/Projects/ProjectListHeader";
 import { useGetProjects } from "@api/hooks";
 import { ProjectListItem } from "../../components/Projects/ProjectListItem";
+import { useTranslation } from "react-i18next";
 
 export const ProjectList = () => {
+  const { t } = useTranslation();
+
   const { data: projects } = useGetProjects();
 
   return (
@@ -14,7 +17,9 @@ export const ProjectList = () => {
         {!projects ? (
           <SkeletonProjectList />
         ) : projects.length === 0 ? (
-          "no projects to display todo"
+          <Typography textAlign="center">
+            {t("dashboard.projects.no-projects")}
+          </Typography>
         ) : (
           <Grid2 container spacing={2} columns={2}>
             {projects.map((project) => (

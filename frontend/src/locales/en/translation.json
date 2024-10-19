@@ -97,7 +97,8 @@
         "starred": "Favourites",
         "state": "State",
         "type": "Type"
-      }
+      },
+      "no-projects": "There are no projects to display."
     },
     "profile": {
       "profile": "Profile",
