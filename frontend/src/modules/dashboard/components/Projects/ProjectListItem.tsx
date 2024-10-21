@@ -101,7 +101,7 @@ export const ProjectListItem = ({ project }: Props) => {
           </IconButton>
           <IconButton onClick={handleStar} disabled={isUpdateFavoritePending}>
             {isUpdateFavoritePending ? (
-              <CircularProgress size="24px" color="inherit" />
+              <CircularProgress size={24} color="inherit" />
             ) : project.favorite ? (
               <Star color="warning" />
             ) : (
