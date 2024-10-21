@@ -4,11 +4,20 @@ import { ProjectListHeader } from "../../components/Projects/ProjectListHeader";
 import { useGetProjects } from "@api/hooks";
 import { ProjectListItem } from "../../components/Projects/ProjectListItem";
 import { useTranslation } from "react-i18next";
+import { useSearchParams } from "react-router-dom";
+import { ProjectState, ProjectType } from "@api/types";
 
 export const ProjectList = () => {
   const { t } = useTranslation();
 
-  const { data: projects } = useGetProjects();
+  const [searchParams] = useSearchParams();
+
+  const { data: projects } = useGetProjects({
+    name: searchParams.get("name") ?? undefined,
+    onlyFavorite: searchParams.get("starred") === "true",
+    states: searchParams.getAll("state") as ProjectState[],
+    types: searchParams.getAll("type") as ProjectType[],
+  });
 
   return (
     <>

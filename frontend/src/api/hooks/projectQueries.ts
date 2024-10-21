@@ -1,6 +1,7 @@
 import {
   Project,
   ProjectCreateParams,
+  ProjectListFilter,
   ProjectUpdateParams,
   User,
 } from "@api/types";
@@ -11,15 +12,38 @@ import { QUERY_KEYS } from "@utils/constants";
 import { produce } from "immer";
 
 // #region useGetProjects
-const getProjects = async (): Promise<Project[]> => {
-  const response = await pocketBase.collection("projects").getFullList();
+const getProjects = async ({
+  name,
+  onlyFavorite,
+  states,
+  types,
+}: ProjectListFilter): Promise<Project[]> => {
+  const filters: string[] = [];
+  if (name) filters.push(`name ~ "${name}"`);
+
+  if (onlyFavorite) filters.push("favorite=true");
+
+  if (states && states.length > 0)
+    filters.push(`(${states.map((state) => `state="${state}"`).join("||")})`);
+
+  if (types && types.length > 0)
+    filters.push(`(${types.map((type) => `type="${type}"`).join("||")})`);
+
+  const response = await pocketBase.collection("projects").getFullList({
+    filter: filters.join("&&"),
+  });
   return response;
 };
 
-export const useGetProjects = () => {
+export const useGetProjects = ({
+  name,
+  onlyFavorite,
+  states,
+  types,
+}: ProjectListFilter) => {
   return useQuery({
-    queryKey: [QUERY_KEYS.projects],
-    queryFn: getProjects,
+    queryKey: [QUERY_KEYS.projects, { name, onlyFavorite, states, types }],
+    queryFn: () => getProjects({ name, onlyFavorite, states, types }),
   });
 };
 // #endregion
@@ -132,6 +156,44 @@ const updateProjectThumbnail = async ({
 export const useUpdateProjectThumbnail = () => {
   return useMutation({
     mutationFn: updateProjectThumbnail,
+    onSuccess: (response) => {
+      queryClient.setQueriesData<Project>(
+        { queryKey: [QUERY_KEYS.project] },
+        response
+      );
+      queryClient.setQueriesData<Project[]>(
+        { queryKey: [QUERY_KEYS.projects] },
+        produce((draft) => {
+          if (!draft) return;
+          const index = draft.findIndex(
+            (project) => project.id === response.id
+          );
+          if (index < 0) return;
+          draft[index] = response;
+        })
+      );
+    },
+  });
+};
+//#endregion
+
+//#region useUpdateProjectFavorite
+const updateProjectFavorite = async ({
+  projectID,
+  favorite,
+}: {
+  projectID: string;
+  favorite: boolean;
+}): Promise<Project> => {
+  const response = await pocketBase
+    .collection("projects")
+    .update(projectID, { favorite });
+  return response;
+};
+
+export const useUpdateProjectFavorite = () => {
+  return useMutation({
+    mutationFn: updateProjectFavorite,
     onSuccess: (response) => {
       queryClient.setQueriesData<Project>(
         { queryKey: [QUERY_KEYS.project] },

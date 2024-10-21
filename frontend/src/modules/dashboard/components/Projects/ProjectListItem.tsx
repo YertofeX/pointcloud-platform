@@ -1,18 +1,44 @@
+import { useUpdateProjectFavorite } from "@api/hooks";
 import { Project } from "@api/types";
 import { dayjs } from "@lib/dayjs";
 import { pocketBase } from "@lib/pocketbase";
 import {
   CalendarMonth as CalendarMonthIcon,
   Construction as ConstructionIcon,
+  Label as LabelIcon,
   Settings as SettingsIcon,
+  Star,
+  StarOutline,
+  Tag as TagIcon,
   ViewInAr as ViewInArIcon,
 } from "@mui/icons-material";
-import { Avatar, IconButton, Paper, Stack, Typography } from "@mui/material";
+import {
+  Avatar,
+  Chip,
+  CircularProgress,
+  IconButton,
+  Paper,
+  Stack,
+  Typography,
+} from "@mui/material";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 type Props = { project: Project };
 
 export const ProjectListItem = ({ project }: Props) => {
+  const { t } = useTranslation();
+
+  const { mutate: updateProjectFavorite, isPending: isUpdateFavoritePending } =
+    useUpdateProjectFavorite();
+
+  const handleStar = () => {
+    updateProjectFavorite({
+      projectID: project.id,
+      favorite: !project.favorite,
+    });
+  };
+
   return (
     <Paper
       elevation={3}
@@ -51,6 +77,20 @@ export const ProjectListItem = ({ project }: Props) => {
               {dayjs(project.created).format("L LT")}
             </Typography>
           </Stack>
+          <Stack direction="row" alignItems="center" gap={1}>
+            <Chip
+              size="small"
+              variant="outlined"
+              label={t(`project.states.${project.state}`)}
+              icon={<LabelIcon />}
+            />
+            <Chip
+              size="small"
+              variant="outlined"
+              label={t(`project.types.${project.type}`)}
+              icon={<TagIcon />}
+            />
+          </Stack>
         </Stack>
         <Stack direction="row" alignItems="center" gap={1}>
           <IconButton component={Link} to={`/projects/${project.id}`}>
@@ -58,6 +98,15 @@ export const ProjectListItem = ({ project }: Props) => {
           </IconButton>
           <IconButton component={Link} to={`/projects/${project.id}/settings`}>
             <SettingsIcon />
+          </IconButton>
+          <IconButton onClick={handleStar} disabled={isUpdateFavoritePending}>
+            {isUpdateFavoritePending ? (
+              <CircularProgress size="24px" color="inherit" />
+            ) : project.favorite ? (
+              <Star color="warning" />
+            ) : (
+              <StarOutline />
+            )}
           </IconButton>
         </Stack>
       </Stack>

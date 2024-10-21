@@ -17,6 +17,7 @@ export type Project = {
   id: string;
   name: string;
   description: string;
+  favorite: boolean;
   state: ProjectState;
   type: ProjectType;
   owner: User;
@@ -37,4 +38,11 @@ export type ProjectUpdateParams = Omit<
   "owner" | "thumbnail" | "created" | "updated"
 > & {
   owner: string;
+};
+
+export type ProjectListFilter = {
+  name?: string;
+  onlyFavorite?: boolean;
+  states?: ProjectState[];
+  types?: ProjectType[];
 };
