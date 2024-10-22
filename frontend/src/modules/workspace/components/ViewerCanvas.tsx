@@ -8,6 +8,7 @@ import { PermObjects } from "./objects/PermObjects";
 import { ToolHandler } from "./ToolHandler";
 import { DelayedOrbitControls } from "./DelayedOrbitControl/DelayedOrbitControl";
 import { useLocalStorage } from "@mantine/hooks";
+import { Vector3 } from "three";
 
 export const ViewerCanvas = () => {
   const { enabled, setMoving } = useControlsContext();
@@ -41,7 +42,13 @@ export const ViewerCanvas = () => {
         dampingFactor={0.4}
         enableDamping
         enabled={enabled}
-        target={initialCamera.target}
+        target={
+          new Vector3(
+            initialCamera.target[0],
+            initialCamera.target[1],
+            initialCamera.target[2]
+          )
+        }
         onStart={() => setMoving(true)}
         onEnd={(_, { position, target }) => {
           setInitialCamera({
