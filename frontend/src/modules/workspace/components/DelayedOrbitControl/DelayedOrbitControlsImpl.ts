@@ -117,6 +117,7 @@ class OrbitControls extends EventDispatcher {
 
   constructor(
     object: PerspectiveCamera | OrthographicCamera,
+    initialTarget?: Vector3,
     domElement?: HTMLElement
   ) {
     super();
@@ -124,6 +125,13 @@ class OrbitControls extends EventDispatcher {
     this.object = object;
     this.domElement = domElement;
 
+    if (initialTarget) {
+      this.target = new Vector3(
+        initialTarget.x,
+        initialTarget.y,
+        initialTarget.z
+      );
+    }
     // for reset
     this.target0 = this.target.clone();
     this.position0 = this.object.position.clone();

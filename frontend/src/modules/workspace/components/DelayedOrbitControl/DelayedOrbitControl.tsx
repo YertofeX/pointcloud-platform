@@ -10,11 +10,12 @@ import {
   PropsWithoutRef,
   RefAttributes,
 } from "react";
-import type {
-  Camera,
-  Event,
-  OrthographicCamera,
-  PerspectiveCamera,
+import {
+  Vector3,
+  type Camera,
+  type Event,
+  type OrthographicCamera,
+  type PerspectiveCamera,
 } from "three";
 import { DelayedOrbitControlsImpl } from "./DelayedOrbitControlsImpl";
 
@@ -38,7 +39,13 @@ export type OrbitControlsProps = Omit<
       enableDamping?: boolean;
       makeDefault?: boolean;
       onChange?: (e?: OrbitControlsChangeEvent) => void;
-      onEnd?: (e?: Event) => void;
+      onEnd?: (
+        e: Event,
+        cameraData: {
+          position: [number, number, number];
+          target: [number, number, number];
+        }
+      ) => void;
       onStart?: (e?: Event) => void;
       regress?: boolean;
       target?: ReactThreeFiber.Vector3;
@@ -66,6 +73,7 @@ export const DelayedOrbitControls: ForwardRefComponent<
       onChange,
       onStart,
       onEnd,
+      target,
       ...restProps
     },
     ref
@@ -87,7 +95,8 @@ export const DelayedOrbitControls: ForwardRefComponent<
       events.connected ||
       gl.domElement) as HTMLElement;
     const controls = React.useMemo(
-      () => new DelayedOrbitControlsImpl(explCamera),
+      () =>
+        new DelayedOrbitControlsImpl(explCamera, target as Vector3 | undefined),
       [explCamera]
     );
 
@@ -116,7 +125,14 @@ export const DelayedOrbitControls: ForwardRefComponent<
       };
 
       const onEndCb = (e: Event) => {
-        if (onEnd) onEnd(e);
+        console.log({ explCamera });
+        const { position } = explCamera;
+        const { target } = controls;
+        if (onEnd)
+          onEnd(e, {
+            position: [position.x, position.y, position.z],
+            target: [target.x, target.y, target.z],
+          });
       };
 
       controls.addEventListener("change", callback);
@@ -128,7 +144,7 @@ export const DelayedOrbitControls: ForwardRefComponent<
         controls.removeEventListener("end", onEndCb);
         controls.removeEventListener("change", callback);
       };
-    }, [onChange, onStart, onEnd, controls, invalidate, setEvents]);
+    }, [onChange, onStart, onEnd, controls, invalidate, setEvents, explCamera]);
 
     React.useEffect(() => {
       if (makeDefault) {
