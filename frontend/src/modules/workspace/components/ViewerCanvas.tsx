@@ -9,16 +9,22 @@ import { ToolHandler } from "./ToolHandler";
 import { DelayedOrbitControls } from "./DelayedOrbitControl/DelayedOrbitControl";
 import { useLocalStorage } from "@mantine/hooks";
 import { Vector3 } from "three";
+import { useWorkspaceContext } from "./WorkspaceContext/WorkspaceContext";
 
 export const ViewerCanvas = () => {
+  const { project } = useWorkspaceContext();
+
   const { enabled, setMoving } = useControlsContext();
 
   const [initialCamera, setInitialCamera] = useLocalStorage<{
     position: [number, number, number];
     target: [number, number, number];
   }>({
-    key: "viewer-camera",
-    defaultValue: { position: [2, 2, 2], target: [0, 0, 0] },
+    key: `viewer-camera-${project.id}`,
+    defaultValue: {
+      position: [2, 2, 2],
+      target: [0, 0, 0],
+    },
   });
 
   return (
