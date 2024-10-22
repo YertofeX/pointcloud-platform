@@ -125,7 +125,6 @@ export const DelayedOrbitControls: ForwardRefComponent<
       };
 
       const onEndCb = (e: Event) => {
-        console.log({ explCamera });
         const { position } = explCamera;
         const { target } = controls;
         if (onEnd)
