@@ -33,7 +33,7 @@ export const ProjectList = () => {
           <Grid2 container spacing={2} columns={2}>
             {projects.map((project) => (
               <Grid2
-                size={{ md: 1, xs: 2 }}
+                size={{ lg: 1, xs: 2 }}
                 key={project.id}
                 justifyContent="start"
                 alignItems="start"

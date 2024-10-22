@@ -7,8 +7,8 @@ import {
   Construction as ConstructionIcon,
   Label as LabelIcon,
   Settings as SettingsIcon,
-  Star,
-  StarOutline,
+  Star as StarIcon,
+  StarOutline as StarOutlineIcon,
   Tag as TagIcon,
   ViewInAr as ViewInArIcon,
 } from "@mui/icons-material";
@@ -63,7 +63,7 @@ export const ProjectListItem = ({ project }: Props) => {
             fontSize={16}
             fontWeight="bold"
             noWrap
-            maxWidth={{ xs: 200, sm: 340, md: 220, lg: 360 }}
+            maxWidth={{ xs: 200, sm: 300, md: 600, lg: 320 }}
             title={project.name}
           >
             {project.name}
@@ -103,9 +103,9 @@ export const ProjectListItem = ({ project }: Props) => {
             {isUpdateFavoritePending ? (
               <CircularProgress size={24} color="inherit" />
             ) : project.favorite ? (
-              <Star color="warning" />
+              <StarIcon color="warning" />
             ) : (
-              <StarOutline />
+              <StarOutlineIcon />
             )}
           </IconButton>
         </Stack>
