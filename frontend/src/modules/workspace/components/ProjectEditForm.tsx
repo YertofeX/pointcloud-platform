@@ -76,6 +76,7 @@ export const ProjectEditForm = ({ project }: Props) => {
         description,
         state: state.value,
         type: type.value,
+        favorite: false,
       },
       {
         onSuccess: () => {

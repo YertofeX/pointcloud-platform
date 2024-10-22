@@ -214,3 +214,26 @@ export const useUpdateProjectFavorite = () => {
   });
 };
 //#endregion
+
+//#region useUploadProjectPointcloud
+const uploadProjectPointcloud = async ({
+  projectID,
+  raw,
+}: {
+  projectID: string;
+  raw: File;
+}) => {
+  const data = new FormData();
+  data.append("raw", raw);
+  data.append("project", projectID);
+  data.append("owner", (pocketBase.authStore.model as User).id);
+  const response = await pocketBase.collection("pointclouds").create(data);
+  return response;
+};
+
+export const useUploadProjectPointcloud = () => {
+  return useMutation({
+    mutationFn: uploadProjectPointcloud,
+  });
+};
+//#endregion

@@ -1,10 +1,11 @@
-import { Project, User } from "@api/types";
+import { PointcloudData, Project, User } from "@api/types";
 import PocketBase, { RecordService } from "pocketbase";
 
 interface TypedPocketBase extends PocketBase {
   collection(idOrName: string): RecordService; // default fallback for any other collection
   collection(idOrName: "users"): RecordService<User>;
   collection(idOrName: "projects"): RecordService<Project>;
+  collection(idOrName: "pointclouds"): RecordService<PointcloudData>;
 }
 
 export const pocketBase = new PocketBase(
