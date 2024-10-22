@@ -79,11 +79,7 @@ export const PermLineComponent = ({ line }: Props) => {
   return (
     <PolyLineComponent
       visible={!cull && line.visible}
-      onGrab={
-        toolState.name == "distance-measure" && toolState.measuring
-          ? onGrab
-          : undefined
-      }
+      onGrab={toolState.name == "distance-measure" ? onGrab : undefined}
       onGrabStart={() => setEditing(true)}
       onGrabEnd={handleGrabEnd}
       line={{

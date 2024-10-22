@@ -38,7 +38,7 @@ export const AreaMeasureToolView = () => {
   const addAreaPoint = (p: Vector3) => {
     setToolState(
       produce((draft) => {
-        if (draft.name !== "distance-measure") return;
+        if (draft.name !== "area-measure") return;
         // There are no points in the points stack
         if (draft.stackIndex < 0) {
           draft.pointsStack = [[p]];
@@ -59,7 +59,7 @@ export const AreaMeasureToolView = () => {
   const undo = () => {
     setToolState(
       produce((draft) => {
-        if (draft.name !== "distance-measure") return;
+        if (draft.name !== "area-measure") return;
         if (draft.stackIndex < 0) return;
         draft.stackIndex -= 1;
       })
@@ -78,7 +78,6 @@ export const AreaMeasureToolView = () => {
     "pointerup",
     useCallback(
       (event) => {
-        //TODO: make this prettier
         if (endLineRef.current) {
           endLineRef.current = false;
           return;

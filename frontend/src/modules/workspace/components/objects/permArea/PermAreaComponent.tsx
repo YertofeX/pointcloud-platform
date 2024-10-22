@@ -86,11 +86,7 @@ export const PermAreaComponent = ({ area }: Props) => {
     <>
       <PolyLineComponent
         visible={!cull && area.visible}
-        onGrab={
-          toolState.name == "area-measure" && toolState.measuring
-            ? onGrab
-            : undefined
-        }
+        onGrab={toolState.name == "area-measure" ? onGrab : undefined}
         onGrabStart={() => setEditing(true)}
         onGrabEnd={handleGrabEnd}
         line={{

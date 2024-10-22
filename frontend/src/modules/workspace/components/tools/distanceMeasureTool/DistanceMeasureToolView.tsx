@@ -38,7 +38,6 @@ export const DistanceMeasureToolView = () => {
           draft.pointsStack = [[p]];
           draft.stackIndex += 1;
         } else {
-          console.log("uu", { pointsStack: draft.pointsStack });
           draft.pointsStack = draft.pointsStack.slice(0, draft.stackIndex + 1);
           const nextPoints = produce(
             draft.pointsStack[stackIndex],
@@ -46,7 +45,6 @@ export const DistanceMeasureToolView = () => {
               points.push(p);
             }
           );
-          console.log({ nextPoints });
           draft.pointsStack.push(nextPoints);
           draft.stackIndex += 1;
         }
