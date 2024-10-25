@@ -6,21 +6,22 @@ import { usePermObjectContext } from "@modules/workspace/contexts/PermObjectCont
 import { useToolContext } from "@modules/workspace/contexts/ToolContext";
 import { CustomPointCloudOctreePicker } from "@modules/workspace/utils/picker/CustomPointCloudOctreePicker";
 import { PolyLineComponent } from "../PolyLine";
-import { getBounds } from "@modules/workspace/utils/getBounds";
 
 export type PermLine = {
-  id: number;
+  id: string;
   points: Vector3[];
   color: string;
   name: string;
   width: number;
   visible: boolean;
   bounds: Box3;
+  created: string;
+  updated: string;
 };
 
-interface Props {
+type Props = {
   line: PermLine;
-}
+};
 
 const picker = new CustomPointCloudOctreePicker();
 
@@ -29,7 +30,7 @@ export const PermLineComponent = ({ line }: Props) => {
 
   const { visiblePcos } = usePointCloudsContext();
 
-  const { setPermLines, highlighted, setEditing, highlightedType } =
+  const { updateObject, highlighted, setEditing, highlightedType } =
     usePermObjectContext();
 
   const { toolState } = useToolContext();
@@ -62,18 +63,10 @@ export const PermLineComponent = ({ line }: Props) => {
 
   const handleGrabEnd = () => {
     setEditing(false);
-    setPermLines((permlines) =>
-      permlines.map((cline) => {
-        if (cline.id !== line.id) {
-          return cline;
-        }
-        return {
-          ...cline,
-          bounds: getBounds(points),
-          points,
-        };
-      })
-    );
+    updateObject({
+      tool: "line",
+      data: { id: line.id, line: points.map(({ x, y, z }) => [x, y, z]) },
+    });
   };
 
   return (

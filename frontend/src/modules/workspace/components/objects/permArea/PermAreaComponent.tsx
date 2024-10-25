@@ -6,20 +6,21 @@ import { usePointCloudsContext } from "@modules/workspace/contexts/PointCloudsCo
 import { usePermObjectContext } from "@modules/workspace/contexts/PermObjectContext";
 import { useToolContext } from "@modules/workspace/contexts/ToolContext";
 import { CustomPointCloudOctreePicker } from "@modules/workspace/utils/picker/CustomPointCloudOctreePicker";
-import { getBounds } from "@modules/workspace/utils/getBounds";
 import { PolyLineComponent } from "../PolyLine";
 import { calculateCenter } from "@modules/workspace/utils/calculateCenter";
 import { calculateArea } from "@modules/workspace/utils/calculateArea";
 import { Paper, Typography } from "@mui/material";
 
 export type PermArea = {
-  id: number;
+  id: string;
   points: Vector3[];
   color: string;
   name: string;
   width: number;
   visible: boolean;
   bounds: Box3;
+  created: string;
+  updated: string;
 };
 
 type Props = {
@@ -31,7 +32,7 @@ const picker = new CustomPointCloudOctreePicker();
 export const PermAreaComponent = ({ area }: Props) => {
   const { visiblePcos } = usePointCloudsContext();
 
-  const { setPermAreas, highlighted, highlightedType, setEditing } =
+  const { updateObject, highlighted, highlightedType, setEditing } =
     usePermObjectContext();
 
   const { toolState } = useToolContext();
@@ -66,18 +67,10 @@ export const PermAreaComponent = ({ area }: Props) => {
 
   const handleGrabEnd = () => {
     setEditing(false);
-    setPermAreas((permareas) =>
-      permareas.map((cArea) => {
-        if (cArea.id !== area.id) {
-          return cArea;
-        }
-        return {
-          ...cArea,
-          bounds: getBounds(points),
-          points,
-        };
-      })
-    );
+    updateObject({
+      tool: "area",
+      data: { id: area.id, line: points.map(({ x, y, z }) => [x, y, z]) },
+    });
   };
 
   const loopAreaPoints = [...points, points[0]];

@@ -85,7 +85,11 @@
       "distance-tooltip": "Distance Measure (d)",
       "area-tooltip": "2D Area Measure (a)",
       "measuring-tooltip": "Click to continue or double click to finsh",
-      "start-measure-tooltip": "Click to measure"
+      "start-measure-tooltip": "Click to measure",
+      "distance-measurement-created-successfully": "Distance measurement created successfully",
+      "distance-measurement-updated-successfully": "Distance measurement updated successfully",
+      "area-measurement-created-successfully": "Area measurement created successfully",
+      "area-measurement-updated-successfully": "Area measurement updated successfully"
     }
   },
   "dashboard": {

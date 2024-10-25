@@ -85,7 +85,11 @@
       "distance-tooltip": "Távolságmérés (d)",
       "area-tooltip": "2D Területmérés (a)",
       "measuring-tooltip": "Kattintás a folytatáshoz vagy dupla kattintás a befejezéshez",
-      "start-measure-tooltip": "Kattintás a méréshez"
+      "start-measure-tooltip": "Kattintás a méréshez",
+      "distance-measurement-created-successfully": "Távolságmérés létrehozása sikeres",
+      "distance-measurement-updated-successfully": "Távolságmérés módosítása sikeres",
+      "area-measurement-created-successfully": "Területmérés létrehozása sikeres",
+      "area-measurement-updated-successfully": "Területmérés módosítása sikeres"
     }
   },
   "dashboard": {

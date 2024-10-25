@@ -1,12 +1,12 @@
 import { BoundsApi } from "@react-three/drei";
 import { createContext, PropsWithChildren, useContext, useState } from "react";
 
-interface Bounds {
+type BoundsContextType = {
   boundsApi: BoundsApi | undefined;
   setBoundsApi: React.Dispatch<React.SetStateAction<BoundsApi | undefined>>;
-}
+};
 
-export const BoundsContext = createContext<Bounds>({
+export const BoundsContext = createContext<BoundsContextType>({
   boundsApi: undefined,
   setBoundsApi: () => {},
 });
