@@ -1,12 +1,10 @@
-import { Paper, Stack, styled, Typography } from "@mui/material";
+import { Paper, styled } from "@mui/material";
+import { LayerHandler } from "../LayerManager/LayerHandler";
 
 export const Outliner = () => {
   return (
     <OutlinerPaper>
-      <Stack gap={2} p={2}>
-        <Typography>asd</Typography>
-        <Typography>asdasdasd</Typography>
-      </Stack>
+      <LayerHandler />
     </OutlinerPaper>
   );
 };
@@ -17,4 +15,5 @@ const OutlinerPaper = styled(Paper)({
   right: 10,
   transform: "translate(0, -50%)",
   zIndex: 99,
+  height: "50vh",
 });

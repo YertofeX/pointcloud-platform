@@ -5,6 +5,7 @@ import { PointCloudsProvider } from "../contexts/PointCloudsContext";
 import { ToolProvider } from "../contexts/ToolContext";
 import { TooltipProvider } from "../contexts/TooltipContext";
 import { PermObjectProvider } from "../contexts/PermObjectContext";
+import { LayerProvider } from "./LayerManager/LayerContext";
 
 export const ViewerProviders = ({ children }: PropsWithChildren) => {
   return (
@@ -13,7 +14,9 @@ export const ViewerProviders = ({ children }: PropsWithChildren) => {
         <PointCloudsProvider>
           <PermObjectProvider>
             <BoundsProvider>
-              <TooltipProvider>{children}</TooltipProvider>
+              <TooltipProvider>
+                <LayerProvider>{children}</LayerProvider>
+              </TooltipProvider>
             </BoundsProvider>
           </PermObjectProvider>
         </PointCloudsProvider>

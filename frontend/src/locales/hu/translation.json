@@ -90,6 +90,13 @@
       "distance-measurement-updated-successfully": "Távolságmérés módosítása sikeres",
       "area-measurement-created-successfully": "Területmérés létrehozása sikeres",
       "area-measurement-updated-successfully": "Területmérés módosítása sikeres"
+    },
+    "layers": {
+      "files": "Fájlok",
+      "pointclouds": "Pontfelhők",
+      "measurements": "Mérések",
+      "distance-measurements": "Távolságmérések",
+      "area-measurements": "Területmérések"
     }
   },
   "dashboard": {
