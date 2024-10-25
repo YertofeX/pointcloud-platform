@@ -1,1 +1,0 @@
-docker build -t pointcloud-platform-backend:latest .

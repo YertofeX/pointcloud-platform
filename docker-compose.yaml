@@ -1,0 +1,10 @@
+name: pointcloud-platform-backend
+services:
+  pocketbase:
+    build: backend
+    ports:
+      - 8090:8090
+    volumes:
+      - ./backend/pb_data:/pb/pb_data
+      - ./backend/pb_hooks:/pb/pb_hooks
+      - ./backend/pb_migrations:/pb/pb_migrations
