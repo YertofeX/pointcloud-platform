@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   closestCenter,
   DndContext,
@@ -44,6 +44,10 @@ export const LayerGroupList = <T extends string>({
   const [groupList, setGroupList] = useState<T[]>(
     Object.keys(layerGroups) as T[]
   );
+
+  useEffect(() => {
+    setGroupList(Object.keys(layerGroups) as T[]);
+  }, [layerGroups]);
 
   const [expandedGroups, setExpandedGroups] = useState<T[]>(
     Object.keys(layerGroups) as T[]

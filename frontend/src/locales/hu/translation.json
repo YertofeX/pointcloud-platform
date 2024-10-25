@@ -88,8 +88,10 @@
       "start-measure-tooltip": "Kattintás a méréshez",
       "distance-measurement-created-successfully": "Távolságmérés létrehozása sikeres",
       "distance-measurement-updated-successfully": "Távolságmérés módosítása sikeres",
+      "distance-measurement-deleted-successfully": "Távolságmérés törlése sikeres",
       "area-measurement-created-successfully": "Területmérés létrehozása sikeres",
-      "area-measurement-updated-successfully": "Területmérés módosítása sikeres"
+      "area-measurement-updated-successfully": "Területmérés módosítása sikeres",
+      "area-measurement-deleted-successfully": "Területmérés törlése sikeres"
     },
     "layers": {
       "files": "Fájlok",

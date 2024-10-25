@@ -13,7 +13,6 @@ export type PermLine = {
   color: string;
   name: string;
   width: number;
-  visible: boolean;
   bounds: Box3;
   created: string;
   updated: string;
@@ -71,7 +70,7 @@ export const PermLineComponent = ({ line }: Props) => {
 
   return (
     <PolyLineComponent
-      visible={!cull && line.visible}
+      visible={!cull}
       onGrab={toolState.name == "distance-measure" ? onGrab : undefined}
       onGrabStart={() => setEditing(true)}
       onGrabEnd={handleGrabEnd}

@@ -11,7 +11,7 @@ import { QUERY_KEYS } from "@utils/constants";
 import { produce } from "immer";
 
 type ProjectIDProp = {
-  projectID: string;
+  projectID?: string;
 };
 
 type MeasurementIDProp = {
@@ -19,7 +19,9 @@ type MeasurementIDProp = {
 };
 
 //#region useGetDistanceMeasurements
-const getDistanceMeasurements = async ({ projectID }: ProjectIDProp) => {
+const getDistanceMeasurements = async ({
+  projectID,
+}: ProjectIDProp): Promise<DistanceMeasurement[]> => {
   const response = await pocketBase
     .collection("distance_measurements")
     .getFullList({
@@ -41,7 +43,8 @@ export const useGetDistanceMeasurements = ({ projectID }: ProjectIDProp) => {
 const createDistanceMeasurement = async ({
   projectID,
   ...data
-}: ProjectIDProp & DistanceMeasurementCreateParams) => {
+}: ProjectIDProp &
+  DistanceMeasurementCreateParams): Promise<DistanceMeasurement> => {
   const response = await pocketBase.collection("distance_measurements").create({
     owner: (pocketBase.authStore.model as User).id,
     project: projectID,
@@ -74,8 +77,11 @@ export const useCreateDistanceMeasurement = () => {
 //#region useUpdateDistanceMeasurement
 const updateDistanceMeasurement = async ({
   measurementID,
+  projectID,
   ...data
-}: MeasurementIDProp & DistanceMeasurementUpdateParams) => {
+}: MeasurementIDProp &
+  ProjectIDProp &
+  DistanceMeasurementUpdateParams): Promise<DistanceMeasurement> => {
   const response = await pocketBase
     .collection("distance_measurements")
     .update(measurementID, data);
@@ -86,10 +92,10 @@ const updateDistanceMeasurement = async ({
 export const useUpdateDistanceMeasurement = () => {
   return useMutation({
     mutationFn: updateDistanceMeasurement,
-    onSuccess: (response) => {
+    onSuccess: (response, { projectID }) => {
       queryClient.setQueriesData<DistanceMeasurement[]>(
         {
-          queryKey: [QUERY_KEYS.distanceMeasurements, response.project.id],
+          queryKey: [QUERY_KEYS.distanceMeasurements, projectID],
         },
         produce((draft) => {
           if (draft === undefined) return;
@@ -108,7 +114,7 @@ export const useUpdateDistanceMeasurement = () => {
 //#region useDeleteDistanceMeasurement
 const deleteDistanceMeasurement = async ({
   measurementID,
-}: ProjectIDProp & MeasurementIDProp) => {
+}: ProjectIDProp & MeasurementIDProp): Promise<boolean> => {
   const response = await pocketBase
     .collection("distance_measurements")
     .delete(measurementID);

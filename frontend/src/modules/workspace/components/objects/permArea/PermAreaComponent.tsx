@@ -19,7 +19,6 @@ export type PermArea = {
   color: string;
   name: string;
   width: number;
-  visible: boolean;
   bounds: Box3;
   created: string;
   updated: string;
@@ -80,7 +79,7 @@ export const PermAreaComponent = ({ area }: Props) => {
   return (
     <>
       <PolyLineComponent
-        visible={!cull && area.visible}
+        visible={!cull}
         onGrab={toolState.name == "area-measure" ? onGrab : undefined}
         onGrabStart={() => setEditing(true)}
         onGrabEnd={handleGrabEnd}

@@ -17,6 +17,7 @@ type MeasurementData = {
   name: string;
   color: string;
   line: PolyLine;
+  visible: boolean;
 };
 
 type DefaultMeasurementProps = RecordData & RelationData & MeasurementData;

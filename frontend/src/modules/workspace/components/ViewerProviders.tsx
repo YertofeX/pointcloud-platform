@@ -11,15 +11,15 @@ export const ViewerProviders = ({ children }: PropsWithChildren) => {
   return (
     <ControlsProvider>
       <ToolProvider>
-        <PointCloudsProvider>
-          <PermObjectProvider>
-            <BoundsProvider>
-              <TooltipProvider>
-                <LayerProvider>{children}</LayerProvider>
-              </TooltipProvider>
-            </BoundsProvider>
-          </PermObjectProvider>
-        </PointCloudsProvider>
+        <BoundsProvider>
+          <PointCloudsProvider>
+            <LayerProvider>
+              <PermObjectProvider>
+                <TooltipProvider>{children}</TooltipProvider>
+              </PermObjectProvider>
+            </LayerProvider>
+          </PointCloudsProvider>
+        </BoundsProvider>
       </ToolProvider>
     </ControlsProvider>
   );

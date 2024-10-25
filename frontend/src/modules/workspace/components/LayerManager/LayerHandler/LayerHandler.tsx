@@ -1,15 +1,15 @@
-import { useLayers } from "../useLayers";
+import { useLayerContext } from "../LayerContext";
 
 import { LayerGroupList } from "./LayerGroupList";
 
 export const LayerHandler = () => {
-  const { layerTree, handleVisibilityChange } = useLayers();
+  const { layerTree } = useLayerContext();
 
   return (
     <LayerGroupList
       layerGroups={layerTree}
       forcedInvisible={false}
-      onVisibilityChange={handleVisibilityChange}
+      onVisibilityChange={() => {}}
     />
   );
 };

@@ -14,8 +14,6 @@ import { ToolName, useToolContext } from "./ToolContext";
 import {
   useCreateAreaMeasurement,
   useCreateDistanceMeasurement,
-  useGetAreaMeasurements,
-  useGetDistanceMeasurements,
   useUpdateAreaMeasurement,
   useUpdateDistanceMeasurement,
 } from "@api/hooks";
@@ -23,9 +21,13 @@ import { useWorkspaceContext } from "../components/WorkspaceContext/WorkspaceCon
 import { useTranslation } from "react-i18next";
 import { useSnackbar } from "@components/SnackbarManager";
 import {
+  AreaMeasurement,
   AreaMeasurementUpdateParams,
+  DistanceMeasurement,
   DistanceMeasurementUpdateParams,
 } from "@api/types";
+import { LayerData, LayerGroupData } from "../components/LayerManager/types";
+import { useLayerContext } from "../components/LayerManager/LayerContext";
 
 export type PermObjectType = "line" | "area" | "pointcloud";
 
@@ -84,48 +86,70 @@ export const PermObjectProvider = ({ children }: PropsWithChildren) => {
     project: { id: projectID },
   } = useWorkspaceContext();
 
-  const { data: distanceMeasurements } = useGetDistanceMeasurements({
-    projectID,
-  });
+  const { layerTree } = useLayerContext();
+
+  const measurementGroup = layerTree["measurement"];
+  const distanceMeasureGroup = measurementGroup.content[
+    "distance-measure"
+  ] as LayerGroupData;
+  const areaMeasureGroup = measurementGroup.content[
+    "area-measure"
+  ] as LayerGroupData;
+
   const permLines = useMemo<PermLine[]>(
     () =>
-      distanceMeasurements?.map(
-        ({ id, name, color, created, updated, line }) => {
-          const points = line.map(([x, y, z]) => new Vector3(x, y, z));
-          return {
-            id,
-            name,
-            color,
-            points,
-            bounds: getBounds(points),
-            visible: true,
-            width: 1,
-            created,
-            updated,
-          } as PermLine;
-        }
-      ) ?? [],
-    [distanceMeasurements]
+      measurementGroup.visible && distanceMeasureGroup.visible
+        ? Object.entries(distanceMeasureGroup.content)
+            .map(
+              ([_, { data, visible }]: [
+                id: string,
+                value: LayerData<string, DistanceMeasurement>,
+              ]) => ({ data, visible })
+            )
+            .filter(({ visible }) => visible)
+            .map(({ data: { id, name, color, line, created, updated } }) => {
+              const points = line.map(([x, y, z]) => new Vector3(x, y, z));
+              return {
+                id,
+                name,
+                color,
+                points,
+                bounds: getBounds(points),
+                width: 1,
+                created,
+                updated,
+              } as PermLine;
+            })
+        : [],
+    [measurementGroup.visible, distanceMeasureGroup]
   );
 
-  const { data: areaMeasurements } = useGetAreaMeasurements({ projectID });
   const permAreas = useMemo<PermArea[]>(
     () =>
-      areaMeasurements?.map(({ id, name, color, created, updated, line }) => {
-        const points = line.map(([x, y, z]) => new Vector3(x, y, z));
-        return {
-          id,
-          name,
-          color,
-          points,
-          bounds: getBounds(points),
-          visible: true,
-          width: 1,
-          created,
-          updated,
-        } as PermArea;
-      }) ?? [],
-    [areaMeasurements]
+      measurementGroup.visible && areaMeasureGroup.visible
+        ? Object.entries(areaMeasureGroup.content)
+            .map(
+              ([_, { data, visible }]: [
+                id: string,
+                value: LayerData<string, AreaMeasurement>,
+              ]) => ({ data, visible })
+            )
+            .filter(({ visible }) => visible)
+            .map(({ data: { id, name, color, line, created, updated } }) => {
+              const points = line.map(([x, y, z]) => new Vector3(x, y, z));
+              return {
+                id,
+                name,
+                color,
+                points,
+                bounds: getBounds(points),
+                width: 1,
+                created,
+                updated,
+              } as PermArea;
+            })
+        : [],
+    [measurementGroup.visible, areaMeasureGroup]
   );
 
   const [selectedObjectId, setSelectedObjectId] = useState<string | null>(null);
@@ -150,6 +174,7 @@ export const PermObjectProvider = ({ children }: PropsWithChildren) => {
         name: "new distance",
         color: randomColor(),
         line: points.map(({ x, y, z }) => [x, y, z]),
+        visible: true,
       },
       {
         onSuccess: () => {
@@ -176,6 +201,7 @@ export const PermObjectProvider = ({ children }: PropsWithChildren) => {
         name: "new area",
         color: randomColor(),
         line: points.map(({ x, y, z }) => [x, y, z]),
+        visible: true,
       },
       {
         onSuccess: () => {
@@ -214,7 +240,7 @@ export const PermObjectProvider = ({ children }: PropsWithChildren) => {
     switch (tool) {
       case "line":
         updateDistanceMeasurement(
-          { measurementID: id, ...updateData },
+          { measurementID: id, projectID, ...updateData },
           {
             onSuccess: () => {
               openSnackbar({
@@ -229,7 +255,7 @@ export const PermObjectProvider = ({ children }: PropsWithChildren) => {
         break;
       case "area":
         updateAreaMeasurement(
-          { measurementID: id, ...updateData },
+          { measurementID: id, projectID, ...updateData },
           {
             onSuccess: () => {
               openSnackbar({

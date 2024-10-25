@@ -6,7 +6,9 @@ import { Paper, Stack, styled, Typography } from "@mui/material";
 
 import { LayerData } from "../types";
 
-import { EyeIconButton } from "./EyeIconButton";
+import { getBounds } from "@modules/workspace/utils/getBounds";
+import { AreaMeasurement, DistanceMeasurement } from "@api/types";
+import { Vector3 } from "three";
 
 type Props = {
   layer: LayerData;
@@ -15,19 +17,13 @@ type Props = {
   onVisibilityChange: (path: string[]) => void;
 };
 
-export const Layer = ({
-  layer,
-  isDragging,
-  forcedInvisible,
-  onVisibilityChange,
-}: Props) => {
-  const { id, title, visible } = layer;
+export const Layer = ({ layer, isDragging, forcedInvisible }: Props) => {
+  const { id, title, visible, data, ActionComponent } = layer;
+
+  const { line } = data as DistanceMeasurement | AreaMeasurement;
+
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id });
-
-  const handleVisibilityClick = () => {
-    onVisibilityChange([id]);
-  };
 
   return (
     <StyledPaper
@@ -39,11 +35,14 @@ export const Layer = ({
       <Stack direction="row" alignItems="center" gap={1}>
         <DragIndicatorIcon fontSize="small" {...attributes} {...listeners} />
         <Typography sx={{ flexGrow: 1 }}>{title}</Typography>
-        <EyeIconButton
-          visible={visible}
-          forcedInvisible={forcedInvisible}
-          onClick={handleVisibilityClick}
-        />
+        {ActionComponent && (
+          <ActionComponent
+            id={id}
+            visible={visible}
+            forcedInvisible={forcedInvisible}
+            bounds={getBounds(line.map(([x, y, z]) => new Vector3(x, y, z)))}
+          />
+        )}
       </Stack>
     </StyledPaper>
   );

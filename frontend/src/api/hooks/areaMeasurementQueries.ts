@@ -11,7 +11,7 @@ import { QUERY_KEYS } from "@utils/constants";
 import { produce } from "immer";
 
 type ProjectIDProp = {
-  projectID: string;
+  projectID?: string;
 };
 
 type MeasurementIDProp = {
@@ -19,7 +19,9 @@ type MeasurementIDProp = {
 };
 
 //#region useGetAreaMeasurements
-const getAreaMeasurements = async ({ projectID }: ProjectIDProp) => {
+const getAreaMeasurements = async ({
+  projectID,
+}: ProjectIDProp): Promise<AreaMeasurement[]> => {
   const response = await pocketBase
     .collection("area_measurements")
     .getFullList({
@@ -41,7 +43,7 @@ export const useGetAreaMeasurements = ({ projectID }: ProjectIDProp) => {
 const createAreaMeasurement = async ({
   projectID,
   ...data
-}: ProjectIDProp & AreaMeasurementCreateParams) => {
+}: ProjectIDProp & AreaMeasurementCreateParams): Promise<AreaMeasurement> => {
   const response = await pocketBase.collection("area_measurements").create({
     owner: (pocketBase.authStore.model as User).id,
     project: projectID,
@@ -74,8 +76,11 @@ export const useCreateAreaMeasurement = () => {
 //#region useUpdateAreaMeasurement
 const updateAreaMeasurement = async ({
   measurementID,
+  projectID,
   ...data
-}: MeasurementIDProp & AreaMeasurementUpdateParams) => {
+}: MeasurementIDProp &
+  ProjectIDProp &
+  AreaMeasurementUpdateParams): Promise<AreaMeasurement> => {
   const response = await pocketBase
     .collection("area_measurements")
     .update(measurementID, data);
@@ -86,10 +91,10 @@ const updateAreaMeasurement = async ({
 export const useUpdateAreaMeasurement = () => {
   return useMutation({
     mutationFn: updateAreaMeasurement,
-    onSuccess: (response) => {
+    onSuccess: (response, { projectID }) => {
       queryClient.setQueriesData<AreaMeasurement[]>(
         {
-          queryKey: [QUERY_KEYS.areaMeasurements, response.project.id],
+          queryKey: [QUERY_KEYS.areaMeasurements, projectID],
         },
         produce((draft) => {
           if (draft === undefined) return;
@@ -108,7 +113,7 @@ export const useUpdateAreaMeasurement = () => {
 //#region useDeleteAreaMeasurement
 const deleteAreaMeasurement = async ({
   measurementID,
-}: ProjectIDProp & MeasurementIDProp) => {
+}: ProjectIDProp & MeasurementIDProp): Promise<boolean> => {
   const response = await pocketBase
     .collection("area_measurements")
     .delete(measurementID);

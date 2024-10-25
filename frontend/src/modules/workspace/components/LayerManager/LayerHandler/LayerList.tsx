@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   closestCenter,
   DndContext,
@@ -43,6 +43,10 @@ export const LayerList = ({
 
   const [layerList, setLayerList] = useState<string[]>(Object.keys(layers));
 
+  useEffect(() => {
+    setLayerList(Object.keys(layers));
+  }, [layers]);
+
   const [activeLayer, setActiveLayer] = useState<string | null>(null);
 
   const handleDragStart = (e: DragStartEvent) => {
@@ -81,19 +85,21 @@ export const LayerList = ({
           items={layerList}
           strategy={verticalListSortingStrategy}
         >
-          {layerList.map((layerKey) => {
-            const layer = layers[layerKey];
-            const { id } = layer;
-            return (
-              <Layer
-                key={id}
-                layer={layer}
-                isDragging={activeLayer === id}
-                forcedInvisible={forcedInvisible}
-                onVisibilityChange={onVisibilityChange}
-              />
-            );
-          })}
+          {layerList
+            .filter((layerKey) => Boolean(layers[layerKey]))
+            .map((layerKey) => {
+              const layer = layers[layerKey];
+              const { id } = layer;
+              return (
+                <Layer
+                  key={id}
+                  layer={layer}
+                  isDragging={activeLayer === id}
+                  forcedInvisible={forcedInvisible}
+                  onVisibilityChange={onVisibilityChange}
+                />
+              );
+            })}
           <DragOverlay>
             {activeLayer && (
               <Layer
