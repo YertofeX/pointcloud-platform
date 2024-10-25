@@ -10,6 +10,8 @@ import { PolyLineComponent } from "../PolyLine";
 import { calculateCenter } from "@modules/workspace/utils/calculateCenter";
 import { calculateArea } from "@modules/workspace/utils/calculateArea";
 import { Paper, Typography } from "@mui/material";
+import { getTextColor } from "@modules/workspace/utils/getTextColor";
+import { hexToRGBA } from "@modules/workspace/utils/hexToRGBA";
 
 export type PermArea = {
   id: string;
@@ -97,8 +99,13 @@ export const PermAreaComponent = ({ area }: Props) => {
         }}
         center
       >
-        <Paper sx={{ px: 1 }}>
-          <Typography>
+        <Paper
+          sx={{
+            px: 1,
+            backgroundColor: area.color,
+          }}
+        >
+          <Typography color={getTextColor(hexToRGBA(area.color))}>
             {Math.round(calculateArea(loopAreaPoints) * 100) / 100}&nbsp;m
             <sup>2</sup>
           </Typography>
