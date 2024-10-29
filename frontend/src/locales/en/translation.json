@@ -64,6 +64,7 @@
     "project-settings": "Project settings",
     "project-files": "Project files",
     "change-thumbnail": "Change thumbnail",
+    "outliner": "Outliner",
     "props": {
       "name": "Name",
       "description": "Description",

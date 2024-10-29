@@ -64,6 +64,7 @@
     "project-settings": "Projekt beállítások",
     "project-files": "Projekt fájlok",
     "change-thumbnail": "Indexkép megváltoztatása",
+    "outliner": "Rétegek",
     "props": {
       "name": "Név",
       "description": "Leírás",

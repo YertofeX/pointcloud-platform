@@ -71,6 +71,7 @@ export const LayerGroup = ({
       isDragging={isDragging}
       transform={transform}
       transition={transition}
+      elevation={0}
     >
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <Stack direction="row" alignItems="center" gap={1}>
