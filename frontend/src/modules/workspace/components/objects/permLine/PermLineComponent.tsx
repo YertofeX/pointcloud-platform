@@ -77,7 +77,7 @@ export const PermLineComponent = ({ line }: Props) => {
         points: points,
         width:
           highlighted?.objectId === line.id &&
-          highlighted?.objectType === "distance-measure"
+          highlighted?.objectType === "distance"
             ? 6
             : 3,
         color: line.color,

@@ -17,6 +17,9 @@
       "no-options": "Nincs kiválasztható érték"
     }
   },
+  "misc": {
+    "copied-to-clipboard": "Vágólapra másolva!"
+  },
   "header": {
     "title": "Pointcloud Platform",
     "profile": {
@@ -100,6 +103,15 @@
       "measurements": "Mérések",
       "distance-measurements": "Távolságmérések",
       "area-measurements": "Területmérések"
+    },
+    "details": {
+      "created": "Létrehozva",
+      "updated": "Szerkesztve",
+      "segment": "Szegmens",
+      "length": "Hossz",
+      "total-length": "Teljes hossz",
+      "area": "Terület",
+      "circumference": "Kerület"
     }
   },
   "dashboard": {

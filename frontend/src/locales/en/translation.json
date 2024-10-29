@@ -12,6 +12,9 @@
     },
     "loading": "Loading..."
   },
+  "misc": {
+    "copied-to-clipboard": "Copied to clipboard!"
+  },
   "form": {
     "autocomplete": {
       "loading": "Loading...",
@@ -100,6 +103,15 @@
       "measurements": "Measurements",
       "distance-measurements": "Distance measurements",
       "area-measurements": "Area measurements"
+    },
+    "details": {
+      "created": "Created",
+      "updated": "Updated",
+      "segment": "Segment",
+      "length": "Length",
+      "total-length": "Total length",
+      "area": "Area",
+      "circumference": "Circumference"
     }
   },
   "dashboard": {

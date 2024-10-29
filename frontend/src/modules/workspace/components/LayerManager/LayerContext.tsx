@@ -22,11 +22,15 @@ export type GroupVisibility = {
 type LayerContextType = {
   layerTree: LayerGroupList;
   toggleGroupVisibility: (key: keyof GroupVisibility) => void;
+  distanceMeasurements: DistanceMeasurement[];
+  areaMeasurements: AreaMeasurement[];
 };
 
 const LayerContext = createContext<LayerContextType>({
   layerTree: {},
   toggleGroupVisibility: () => {},
+  distanceMeasurements: [],
+  areaMeasurements: [],
 });
 
 export const useLayerContext = () => useContext(LayerContext);
@@ -151,7 +155,12 @@ export const LayerProvider = ({ children }: PropsWithChildren) => {
 
   return (
     <LayerContext.Provider
-      value={{ layerTree: mainLayerGroups, toggleGroupVisibility }}
+      value={{
+        layerTree: mainLayerGroups,
+        toggleGroupVisibility,
+        distanceMeasurements: distanceMeasurements ?? [],
+        areaMeasurements: areaMeasurements ?? [],
+      }}
     >
       {children}
     </LayerContext.Provider>

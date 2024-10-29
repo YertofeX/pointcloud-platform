@@ -2,7 +2,7 @@ import { Outliner } from "./Outliner";
 import { ViewerMenu } from "./ViewerMenu";
 import { ViewerToolbar } from "./ViewerToolbar";
 import { ViewerProfile } from "./ViewerProfile";
-import { ActionBar } from "./ActionBar";
+import { ObjectDetails } from "./ObjectDetails";
 import { ViewerDataDisplay } from "./ViewerDataDisplay";
 import { ActiveMeasurementControls } from "./ActiveMeasurementControls";
 
@@ -14,7 +14,7 @@ export const ViewerUI = () => {
       <ViewerToolbar />
       <ActiveMeasurementControls />
       <ViewerProfile />
-      <ActionBar />
+      <ObjectDetails />
       <Outliner />
     </>
   );
