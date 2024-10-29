@@ -9,6 +9,7 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
+  Checkbox,
   Stack,
   styled,
   Typography,
@@ -16,7 +17,6 @@ import {
 
 import { LayerGroupData, LayerGroupList as LayerGroupListType } from "../types";
 
-import { EyeIconButton } from "./EyeIconButton";
 import { LayerGroupList } from "./LayerGroupList";
 import { LayerList } from "./LayerList";
 
@@ -74,10 +74,18 @@ export const LayerGroup = ({
         <Stack direction="row" alignItems="center" gap={1}>
           <DragIndicatorIcon fontSize="small" {...attributes} {...listeners} />
           <Typography sx={{ flexGrow: 1 }}>{title}</Typography>
-          <EyeIconButton
-            visible={visible}
-            forcedInvisible={forcedInvisible}
-            onClick={handleVisibilityClick}
+
+          <Checkbox
+            size="small"
+            checked={visible}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleVisibilityClick();
+            }}
+            color="default"
+            sx={{
+              opacity: forcedInvisible ? 0.2 : 1,
+            }}
           />
         </Stack>
       </AccordionSummary>

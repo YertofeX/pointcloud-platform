@@ -8,13 +8,24 @@ import { useWorkspaceContext } from "../WorkspaceContext/WorkspaceContext";
 import { usePointCloudsContext } from "@modules/workspace/contexts/PointCloudsContext";
 import { DistanceMeasureActions } from "../tools/distanceMeasureTool/DistanceMeasureActions";
 import { AreaMeasureActions } from "../tools/areaMeasureTool/AreaMeasureActions";
+import { produce } from "immer";
+import { useLocalStorage } from "@mantine/hooks";
+
+export type GroupVisibility = {
+  file: boolean;
+  measurement: boolean;
+  "distance-measure": boolean;
+  "area-measure": boolean;
+};
 
 type LayerContextType = {
   layerTree: LayerGroupList;
+  toggleGroupVisibility: (key: keyof GroupVisibility) => void;
 };
 
 const LayerContext = createContext<LayerContextType>({
   layerTree: {},
+  toggleGroupVisibility: () => {},
 });
 
 export const useLayerContext = () => useContext(LayerContext);
@@ -70,6 +81,24 @@ export const LayerProvider = ({ children }: PropsWithChildren) => {
     [areaMeasurements]
   );
 
+  const [staticGroupVisibility, setStaticGroupVisibility] = useLocalStorage({
+    key: `static-layer-visibility-${projectID}`,
+    defaultValue: {
+      file: true,
+      measurement: true,
+      "distance-measure": true,
+      "area-measure": true,
+    },
+  });
+
+  const toggleGroupVisibility = (key: keyof GroupVisibility) => {
+    setStaticGroupVisibility(
+      produce((draft) => {
+        draft[key] = !draft[key];
+      })
+    );
+  };
+
   const measurementLayerGroups = useMemo<
     LayerGroupList<Exclude<ToolName, "select">>
   >(
@@ -77,17 +106,17 @@ export const LayerProvider = ({ children }: PropsWithChildren) => {
       "distance-measure": {
         id: "distance-measure",
         title: t("project.layers.distance-measurements"),
-        visible: true,
+        visible: staticGroupVisibility["distance-measure"],
         content: distanceMeasureLayers,
       },
       "area-measure": {
         id: "area-measure",
         title: t("project.layers.area-measurements"),
-        visible: true,
+        visible: staticGroupVisibility["area-measure"],
         content: areaMeasureLayers,
       },
     }),
-    [distanceMeasureLayers, areaMeasureLayers]
+    [distanceMeasureLayers, areaMeasureLayers, staticGroupVisibility]
   );
 
   const mainLayerGroups = useMemo<LayerGroupList<MainLayerGroup>>(
@@ -106,20 +135,22 @@ export const LayerProvider = ({ children }: PropsWithChildren) => {
             } as LayerData<string>,
           ])
         ) as LayerList,
-        visible: true,
+        visible: staticGroupVisibility.file,
       },
       measurement: {
         id: "measurement",
         title: t("project.layers.measurements"),
         content: measurementLayerGroups,
-        visible: true,
+        visible: staticGroupVisibility.measurement,
       },
     }),
-    [measurementLayerGroups, pointClouds]
+    [measurementLayerGroups, pointClouds, staticGroupVisibility]
   );
 
   return (
-    <LayerContext.Provider value={{ layerTree: mainLayerGroups }}>
+    <LayerContext.Provider
+      value={{ layerTree: mainLayerGroups, toggleGroupVisibility }}
+    >
       {children}
     </LayerContext.Provider>
   );
