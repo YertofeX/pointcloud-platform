@@ -36,6 +36,7 @@
     "dayjs": "^1.11.13",
     "i18next": "^23.15.1",
     "immer": "^10.1.1",
+    "mui-color-input": "^4.0.2",
     "pocketbase": "^0.21.5",
     "potree-core": "2.0.8",
     "prettier": "^3.3.3",

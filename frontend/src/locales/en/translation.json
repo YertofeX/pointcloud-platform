@@ -71,6 +71,7 @@
     "props": {
       "name": "Name",
       "description": "Description",
+      "color": "Color",
       "state": "State",
       "type": "Type"
     },

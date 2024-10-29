@@ -51,12 +51,14 @@ export const ObjectDetails = () => {
       case "distance":
         return (
           <DistanceMeasurementDetails
+            key={selectedObject.id}
             measurement={selectedObject as DistanceMeasurement}
           />
         );
       case "area":
         return (
           <AreaMeasurementDetails
+            key={selectedObject.id}
             measurement={selectedObject as AreaMeasurement}
           />
         );
@@ -71,13 +73,13 @@ export const ObjectDetails = () => {
   if (!selectedObject) return null;
 
   return (
-    <ActionbarPaper variant="outlined">
+    <ObjectDetailsPaper variant="outlined">
       {getDetailsComponent(selected.objectType, selectedObject)}
-    </ActionbarPaper>
+    </ObjectDetailsPaper>
   );
 };
 
-const ActionbarPaper = styled(Paper)({
+const ObjectDetailsPaper = styled(Paper)({
   position: "absolute",
   top: "50%",
   left: 10,

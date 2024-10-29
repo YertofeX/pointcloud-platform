@@ -8,7 +8,12 @@ import {
   formatLength,
 } from "@modules/workspace/utils/calculateLength";
 import { toVec3 } from "@modules/workspace/utils/toVec3";
-import { CalendarMonth, Close as CloseIcon } from "@mui/icons-material";
+import {
+  CalendarMonth,
+  Close as CloseIcon,
+  Edit,
+  Polyline as PolylineIcon,
+} from "@mui/icons-material";
 import {
   Box,
   Divider,
@@ -23,8 +28,9 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { DistanceMeasurementEditForm } from "./DistanceMeasurementEditForm";
 
 type Props = {
   measurement: DistanceMeasurement;
@@ -36,6 +42,8 @@ export const DistanceMeasurementDetails = ({ measurement }: Props) => {
   const { id, name, color, line, created, updated } = measurement;
 
   const { setSelected } = usePermObjectContext();
+
+  const [editing, setEditing] = useState<boolean>(false);
 
   const totalLength = useMemo<string>(
     () => formatLength(calculateLength(line.map(toVec3))),
@@ -54,17 +62,10 @@ export const DistanceMeasurementDetails = ({ measurement }: Props) => {
     [line]
   );
 
-  return (
-    <Stack gap={1} p={1}>
+  const details = (
+    <>
       <Stack direction="row" alignItems="center" gap={1}>
-        <Box bgcolor={color} width={18} height={18} borderRadius="100%" />
-        <Typography flexGrow={1}>{name}</Typography>
-        <IconButton onClick={() => setSelected(null)}>
-          <CloseIcon />
-        </IconButton>
-      </Stack>
-      <Divider />
-      <Stack direction="row" alignItems="center" gap={1}>
+        <PolylineIcon fontSize="small" />
         <Typography>{`${t("project.details.total-length")}:`}</Typography>
         <CopyButton sx={{ textTransform: "none" }} copyContent={totalLength}>
           {totalLength}
@@ -109,6 +110,36 @@ export const DistanceMeasurementDetails = ({ measurement }: Props) => {
           {`${t("project.details.updated")}: ${dayjs(updated).format("L LT")}`}
         </Typography>
       </Stack>
+    </>
+  );
+
+  const editForm = (
+    <DistanceMeasurementEditForm
+      measurement={measurement}
+      onClose={() => setEditing(false)}
+    />
+  );
+
+  return (
+    <Stack gap={1} p={1}>
+      <Stack direction="row" alignItems="center" gap={1}>
+        <Stack direction="row" alignItems="center" gap={1} flexGrow={1}>
+          <Box bgcolor={color} width={18} height={18} borderRadius="100%" />
+          <Typography maxWidth={240} noWrap>
+            {name}
+          </Typography>
+          {!editing && (
+            <IconButton onClick={() => setEditing(true)}>
+              <Edit />
+            </IconButton>
+          )}
+        </Stack>
+        <IconButton onClick={() => setSelected(null)}>
+          <CloseIcon />
+        </IconButton>
+      </Stack>
+      <Divider />
+      {editing ? editForm : details}
     </Stack>
   );
 };

@@ -71,6 +71,7 @@
     "props": {
       "name": "Név",
       "description": "Leírás",
+      "color": "Szín",
       "state": "Állapot",
       "type": "Típus"
     },
