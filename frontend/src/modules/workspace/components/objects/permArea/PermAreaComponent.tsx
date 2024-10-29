@@ -33,8 +33,7 @@ const picker = new CustomPointCloudOctreePicker();
 export const PermAreaComponent = ({ area }: Props) => {
   const { visiblePcos } = usePointCloudsContext();
 
-  const { updateObject, highlighted, highlightedType, setEditing } =
-    usePermObjectContext();
+  const { updateObject, highlighted, setEditing } = usePermObjectContext();
 
   const { toolState } = useToolContext();
 
@@ -85,7 +84,11 @@ export const PermAreaComponent = ({ area }: Props) => {
         onGrabEnd={handleGrabEnd}
         line={{
           points: loopAreaPoints,
-          width: highlighted === area.id && highlightedType == "area" ? 6 : 3,
+          width:
+            highlighted?.objectId === area.id &&
+            highlighted?.objectType == "area-measure"
+              ? 6
+              : 3,
           color: area.color,
         }}
       />

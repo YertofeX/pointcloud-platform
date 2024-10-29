@@ -10,6 +10,7 @@ import { useWorkspaceContext } from "../../WorkspaceContext/WorkspaceContext";
 import { useSnackbar } from "@components/SnackbarManager";
 import { useTranslation } from "react-i18next";
 import { LayerActionComponentProps } from "../../LayerManager/types";
+import { usePermObjectContext } from "@modules/workspace/contexts/PermObjectContext";
 
 export const DistanceMeasureActions = ({
   id,
@@ -20,6 +21,8 @@ export const DistanceMeasureActions = ({
   const { t } = useTranslation();
 
   const { openSnackbar } = useSnackbar();
+
+  const { setHighlighted } = usePermObjectContext();
 
   const { boundsApi } = useBoundsContext();
 
@@ -70,7 +73,15 @@ export const DistanceMeasureActions = ({
   };
 
   return (
-    <Stack direction="row" alignItems="center" gap={1}>
+    <Stack
+      direction="row"
+      alignItems="center"
+      gap={1}
+      onMouseEnter={() =>
+        setHighlighted({ objectId: id, objectType: "distance-measure" })
+      }
+      onMouseLeave={() => setHighlighted(null)}
+    >
       {bounds && (
         <IconButton
           size="small"

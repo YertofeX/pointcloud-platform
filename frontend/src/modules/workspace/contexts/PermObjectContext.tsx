@@ -40,11 +40,15 @@ type PermObjectContextType = {
   setSelectedObjectType: React.Dispatch<
     React.SetStateAction<PermObjectType | null>
   >;
-  highlighted: string | null;
-  setHighlighted: React.Dispatch<React.SetStateAction<string | null>>;
-  highlightedType: "area" | "distance" | null;
-  setHighlightedType: React.Dispatch<
-    React.SetStateAction<"area" | "distance" | null>
+  highlighted: {
+    objectId: string;
+    objectType: Omit<ToolName, "select">;
+  } | null;
+  setHighlighted: React.Dispatch<
+    React.SetStateAction<{
+      objectId: string;
+      objectType: Omit<ToolName, "select">;
+    } | null>
   >;
   editing: boolean;
   setEditing: React.Dispatch<React.SetStateAction<boolean>>;
@@ -65,8 +69,6 @@ export const PermObjectContext = createContext<PermObjectContextType>({
   setSelectedObjectType: () => {},
   highlighted: null,
   setHighlighted: () => {},
-  highlightedType: null,
-  setHighlightedType: () => {},
   editing: false,
   setEditing: () => {},
   commitObject: () => {},
@@ -157,10 +159,11 @@ export const PermObjectProvider = ({ children }: PropsWithChildren) => {
   const [selectedObjectType, setSelectedObjectType] =
     useState<PermObjectType | null>(null);
 
-  const [highlighted, setHighlighted] = useState<string | null>(null);
-  const [highlightedType, setHighlightedType] = useState<
-    "area" | "distance" | null
-  >(null);
+  const [highlighted, setHighlighted] = useState<{
+    objectId: string;
+    objectType: Omit<ToolName, "select">;
+  } | null>(null);
+
   const [editing, setEditing] = useState<boolean>(false);
 
   const { mutate: createDistanceMeasurement } = useCreateDistanceMeasurement();
@@ -284,8 +287,6 @@ export const PermObjectProvider = ({ children }: PropsWithChildren) => {
         setSelectedObjectType,
         highlighted,
         setHighlighted,
-        highlightedType,
-        setHighlightedType,
         editing,
         setEditing,
         commitObject,

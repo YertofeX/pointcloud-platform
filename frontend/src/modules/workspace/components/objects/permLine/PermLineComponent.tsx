@@ -29,8 +29,7 @@ export const PermLineComponent = ({ line }: Props) => {
 
   const { visiblePcos } = usePointCloudsContext();
 
-  const { updateObject, highlighted, setEditing, highlightedType } =
-    usePermObjectContext();
+  const { updateObject, highlighted, setEditing } = usePermObjectContext();
 
   const { toolState } = useToolContext();
 
@@ -76,7 +75,11 @@ export const PermLineComponent = ({ line }: Props) => {
       onGrabEnd={handleGrabEnd}
       line={{
         points: points,
-        width: highlighted === line.id && highlightedType == "distance" ? 6 : 3,
+        width:
+          highlighted?.objectId === line.id &&
+          highlighted?.objectType === "distance-measure"
+            ? 6
+            : 3,
         color: line.color,
       }}
       showTotalDistance
