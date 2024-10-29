@@ -4,25 +4,35 @@ import {
 } from "@api/hooks";
 import { useBoundsContext } from "@modules/workspace/contexts/BoundsContext";
 import { CropFree as CropFreeIcon, Delete } from "@mui/icons-material";
-import { CircularProgress, IconButton, Stack } from "@mui/material";
+import {
+  Box,
+  CircularProgress,
+  IconButton,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { EyeIconButton } from "../../LayerManager/LayerHandler/EyeIconButton";
 import { useWorkspaceContext } from "../../WorkspaceContext/WorkspaceContext";
-import { useSnackbar } from "@components/SnackbarManager";
-import { useTranslation } from "react-i18next";
 import { LayerActionComponentProps } from "../../LayerManager/types";
 import { usePermObjectContext } from "@modules/workspace/contexts/PermObjectContext";
+import { HighlightableSelectableStack } from "@components/HighlightableSelectableStack";
+import { useTranslation } from "react-i18next";
+import { useSnackbar } from "@components/SnackbarManager";
 
 export const DistanceMeasureActions = ({
   id,
+  title,
   visible,
   forcedInvisible,
+  color,
   bounds,
 }: LayerActionComponentProps) => {
   const { t } = useTranslation();
 
   const { openSnackbar } = useSnackbar();
 
-  const { setHighlighted } = usePermObjectContext();
+  const { highlighted, setHighlighted, selected, setSelected } =
+    usePermObjectContext();
 
   const { boundsApi } = useBoundsContext();
 
@@ -48,6 +58,12 @@ export const DistanceMeasureActions = ({
     project: { id: projectID },
   } = useWorkspaceContext();
 
+  const isHighlighted =
+    highlighted?.objectId === id && highlighted.objectType === "distance";
+
+  const isSelected =
+    selected?.objectId === id && selected.objectType === "distance";
+
   const handleVisibilityClick = () => {
     updateDistanceMeasurement({
       measurementID: id,
@@ -67,55 +83,80 @@ export const DistanceMeasureActions = ({
             ),
             severity: "success",
           });
+          if (isSelected) setSelected(null);
+          if (isHighlighted) setHighlighted(null);
         },
       }
     );
   };
 
+  const handleSelectMeasurement = () => {
+    setSelected({ objectId: id, objectType: "distance" });
+  };
+
   return (
-    <Stack
+    <HighlightableSelectableStack
+      pl={1}
+      flexGrow={1}
       direction="row"
       alignItems="center"
-      gap={1}
+      gap={2}
       onMouseEnter={() =>
-        setHighlighted({ objectId: id, objectType: "distance-measure" })
+        setHighlighted({ objectId: id, objectType: "distance" })
       }
       onMouseLeave={() => setHighlighted(null)}
+      highlighted={isHighlighted}
+      selected={isSelected}
     >
-      {bounds && (
-        <IconButton
-          size="small"
-          disabled={
-            isUpdateDistanceMeasurementPending ||
-            isDeleteDistanceMeasurementPending
-          }
-          onClick={(e) => {
-            e.stopPropagation();
-            frame();
-          }}
-        >
-          <CropFreeIcon fontSize="small" />
-        </IconButton>
-      )}
-      {isDeleteDistanceMeasurementPending ? (
-        <CircularProgress size={22} />
-      ) : (
-        <IconButton
-          size="small"
-          disabled={isUpdateDistanceMeasurementPending}
-          onClick={(e) => {
-            e.stopPropagation();
-            handleDeleteMeasurement();
-          }}
-        >
-          <Delete fontSize="small" />
-        </IconButton>
-      )}
-      <EyeIconButton
-        visible={visible}
-        forcedInvisible={forcedInvisible}
-        onClick={handleVisibilityClick}
-      />
-    </Stack>
+      <Stack
+        direction="row"
+        alignItems="center"
+        onClick={handleSelectMeasurement}
+        sx={{ userSelect: "none", cursor: "pointer" }}
+        gap={1}
+        flexGrow={1}
+      >
+        {color && (
+          <Box bgcolor={color} width={14} height={14} borderRadius="100%" />
+        )}
+        <Typography>{title}</Typography>
+      </Stack>
+      <Stack direction="row" alignItems="center" gap={1}>
+        {bounds && (
+          <IconButton
+            size="small"
+            disabled={
+              isUpdateDistanceMeasurementPending ||
+              isDeleteDistanceMeasurementPending
+            }
+            onClick={(e) => {
+              e.stopPropagation();
+              frame();
+            }}
+          >
+            <CropFreeIcon fontSize="small" />
+          </IconButton>
+        )}
+        {isDeleteDistanceMeasurementPending ? (
+          <CircularProgress size={22} />
+        ) : (
+          <IconButton
+            size="small"
+            disabled={isUpdateDistanceMeasurementPending}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleDeleteMeasurement();
+            }}
+          >
+            <Delete fontSize="small" />
+          </IconButton>
+        )}
+        <EyeIconButton
+          visible={visible}
+          forcedInvisible={forcedInvisible}
+          onClick={handleVisibilityClick}
+        />
+      </Stack>
+    </HighlightableSelectableStack>
   );
 };

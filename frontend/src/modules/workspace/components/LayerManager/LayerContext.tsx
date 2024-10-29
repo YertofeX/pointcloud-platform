@@ -10,6 +10,7 @@ import { DistanceMeasureActions } from "../tools/distanceMeasureTool/DistanceMea
 import { AreaMeasureActions } from "../tools/areaMeasureTool/AreaMeasureActions";
 import { produce } from "immer";
 import { useLocalStorage } from "@mantine/hooks";
+import { PointcloudActions } from "../objects/pointCloud/PointcloudActions";
 
 export type GroupVisibility = {
   file: boolean;
@@ -132,6 +133,7 @@ export const LayerProvider = ({ children }: PropsWithChildren) => {
               title: name,
               visible,
               data: name,
+              ActionComponent: PointcloudActions,
             } as LayerData<string>,
           ])
         ) as LayerList,

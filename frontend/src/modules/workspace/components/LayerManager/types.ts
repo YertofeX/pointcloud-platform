@@ -1,4 +1,4 @@
-import { ComponentType } from "react";
+import { ComponentType, ReactNode } from "react";
 import { MAIN_LAYER_GROUPS } from "./mainLayerGroups";
 import { Box3 } from "three";
 
@@ -8,8 +8,10 @@ type VisibilityData = {
 
 export type LayerActionComponentProps = {
   id: string;
+  title: string;
   visible: boolean;
   forcedInvisible: boolean;
+  color?: string;
   bounds?: Box3;
 };
 

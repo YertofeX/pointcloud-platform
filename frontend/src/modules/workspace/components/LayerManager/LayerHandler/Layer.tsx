@@ -2,7 +2,7 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS, Transform } from "@dnd-kit/utilities";
 
 import { DragIndicator as DragIndicatorIcon } from "@mui/icons-material";
-import { Paper, Stack, styled, Typography } from "@mui/material";
+import { Paper, Stack, styled } from "@mui/material";
 
 import { LayerData } from "../types";
 
@@ -20,27 +20,34 @@ type Props = {
 export const Layer = ({ layer, isDragging, forcedInvisible }: Props) => {
   const { id, title, visible, data, ActionComponent } = layer;
 
-  const { line } = data as DistanceMeasurement | AreaMeasurement;
+  // TODO: handle pointcloud permobjects
+  const { line, color } = data as DistanceMeasurement | AreaMeasurement;
 
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id });
 
   return (
     <StyledPaper
+      variant="outlined"
       ref={setNodeRef}
       isDragging={isDragging}
       transform={transform}
       transition={transition}
     >
-      <Stack direction="row" alignItems="center" gap={1}>
+      <Stack direction="row" alignItems="center">
         <DragIndicatorIcon fontSize="small" {...attributes} {...listeners} />
-        <Typography sx={{ flexGrow: 1 }}>{title}</Typography>
         {ActionComponent && (
           <ActionComponent
             id={id}
+            title={title}
             visible={visible}
             forcedInvisible={forcedInvisible}
-            bounds={getBounds(line.map(([x, y, z]) => new Vector3(x, y, z)))}
+            color={color}
+            bounds={
+              line
+                ? getBounds(line.map(([x, y, z]) => new Vector3(x, y, z)))
+                : undefined
+            }
           />
         )}
       </Stack>

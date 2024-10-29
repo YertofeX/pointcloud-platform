@@ -4,6 +4,8 @@ import { CSS, Transform } from "@dnd-kit/utilities";
 import {
   DragIndicator as DragIndicatorIcon,
   ExpandMore as ExpandMoreIcon,
+  Folder as FolderIcon,
+  FolderOpen as FolderOpenIcon,
 } from "@mui/icons-material";
 import {
   Accordion,
@@ -73,6 +75,7 @@ export const LayerGroup = ({
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <Stack direction="row" alignItems="center" gap={1}>
           <DragIndicatorIcon fontSize="small" {...attributes} {...listeners} />
+          {expanded ? <FolderOpenIcon /> : <FolderIcon />}
           <Typography sx={{ flexGrow: 1 }}>{title}</Typography>
 
           <Checkbox

@@ -29,27 +29,20 @@ import {
 import { LayerData, LayerGroupData } from "../components/LayerManager/types";
 import { useLayerContext } from "../components/LayerManager/LayerContext";
 
-export type PermObjectType = "line" | "area" | "pointcloud";
+export type PermObjectType = "distance" | "area" | "pointcloud";
+
+type PermObjectData = {
+  objectId: string;
+  objectType: PermObjectType;
+};
 
 type PermObjectContextType = {
   permLines: PermLine[];
   permAreas: PermArea[];
-  selectedObjectId: string | null;
-  setSelectedObjectId: React.Dispatch<React.SetStateAction<string | null>>;
-  selectedObjectType: PermObjectType | null;
-  setSelectedObjectType: React.Dispatch<
-    React.SetStateAction<PermObjectType | null>
-  >;
-  highlighted: {
-    objectId: string;
-    objectType: Omit<ToolName, "select">;
-  } | null;
-  setHighlighted: React.Dispatch<
-    React.SetStateAction<{
-      objectId: string;
-      objectType: Omit<ToolName, "select">;
-    } | null>
-  >;
+  selected: PermObjectData | null;
+  setSelected: React.Dispatch<React.SetStateAction<PermObjectData | null>>;
+  highlighted: PermObjectData | null;
+  setHighlighted: React.Dispatch<React.SetStateAction<PermObjectData | null>>;
   editing: boolean;
   setEditing: React.Dispatch<React.SetStateAction<boolean>>;
   commitObject: (tool: Exclude<ToolName, "select">, points: Vector3[]) => void;
@@ -63,10 +56,8 @@ type PermObjectContextType = {
 export const PermObjectContext = createContext<PermObjectContextType>({
   permLines: [],
   permAreas: [],
-  selectedObjectId: null,
-  setSelectedObjectId: () => {},
-  selectedObjectType: null,
-  setSelectedObjectType: () => {},
+  selected: null,
+  setSelected: () => {},
   highlighted: null,
   setHighlighted: () => {},
   editing: false,
@@ -154,15 +145,9 @@ export const PermObjectProvider = ({ children }: PropsWithChildren) => {
     [measurementGroup.visible, areaMeasureGroup]
   );
 
-  const [selectedObjectId, setSelectedObjectId] = useState<string | null>(null);
+  const [selected, setSelected] = useState<PermObjectData | null>(null);
 
-  const [selectedObjectType, setSelectedObjectType] =
-    useState<PermObjectType | null>(null);
-
-  const [highlighted, setHighlighted] = useState<{
-    objectId: string;
-    objectType: Omit<ToolName, "select">;
-  } | null>(null);
+  const [highlighted, setHighlighted] = useState<PermObjectData | null>(null);
 
   const [editing, setEditing] = useState<boolean>(false);
 
@@ -281,10 +266,8 @@ export const PermObjectProvider = ({ children }: PropsWithChildren) => {
       value={{
         permLines,
         permAreas,
-        selectedObjectId,
-        setSelectedObjectId,
-        selectedObjectType,
-        setSelectedObjectType,
+        selected,
+        setSelected,
         highlighted,
         setHighlighted,
         editing,
