@@ -1,6 +1,6 @@
 import { Paper } from "@mui/material";
 import { useWorkspaceContext } from "../components/WorkspaceContext/WorkspaceContext";
-import { useUploadProjectPointcloud } from "@api/hooks";
+import { useCreatePointcloud } from "@api/hooks";
 import { ChangeEvent } from "react";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { CloudUpload } from "@mui/icons-material";
@@ -15,13 +15,17 @@ export const Files = () => {
   const {
     mutate: uploadProjectPointcloud,
     isPending: isUploadProjectPointcloudPending,
-  } = useUploadProjectPointcloud();
+  } = useCreatePointcloud();
 
   const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files === null) return;
     const file = event.target.files.item(0);
     if (file === null) return;
-    uploadProjectPointcloud({ projectID: project.id, raw: file });
+    uploadProjectPointcloud({
+      projectID: project.id,
+      name: "new pointcloud",
+      raw: file,
+    });
   };
 
   return (

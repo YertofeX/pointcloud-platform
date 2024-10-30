@@ -2,16 +2,22 @@ import { createContext, PropsWithChildren, useContext, useMemo } from "react";
 import { LayerData, LayerGroupList, LayerList, MainLayerGroup } from "./types";
 import { ToolName } from "@modules/workspace/contexts/ToolContext";
 import { useTranslation } from "react-i18next";
-import { AreaMeasurement, DistanceMeasurement } from "@api/types";
-import { useGetAreaMeasurements, useGetDistanceMeasurements } from "@api/hooks";
+import {
+  AreaMeasurement,
+  DistanceMeasurement,
+  PointcloudData,
+} from "@api/types";
+import {
+  useGetAreaMeasurements,
+  useGetDistanceMeasurements,
+  useGetPointclouds,
+} from "@api/hooks";
 import { useWorkspaceContext } from "../WorkspaceContext/WorkspaceContext";
-import { usePointCloudsContext } from "@modules/workspace/contexts/PointCloudsContext";
 import { DistanceMeasureActions } from "../tools/distanceMeasureTool/DistanceMeasureActions";
 import { AreaMeasureActions } from "../tools/areaMeasureTool/AreaMeasureActions";
 import { produce } from "immer";
 import { useLocalStorage } from "@mantine/hooks";
 import { PointcloudActions } from "../objects/pointCloud/PointcloudActions";
-import { PointCloudOctree } from "potree-core";
 
 export type GroupVisibility = {
   file: boolean;
@@ -39,11 +45,27 @@ export const useLayerContext = () => useContext(LayerContext);
 export const LayerProvider = ({ children }: PropsWithChildren) => {
   const { t } = useTranslation();
 
-  const { pointClouds } = usePointCloudsContext();
-
   const {
     project: { id: projectID },
   } = useWorkspaceContext();
+
+  const [staticGroupVisibility, setStaticGroupVisibility] = useLocalStorage({
+    key: `static-layer-visibility-${projectID}`,
+    defaultValue: {
+      file: true,
+      measurement: true,
+      "distance-measure": true,
+      "area-measure": true,
+    },
+  });
+
+  const toggleGroupVisibility = (key: keyof GroupVisibility) => {
+    setStaticGroupVisibility(
+      produce((draft) => {
+        draft[key] = !draft[key];
+      })
+    );
+  };
 
   const { data: distanceMeasurements } = useGetDistanceMeasurements({
     projectID,
@@ -87,24 +109,6 @@ export const LayerProvider = ({ children }: PropsWithChildren) => {
     [areaMeasurements]
   );
 
-  const [staticGroupVisibility, setStaticGroupVisibility] = useLocalStorage({
-    key: `static-layer-visibility-${projectID}`,
-    defaultValue: {
-      file: true,
-      measurement: true,
-      "distance-measure": true,
-      "area-measure": true,
-    },
-  });
-
-  const toggleGroupVisibility = (key: keyof GroupVisibility) => {
-    setStaticGroupVisibility(
-      produce((draft) => {
-        draft[key] = !draft[key];
-      })
-    );
-  };
-
   const measurementLayerGroups = useMemo<
     LayerGroupList<Exclude<ToolName, "select">>
   >(
@@ -125,23 +129,32 @@ export const LayerProvider = ({ children }: PropsWithChildren) => {
     [distanceMeasureLayers, areaMeasureLayers, staticGroupVisibility]
   );
 
+  const { data: pointclouds } = useGetPointclouds({ projectID });
+  const pointcloudLayers = useMemo<LayerList<PointcloudData>>(
+    () =>
+      pointclouds
+        ? (Object.fromEntries(
+            pointclouds.map((pointcloud) => [
+              String(pointcloud.id),
+              {
+                id: String(pointcloud.id),
+                title: pointcloud.name,
+                visible: pointcloud.visible,
+                data: pointcloud,
+                ActionComponent: PointcloudActions,
+              } as LayerData<string, PointcloudData>,
+            ])
+          ) as LayerList)
+        : {},
+    [pointclouds]
+  );
+
   const mainLayerGroups = useMemo<LayerGroupList<MainLayerGroup>>(
     () => ({
       file: {
         id: "file",
         title: t("project.layers.files"),
-        content: Object.fromEntries(
-          pointClouds.map(({ pco, visible }) => [
-            String(pco.id),
-            {
-              id: String(pco.id),
-              title: pco.name,
-              visible,
-              data: pco,
-              ActionComponent: PointcloudActions,
-            } as LayerData<string, PointCloudOctree>,
-          ])
-        ) as LayerList,
+        content: pointcloudLayers,
         visible: staticGroupVisibility.file,
       },
       measurement: {
@@ -151,7 +164,7 @@ export const LayerProvider = ({ children }: PropsWithChildren) => {
         visible: staticGroupVisibility.measurement,
       },
     }),
-    [measurementLayerGroups, pointClouds, staticGroupVisibility]
+    [measurementLayerGroups, pointcloudLayers, staticGroupVisibility]
   );
 
   return (

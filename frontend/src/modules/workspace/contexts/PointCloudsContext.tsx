@@ -4,14 +4,11 @@ import {
   PointSizeType,
   Potree,
 } from "potree-core";
-import {
-  createContext,
-  PropsWithChildren,
-  useContext,
-  useRef,
-  useState,
-} from "react";
+import { createContext, PropsWithChildren, useContext, useRef } from "react";
 import { Group } from "three";
+import { useLayerContext } from "../components/LayerManager/LayerContext";
+import { LayerList } from "../components/LayerManager/types";
+import { PointcloudData } from "@api/types";
 
 // Pointcloud octree with extra properties
 // extending the PointCloudOctree class with an extra 'isVisible' field didn't work
@@ -47,7 +44,10 @@ export const PointCloudsProvider = ({ children }: PropsWithChildren) => {
 
   const pointCloudsRef = useRef<Group>(null);
 
-  const [pointClouds, setPointClouds] = useState<PointCloud[]>([]);
+  const { layerTree } = useLayerContext();
+
+  const fileGroup = layerTree["file"];
+  const pointclouds = fileGroup.content as LayerList<PointcloudData>;
 
   const loadPco = (baseUrl: string, filename: string, name?: string) => {
     potree
@@ -61,10 +61,10 @@ export const PointCloudsProvider = ({ children }: PropsWithChildren) => {
         pco.material.outputColorEncoding = 1;
         pco.showBoundingBox = false;
         // pco.pointSizeType = PointSizeType.FIXED;
-        pco.name = name ?? `pointcloud ${pointClouds.length}`;
+        pco.name = name ?? `pointcloud ${pointclouds.length}`;
 
-        setPointClouds((pointClouds) => [
-          ...pointClouds,
+        setPointclouds((pointclouds) => [
+          ...pointclouds,
           { pco: pco, visible: true },
         ]);
 
