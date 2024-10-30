@@ -122,7 +122,7 @@ export const PolyLineComponent = forwardRef(
         {line.points.map((point, index) => (
           <KeepSize position={point} key={`${index}`}>
             <Sphere
-              scale={0.02}
+              scale={0.01}
               renderOrder={2}
               onPointerEnter={() => {
                 if (grabbedIndex === null && onGrab !== undefined) {

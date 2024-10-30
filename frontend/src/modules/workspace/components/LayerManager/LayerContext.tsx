@@ -11,6 +11,7 @@ import { AreaMeasureActions } from "../tools/areaMeasureTool/AreaMeasureActions"
 import { produce } from "immer";
 import { useLocalStorage } from "@mantine/hooks";
 import { PointcloudActions } from "../objects/pointCloud/PointcloudActions";
+import { PointCloudOctree } from "potree-core";
 
 export type GroupVisibility = {
   file: boolean;
@@ -130,15 +131,15 @@ export const LayerProvider = ({ children }: PropsWithChildren) => {
         id: "file",
         title: t("project.layers.files"),
         content: Object.fromEntries(
-          pointClouds.map(({ pco: { id, name }, visible }) => [
-            String(id),
+          pointClouds.map(({ pco, visible }) => [
+            String(pco.id),
             {
-              id: String(id),
-              title: name,
+              id: String(pco.id),
+              title: pco.name,
               visible,
-              data: name,
+              data: pco,
               ActionComponent: PointcloudActions,
-            } as LayerData<string>,
+            } as LayerData<string, PointCloudOctree>,
           ])
         ) as LayerList,
         visible: staticGroupVisibility.file,

@@ -15,15 +15,18 @@ import { usePermObjectContext } from "@modules/workspace/contexts/PermObjectCont
 import { HighlightableSelectableStack } from "@components/HighlightableSelectableStack";
 import { useTranslation } from "react-i18next";
 import { useSnackbar } from "@components/SnackbarManager";
+import { AreaMeasurement } from "@api/types";
+import { useMemo } from "react";
+import { getBounds } from "@modules/workspace/utils/getBounds";
+import { toVec3 } from "@modules/workspace/utils/toVec3";
 
 export const AreaMeasureActions = ({
   id,
   title,
   visible,
   forcedInvisible,
-  color,
-  bounds,
-}: LayerActionComponentProps) => {
+  data,
+}: LayerActionComponentProps<AreaMeasurement>) => {
   const { t } = useTranslation();
 
   const { openSnackbar } = useSnackbar();
@@ -32,6 +35,10 @@ export const AreaMeasureActions = ({
     usePermObjectContext();
 
   const { boundsApi } = useBoundsContext();
+
+  const { color, line } = data;
+
+  const bounds = useMemo(() => getBounds(line.map(toVec3)), [line]);
 
   const frame = () => {
     if (!boundsApi) return;

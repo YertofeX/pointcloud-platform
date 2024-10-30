@@ -1,18 +1,16 @@
-import { ComponentType, ReactNode } from "react";
+import { ComponentType } from "react";
 import { MAIN_LAYER_GROUPS } from "./mainLayerGroups";
-import { Box3 } from "three";
 
 type VisibilityData = {
   visible: boolean;
 };
 
-export type LayerActionComponentProps = {
+export type LayerActionComponentProps<T = any> = {
   id: string;
   title: string;
   visible: boolean;
   forcedInvisible: boolean;
-  color?: string;
-  bounds?: Box3;
+  data: T
 };
 
 export type LayerData<K extends string = string, T = any> = {

@@ -18,15 +18,18 @@ import { usePermObjectContext } from "@modules/workspace/contexts/PermObjectCont
 import { HighlightableSelectableStack } from "@components/HighlightableSelectableStack";
 import { useTranslation } from "react-i18next";
 import { useSnackbar } from "@components/SnackbarManager";
+import { DistanceMeasurement } from "@api/types";
+import { getBounds } from "@modules/workspace/utils/getBounds";
+import { toVec3 } from "@modules/workspace/utils/toVec3";
+import { useMemo } from "react";
 
 export const DistanceMeasureActions = ({
   id,
   title,
   visible,
   forcedInvisible,
-  color,
-  bounds,
-}: LayerActionComponentProps) => {
+  data,
+}: LayerActionComponentProps<DistanceMeasurement>) => {
   const { t } = useTranslation();
 
   const { openSnackbar } = useSnackbar();
@@ -35,6 +38,10 @@ export const DistanceMeasureActions = ({
     usePermObjectContext();
 
   const { boundsApi } = useBoundsContext();
+
+  const { color, line } = data;
+
+  const bounds = useMemo(() => getBounds(line.map(toVec3)), [line]);
 
   const frame = () => {
     if (!boundsApi) return;
