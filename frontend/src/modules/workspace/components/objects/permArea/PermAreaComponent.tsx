@@ -86,7 +86,7 @@ export const PermAreaComponent = ({ area }: Props) => {
           points: loopAreaPoints,
           width:
             highlighted?.objectId === area.id &&
-            highlighted?.objectType == "area-measure"
+            highlighted?.objectType == "area"
               ? 6
               : 3,
           color: area.color,
