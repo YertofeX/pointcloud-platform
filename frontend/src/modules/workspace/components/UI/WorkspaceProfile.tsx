@@ -26,7 +26,7 @@ export const WorkspaceProfile = () => {
 
   return (
     <>
-      <Paper>
+      <Paper variant="outlined">
         <ProfileWrapper variant="text" onClick={handleClick} size="small">
           <Avatar
             variant="rounded"

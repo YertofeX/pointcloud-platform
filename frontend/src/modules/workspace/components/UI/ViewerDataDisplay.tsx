@@ -7,7 +7,7 @@ export const ViewerDataDisplay = () => {
   const { project } = useWorkspaceContext();
 
   return (
-    <DataDisplayPaper>
+    <DataDisplayPaper variant="outlined">
       <Stack direction="row" gap={2} alignItems="center" pr={{ xs: 0, md: 2 }}>
         <Avatar
           sx={{ width: 40, height: 40 }}
