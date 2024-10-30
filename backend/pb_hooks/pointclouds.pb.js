@@ -13,13 +13,8 @@ onRecordAfterCreateRequest((e) => {
     e.record.baseFilesPath(),
   ].join("/");
 
-  // TODO: try https://pocketbase.io/jsvm/functions/_filesystem.fileFromPath.html
-
   const raw = `${recordFilesDir}/${e.record.get("raw")}`;  
-  const metadata = `${recordFilesDir}/metadata.json`;
-  const hierarchy = `${recordFilesDir}/hierarchy.bin`;
-  const octree = `${recordFilesDir}/octree.bin`;
-  const log = `${recordFilesDir}/log.txt`;
+  
 
   const cmd = $os.cmd(
     "/potreeconverter/build/PotreeConverter",
@@ -27,13 +22,22 @@ onRecordAfterCreateRequest((e) => {
     "-o",
     recordFilesDir
   );
-  
+
   console.log(JSON.stringify(cmd));
   const output = toString(cmd.output());
   console.log(output);
-  
+
+  const metadata = `metadata.json`;
+  const hierarchy = `hierarchy.bin`;
+  const octree = `octree.bin`;
+  const log = `log.txt`;
+
   e.record.set("metadata", metadata);
   e.record.set("hierarchy", hierarchy);
   e.record.set("octree", octree);
   e.record.set("log", log);
+  
+  e.record.set("name", "hello there");
+  
+  $app.dao().saveRecord(e.record);
 }, "pointclouds");
