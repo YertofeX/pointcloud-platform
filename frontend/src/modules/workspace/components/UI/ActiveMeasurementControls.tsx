@@ -45,7 +45,7 @@ export const ActiveMeasurementControls = () => {
   };
 
   return (
-    <ControlsPaper>
+    <ControlsPaper variant="outlined">
       <Stack direction="row" p={1} gap={1}>
         <IconButton size="small" disabled={stackIndex < 0} onClick={handleUndo}>
           <UndoIcon />

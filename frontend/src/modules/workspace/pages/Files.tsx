@@ -1,6 +1,6 @@
 import { Paper } from "@mui/material";
 import { useWorkspaceContext } from "../components/WorkspaceContext/WorkspaceContext";
-import { useUploadProjectPointcloud } from "@api/hooks";
+import { useCreatePointcloud } from "@api/hooks";
 import { ChangeEvent } from "react";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { CloudUpload } from "@mui/icons-material";
@@ -12,16 +12,19 @@ export const Files = () => {
 
   const { project } = useWorkspaceContext();
 
-  const {
-    mutate: uploadProjectPointcloud,
-    isPending: isUploadProjectPointcloudPending,
-  } = useUploadProjectPointcloud();
+  const { mutate: createPointCloud, isPending: isCreatePointCloudPending } =
+    useCreatePointcloud();
 
   const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files === null) return;
     const file = event.target.files.item(0);
     if (file === null) return;
-    uploadProjectPointcloud({ projectID: project.id, raw: file });
+    createPointCloud({
+      projectID: project.id,
+      name: "new pointcloud",
+      visible: true,
+      raw: file,
+    });
   };
 
   return (
@@ -31,7 +34,7 @@ export const Files = () => {
         variant="contained"
         tabIndex={-1}
         startIcon={<CloudUpload />}
-        loading={isUploadProjectPointcloudPending}
+        loading={isCreatePointCloudPending}
       >
         {t("dashboard.profile.upload-image")}
         <VisuallyHiddenInput type="file" onChange={handleFileUpload} />

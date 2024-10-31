@@ -46,10 +46,3 @@ export type ProjectListFilter = {
   states?: ProjectState[];
   types?: ProjectType[];
 };
-
-export type PointcloudData = {
-  owner: User;
-  project: Project;
-  raw: string;
-  potree: string;
-};

@@ -17,6 +17,9 @@
       "no-options": "Nincs kiválasztható érték"
     }
   },
+  "misc": {
+    "copied-to-clipboard": "Vágólapra másolva!"
+  },
   "header": {
     "title": "Pointcloud Platform",
     "profile": {
@@ -64,9 +67,11 @@
     "project-settings": "Projekt beállítások",
     "project-files": "Projekt fájlok",
     "change-thumbnail": "Indexkép megváltoztatása",
+    "outliner": "Rétegek",
     "props": {
       "name": "Név",
       "description": "Leírás",
+      "color": "Szín",
       "state": "Állapot",
       "type": "Típus"
     },
@@ -85,7 +90,29 @@
       "distance-tooltip": "Távolságmérés (d)",
       "area-tooltip": "2D Területmérés (a)",
       "measuring-tooltip": "Kattintás a folytatáshoz vagy dupla kattintás a befejezéshez",
-      "start-measure-tooltip": "Kattintás a méréshez"
+      "start-measure-tooltip": "Kattintás a méréshez",
+      "distance-measurement-created-successfully": "Távolságmérés létrehozása sikeres",
+      "distance-measurement-updated-successfully": "Távolságmérés módosítása sikeres",
+      "distance-measurement-deleted-successfully": "Távolságmérés törlése sikeres",
+      "area-measurement-created-successfully": "Területmérés létrehozása sikeres",
+      "area-measurement-updated-successfully": "Területmérés módosítása sikeres",
+      "area-measurement-deleted-successfully": "Területmérés törlése sikeres"
+    },
+    "layers": {
+      "files": "Fájlok",
+      "pointclouds": "Pontfelhők",
+      "measurements": "Mérések",
+      "distance-measurements": "Távolságmérések",
+      "area-measurements": "Területmérések"
+    },
+    "details": {
+      "created": "Létrehozva",
+      "updated": "Szerkesztve",
+      "segment": "Szegmens",
+      "length": "Hossz",
+      "total-length": "Teljes hossz",
+      "area": "Terület",
+      "circumference": "Kerület"
     }
   },
   "dashboard": {

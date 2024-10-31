@@ -1,14 +1,14 @@
 import { createContext, useContext, useState } from "react";
 
-interface Controls {
+type ControlsContextType = {
   enabled: boolean;
   setEnabled: React.Dispatch<React.SetStateAction<boolean>>;
   /** `true` if a camera movement is currently in progress */
   moving: boolean;
   setMoving: React.Dispatch<React.SetStateAction<boolean>>;
-}
+};
 
-export const ControlsContext = createContext<Controls>({
+export const ControlsContext = createContext<ControlsContextType>({
   enabled: false,
   setEnabled: () => {},
   moving: false,

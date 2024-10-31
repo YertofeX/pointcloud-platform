@@ -1,11 +1,19 @@
-import { PointcloudData, Project, User } from "@api/types";
+import { PointCloudData, Project, User } from "@api/types";
+import {
+  AreaMeasurement,
+  DistanceMeasurement,
+} from "@api/types/measurementTypes";
 import PocketBase, { RecordService } from "pocketbase";
 
 interface TypedPocketBase extends PocketBase {
   collection(idOrName: string): RecordService; // default fallback for any other collection
   collection(idOrName: "users"): RecordService<User>;
   collection(idOrName: "projects"): RecordService<Project>;
-  collection(idOrName: "pointclouds"): RecordService<PointcloudData>;
+  collection(idOrName: "pointclouds"): RecordService<PointCloudData>;
+  collection(
+    idOrName: "distance_measurements"
+  ): RecordService<DistanceMeasurement>;
+  collection(idOrName: "area_measurements"): RecordService<AreaMeasurement>;
 }
 
 export const pocketBase = new PocketBase(

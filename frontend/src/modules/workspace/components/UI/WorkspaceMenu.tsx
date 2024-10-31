@@ -38,7 +38,7 @@ export const WorkspaceMenu = () => {
 
   return (
     <>
-      <Paper>
+      <Paper variant="outlined">
         <IconButton onClick={handleOpen}>
           <MenuIcon />
         </IconButton>
