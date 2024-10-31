@@ -1,48 +1,44 @@
-import { useEffect } from "react";
 import { useFrame } from "@react-three/fiber";
-import { usePointCloudsContext } from "../contexts/PointCloudsContext";
+import {
+  PointCloud,
+  usePointCloudsContext,
+} from "../contexts/PointCloudsContext";
+import { useLayerContext } from "./LayerManager/LayerContext";
+import { LayerList } from "./LayerManager/types";
 
 export const PotreeScene = () => {
-  const { visiblePcos, pointCloudsRef, potree, loadPco, unloadPcos } =
-    usePointCloudsContext();
+  const { potree, pointCloudsRef } = usePointCloudsContext();
 
-  useEffect(() => {
-    loadPco(
-      "https://raw.githubusercontent.com/potree/potree/develop/pointclouds/lion_takanawa/",
-      "cloud.js",
-      "lion"
+  const { layerTree } = useLayerContext();
+  const fileGroup = layerTree["file"];
+
+  const visiblePcosWithId = Object.entries(
+    fileGroup.content as LayerList<PointCloud>
+  )
+    .filter(([_, { visible }]) => visible)
+    .map(
+      ([
+        id,
+        {
+          data: { pco },
+        },
+      ]) => ({ id, pco })
     );
 
-    // loadPco(
-    //   "https://static.thelostmetropolis.org/BigShotCleanV2/",
-    //   "metadata.json",
-    //   "facility"
-    // );
-
-    // loadPco("/pointclouds/output/banya/", "metadata.json", "bánya");
-    // loadPco("/pointclouds/output/teszt/", "metadata.json", "Teszt");
-
-    // loadPco("/pointclouds/output/line/", "metadata.json");
-    // loadPco("/pointclouds/output/lattice/", "metadata.json");
-
-    // loadPco(
-    //   "https://mandras.pannon2010.hu/uploads/projects/1/potrees/17jh2t8aja2v4fvxih21shac/",
-    //   "metadata.json"
-    // );
-
-    return () => {
-      unloadPcos();
-    };
-  }, []);
-
   useFrame(({ camera, gl }) => {
-    potree.updatePointClouds(visiblePcos, camera, gl);
+    potree.updatePointClouds(
+      visiblePcosWithId.map(({ pco }) => pco),
+      camera,
+      gl
+    );
   });
+
+  if (!fileGroup.visible) return null;
 
   return (
     <group ref={pointCloudsRef}>
-      {visiblePcos.map((pco) => (
-        <primitive key={pco.id} object={pco} />
+      {visiblePcosWithId.map(({ id, pco }) => (
+        <primitive key={id} object={pco} />
       ))}
     </group>
   );

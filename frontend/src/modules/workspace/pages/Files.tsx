@@ -12,18 +12,17 @@ export const Files = () => {
 
   const { project } = useWorkspaceContext();
 
-  const {
-    mutate: uploadProjectPointcloud,
-    isPending: isUploadProjectPointcloudPending,
-  } = useCreatePointcloud();
+  const { mutate: createPointCloud, isPending: isCreatePointCloudPending } =
+    useCreatePointcloud();
 
   const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files === null) return;
     const file = event.target.files.item(0);
     if (file === null) return;
-    uploadProjectPointcloud({
+    createPointCloud({
       projectID: project.id,
       name: "new pointcloud",
+      visible: true,
       raw: file,
     });
   };
@@ -35,7 +34,7 @@ export const Files = () => {
         variant="contained"
         tabIndex={-1}
         startIcon={<CloudUpload />}
-        loading={isUploadProjectPointcloudPending}
+        loading={isCreatePointCloudPending}
       >
         {t("dashboard.profile.upload-image")}
         <VisuallyHiddenInput type="file" onChange={handleFileUpload} />

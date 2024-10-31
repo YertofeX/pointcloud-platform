@@ -1,7 +1,7 @@
 import { User } from "./authTypes";
 import { Project } from "./projectTypes";
 
-export type PointcloudData = {
+export type PointCloudData = {
   id: string;
   owner: User;
   project: Project;

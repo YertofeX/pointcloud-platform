@@ -1,4 +1,4 @@
-import { PointcloudData, Project, User } from "@api/types";
+import { PointCloudData, Project, User } from "@api/types";
 import {
   AreaMeasurement,
   DistanceMeasurement,
@@ -9,7 +9,7 @@ interface TypedPocketBase extends PocketBase {
   collection(idOrName: string): RecordService; // default fallback for any other collection
   collection(idOrName: "users"): RecordService<User>;
   collection(idOrName: "projects"): RecordService<Project>;
-  collection(idOrName: "pointclouds"): RecordService<PointcloudData>;
+  collection(idOrName: "pointclouds"): RecordService<PointCloudData>;
   collection(
     idOrName: "distance_measurements"
   ): RecordService<DistanceMeasurement>;

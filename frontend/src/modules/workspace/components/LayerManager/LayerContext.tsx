@@ -5,19 +5,16 @@ import { useTranslation } from "react-i18next";
 import {
   AreaMeasurement,
   DistanceMeasurement,
-  PointcloudData,
+  PointCloudData,
 } from "@api/types";
-import {
-  useGetAreaMeasurements,
-  useGetDistanceMeasurements,
-  useGetPointclouds,
-} from "@api/hooks";
+import { useGetAreaMeasurements, useGetDistanceMeasurements } from "@api/hooks";
 import { useWorkspaceContext } from "../WorkspaceContext/WorkspaceContext";
 import { DistanceMeasureActions } from "../tools/distanceMeasureTool/DistanceMeasureActions";
 import { AreaMeasureActions } from "../tools/areaMeasureTool/AreaMeasureActions";
 import { produce } from "immer";
 import { useLocalStorage } from "@mantine/hooks";
 import { PointcloudActions } from "../objects/pointCloud/PointcloudActions";
+import { usePointCloudsContext } from "@modules/workspace/contexts/PointCloudsContext";
 
 export type GroupVisibility = {
   file: boolean;
@@ -129,24 +126,24 @@ export const LayerProvider = ({ children }: PropsWithChildren) => {
     [distanceMeasureLayers, areaMeasureLayers, staticGroupVisibility]
   );
 
-  const { data: pointclouds } = useGetPointclouds({ projectID });
-  const pointcloudLayers = useMemo<LayerList<PointcloudData>>(
+  const { pointClouds } = usePointCloudsContext();
+  const pointcloudLayers = useMemo<LayerList<PointCloudData>>(
     () =>
-      pointclouds
+      pointClouds
         ? (Object.fromEntries(
-            pointclouds.map((pointcloud) => [
-              String(pointcloud.id),
+            pointClouds.map((pointCloud) => [
+              String(pointCloud.id),
               {
-                id: String(pointcloud.id),
-                title: pointcloud.name,
-                visible: pointcloud.visible,
-                data: pointcloud,
+                id: String(pointCloud.id),
+                title: pointCloud.name,
+                visible: pointCloud.visible,
+                data: pointCloud,
                 ActionComponent: PointcloudActions,
-              } as LayerData<string, PointcloudData>,
+              } as LayerData<string, PointCloudData>,
             ])
           ) as LayerList)
         : {},
-    [pointclouds]
+    [pointClouds]
   );
 
   const mainLayerGroups = useMemo<LayerGroupList<MainLayerGroup>>(

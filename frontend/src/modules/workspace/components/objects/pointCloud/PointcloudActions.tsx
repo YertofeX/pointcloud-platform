@@ -2,19 +2,21 @@ import { IconButton, Stack, Typography } from "@mui/material";
 import { LayerActionComponentProps } from "../../LayerManager/types";
 import { HighlightableSelectableStack } from "@components/HighlightableSelectableStack";
 import { CropFree as CropFreeIcon, ScatterPlot } from "@mui/icons-material";
-import { PointCloudOctree } from "potree-core";
 import { BoxGeometry, Mesh, MeshBasicMaterial, Vector3 } from "three";
 import { useBoundsContext } from "@modules/workspace/contexts/BoundsContext";
 import { usePermObjectContext } from "@modules/workspace/contexts/PermObjectContext";
+import { PointCloud } from "@modules/workspace/contexts/PointCloudsContext";
 
 export const PointcloudActions = ({
   id,
   title,
   visible,
   forcedInvisible,
-  data: pco,
-}: LayerActionComponentProps<PointCloudOctree>) => {
+  data: pointCloud,
+}: LayerActionComponentProps<PointCloud>) => {
   const { boundsApi } = useBoundsContext();
+
+  const { pco } = pointCloud;
 
   const { highlighted, setHighlighted, selected, setSelected } =
     usePermObjectContext();

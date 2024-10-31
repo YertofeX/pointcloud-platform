@@ -1,109 +1,92 @@
+import { PointCloudOctree, Potree } from "potree-core";
 import {
-  PointCloudOctree,
-  PointShape,
-  PointSizeType,
-  Potree,
-} from "potree-core";
-import { createContext, PropsWithChildren, useContext, useRef } from "react";
+  createContext,
+  PropsWithChildren,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import { PointCloudData } from "@api/types";
+import { pocketBase } from "@lib/pocketbase";
+import { useGetPointClouds } from "@api/hooks";
+import { useWorkspaceContext } from "../components/WorkspaceContext/WorkspaceContext";
 import { Group } from "three";
-import { useLayerContext } from "../components/LayerManager/LayerContext";
-import { LayerList } from "../components/LayerManager/types";
-import { PointcloudData } from "@api/types";
 
-// Pointcloud octree with extra properties
-// extending the PointCloudOctree class with an extra 'isVisible' field didn't work
-export type PointCloud = {
-  pco: PointCloudOctree;
-  visible: boolean;
-};
+export type PointCloud = PointCloudData & { pco: PointCloudOctree };
 
-export type PointCloudsContextProps = {
+export type PointCloudsContextType = {
+  potree: Potree;
   pointCloudsRef: React.RefObject<Group>;
   pointClouds: PointCloud[];
   visiblePcos: PointCloudOctree[];
-  setPointClouds: React.Dispatch<React.SetStateAction<PointCloud[]>>;
-  potree: Potree;
-  loadPco: (baseUrl: string, filename: string, name?: string) => void;
-  unloadPcos: () => void;
 };
 
-export const PointCloudsContext = createContext<PointCloudsContextProps>({
+export const PointCloudsContext = createContext<PointCloudsContextType>({
+  potree: new Potree(),
   pointCloudsRef: { current: null },
   pointClouds: [],
   visiblePcos: [],
-  setPointClouds: () => {},
-  potree: new Potree(),
-  loadPco: () => {},
-  unloadPcos: () => {},
 });
 
 export const usePointCloudsContext = () => useContext(PointCloudsContext);
 
-export const PointCloudsProvider = ({ children }: PropsWithChildren) => {
-  const potree = new Potree();
+const potree = new Potree();
 
+export const PointCloudsProvider = ({ children }: PropsWithChildren) => {
   const pointCloudsRef = useRef<Group>(null);
 
-  const { layerTree } = useLayerContext();
+  const {
+    project: { id: projectID },
+  } = useWorkspaceContext();
 
-  const fileGroup = layerTree["file"];
-  const pointclouds = fileGroup.content as LayerList<PointcloudData>;
+  const { data: pointCloudDatas } = useGetPointClouds({ projectID });
 
-  const loadPco = (baseUrl: string, filename: string, name?: string) => {
-    potree
-      .loadPointCloud(filename, (url: string) => `${baseUrl}${url}`)
-      .then(function (pco: PointCloudOctree) {
-        if (!pointCloudsRef.current) return;
+  const [pointClouds, setPointClouds] = useState<PointCloud[]>([]);
 
-        pco.material.size = PointSizeType.ADAPTIVE;
-        pco.material.shape = PointShape.PARABOLOID;
-        pco.material.inputColorEncoding = 1;
-        pco.material.outputColorEncoding = 1;
-        pco.showBoundingBox = false;
-        // pco.pointSizeType = PointSizeType.FIXED;
-        pco.name = name ?? `pointcloud ${pointclouds.length}`;
+  useEffect(() => {
+    if (!pointCloudDatas)
+      return () => {
+        setPointClouds([]);
+      };
 
-        setPointclouds((pointclouds) => [
-          ...pointclouds,
-          { pco: pco, visible: true },
-        ]);
+    const loadPco = async (pointCloud: PointCloudData) => {
+      const pco = await potree.loadPointCloud(
+        "metadata.json",
+        (url: string) =>
+          `${pocketBase.getFileUrl(pointCloud, pointCloud.metadata).split("metadata.json")[0]}${url}`
+      );
+      return pco;
+    };
 
-        // console.log("Cloud loaded", pco);
-
-        // * bounding box for debugging * //
-        // const box = pco.pcoGeometry.boundingBox;
-        // const size = box.getSize(new Vector3());
-        // const geometry = new BoxGeometry(size.x, size.y, size.z);
-        // const material = new MeshBasicMaterial({ color: 0xff0000, wireframe: true });
-        // const mesh = new Mesh(geometry, material);
-        // mesh.position.copy(pco.position);
-        // mesh.scale.copy(pco.scale);
-        // mesh.rotation.copy(pco.rotation);
-        // mesh.raycast = () => false;
-        // mesh.position.add(new Vector3(size.x / 2, size.y / 2, size.z / 2));
-        // pointCloudsRef.current.add(mesh);
+    const loadPointClouds = async (pointClouds: PointCloudData[]) => {
+      pointClouds.forEach(async (pointCloud) => {
+        const pco = await loadPco(pointCloud);
+        setPointClouds((prev) => [...prev, { ...pointCloud, pco }]);
       });
-  };
+    };
 
-  const unloadPcos = () => {
-    pointClouds.forEach((extPco) => {
-      extPco.pco.dispose();
-    });
-    setPointClouds([]);
-  };
+    loadPointClouds(pointCloudDatas);
+
+    return () => {
+      pointClouds.forEach(({ pco }) => pco.dispose());
+      setPointClouds([]);
+    };
+  }, [pointCloudDatas]);
+
+  const visiblePcos = useMemo<PointCloudOctree[]>(
+    () => pointClouds.filter(({ visible }) => visible).map(({ pco }) => pco),
+    [pointClouds]
+  );
 
   return (
     <PointCloudsContext.Provider
       value={{
+        potree,
         pointCloudsRef,
         pointClouds,
-        visiblePcos: pointClouds
-          .filter(({ visible }) => visible)
-          .map(({ pco }) => pco),
-        setPointClouds,
-        potree,
-        loadPco,
-        unloadPcos,
+        visiblePcos,
       }}
     >
       {children}

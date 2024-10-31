@@ -12,13 +12,13 @@ export const ViewerProviders = ({ children }: PropsWithChildren) => {
     <ControlsProvider>
       <ToolProvider>
         <BoundsProvider>
-          <LayerProvider>
-            <PointCloudsProvider>
+          <PointCloudsProvider>
+            <LayerProvider>
               <PermObjectProvider>
                 <TooltipProvider>{children}</TooltipProvider>
               </PermObjectProvider>
-            </PointCloudsProvider>
-          </LayerProvider>
+            </LayerProvider>
+          </PointCloudsProvider>
         </BoundsProvider>
       </ToolProvider>
     </ControlsProvider>

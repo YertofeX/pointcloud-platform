@@ -53,7 +53,6 @@ export const DistanceMeasurementEditForm = ({
   const { handleSubmit } = form;
 
   const onSubmit = ({ name, color }: FormParams) => {
-    console.log("hello", { name, color });
     updateDistanceMeasurement(
       {
         measurementID: measurement.id,
