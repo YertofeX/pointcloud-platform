@@ -113,6 +113,11 @@
       "total-length": "Total length",
       "area": "Area",
       "circumference": "Circumference"
+    },
+    "files": {
+      "upload-point-cloud": "Upload point cloud (.las)",
+      "delete-file": "Delete file",
+      "no-files-to-display": "No files to display."
     }
   },
   "dashboard": {

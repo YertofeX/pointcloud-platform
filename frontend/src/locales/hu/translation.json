@@ -113,6 +113,11 @@
       "total-length": "Teljes hossz",
       "area": "Terület",
       "circumference": "Kerület"
+    },
+    "files": {
+      "upload-point-cloud": "Pontfelhő feltöltése (.las)",
+      "delete-file": "Fájl törlése",
+      "no-files-to-display": "Nincsenek megjeleníthető fájlok."
     }
   },
   "dashboard": {
