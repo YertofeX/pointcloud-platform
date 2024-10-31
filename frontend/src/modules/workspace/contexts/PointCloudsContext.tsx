@@ -1,4 +1,9 @@
-import { PointCloudOctree, Potree } from "potree-core";
+import {
+  PointCloudOctree,
+  PointShape,
+  PointSizeType,
+  Potree,
+} from "potree-core";
 import {
   createContext,
   PropsWithChildren,
@@ -56,6 +61,13 @@ export const PointCloudsProvider = ({ children }: PropsWithChildren) => {
         (url: string) =>
           `${pocketBase.getFileUrl(pointCloud, pointCloud.metadata).split("metadata.json")[0]}${url}`
       );
+      pco.material.size = PointSizeType.ADAPTIVE;
+      pco.material.shape = PointShape.PARABOLOID;
+      pco.material.inputColorEncoding = 1;
+      pco.material.outputColorEncoding = 1;
+      pco.showBoundingBox = false;
+      // pco.pointSizeType = PointSizeType.FIXED;
+      pco.name = pointCloud.name;
       return pco;
     };
 
