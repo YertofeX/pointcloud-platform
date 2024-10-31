@@ -6,6 +6,9 @@ import { BoxGeometry, Mesh, MeshBasicMaterial, Vector3 } from "three";
 import { useBoundsContext } from "@modules/workspace/contexts/BoundsContext";
 import { usePermObjectContext } from "@modules/workspace/contexts/PermObjectContext";
 import { PointCloud } from "@modules/workspace/contexts/PointCloudsContext";
+import { EyeIconButton } from "../../LayerManager/LayerHandler/EyeIconButton";
+import { useUpdatePointCloud } from "@api/hooks";
+import { useWorkspaceContext } from "../../WorkspaceContext/WorkspaceContext";
 
 export const PointcloudActions = ({
   id,
@@ -14,6 +17,10 @@ export const PointcloudActions = ({
   forcedInvisible,
   data: pointCloud,
 }: LayerActionComponentProps<PointCloud>) => {
+  const {
+    project: { id: projectID },
+  } = useWorkspaceContext();
+
   const { boundsApi } = useBoundsContext();
 
   const { pco } = pointCloud;
@@ -26,6 +33,8 @@ export const PointcloudActions = ({
 
   const isSelected =
     selected?.objectId === id && selected.objectType === "pointcloud";
+
+  const { mutate: updatePointCloud } = useUpdatePointCloud();
 
   const frame = () => {
     if (!boundsApi) return;
@@ -50,6 +59,14 @@ export const PointcloudActions = ({
 
   const handleSelectPointcloud = () => {
     setSelected({ objectId: id, objectType: "pointcloud" });
+  };
+
+  const handleVisibilityClick = () => {
+    updatePointCloud({
+      pointCloudID: id,
+      projectID,
+      visible: !visible,
+    });
   };
 
   return (
@@ -88,6 +105,11 @@ export const PointcloudActions = ({
       >
         <CropFreeIcon fontSize="small" />
       </IconButton>
+      <EyeIconButton
+        visible={visible}
+        forcedInvisible={forcedInvisible}
+        onClick={handleVisibilityClick}
+      />
     </HighlightableSelectableStack>
   );
 };

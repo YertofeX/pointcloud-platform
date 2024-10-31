@@ -4,5 +4,5 @@ export const QUERY_KEYS = {
   projects: "projects",
   distanceMeasurements: "distanceMeasurements",
   areaMeasurements: "areaMeasurements",
-  pointclouds: "pointclouds"
+  pointClouds: "pointClouds",
 } as const;

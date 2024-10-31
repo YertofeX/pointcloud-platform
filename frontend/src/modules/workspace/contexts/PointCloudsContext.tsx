@@ -42,7 +42,6 @@ export const PointCloudsProvider = ({ children }: PropsWithChildren) => {
   } = useWorkspaceContext();
 
   const { data: pointCloudDatas } = useGetPointClouds({ projectID });
-
   const [pointClouds, setPointClouds] = useState<PointCloud[]>([]);
 
   useEffect(() => {

@@ -15,3 +15,17 @@ export type PointCloudData = {
   created: string;
   updated: string;
 };
+
+export type PointCloudCreateparams = {
+  projectID: string;
+  raw: File;
+  name: string;
+  visible: boolean;
+};
+
+export type PointCloudUpdateParams = {
+  owner?: string;
+  project?: string;
+  name?: string;
+  visible?: boolean;
+};
