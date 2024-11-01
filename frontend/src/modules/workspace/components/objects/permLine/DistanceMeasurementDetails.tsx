@@ -55,9 +55,7 @@ export const DistanceMeasurementDetails = ({ measurement }: Props) => {
       line
         .slice(1)
         .map((coordinates, index) =>
-          formatLength(
-            calculateLength([toVec3(line[index]), toVec3(coordinates)])
-          )
+          formatLength(calculateLength([line[index], coordinates].map(toVec3)))
         ),
     [line]
   );

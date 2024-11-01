@@ -119,7 +119,9 @@ export const AreaMeasureActions = ({
         {color && (
           <Box bgcolor={color} width={14} height={14} borderRadius="100%" />
         )}
-        <Typography>{title}</Typography>
+        <Typography maxWidth={140} noWrap>
+          {title}
+        </Typography>
       </Stack>
       <Stack direction="row" alignItems="center" gap={1}>
         {bounds && (
