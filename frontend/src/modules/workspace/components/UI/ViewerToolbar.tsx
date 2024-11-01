@@ -34,7 +34,7 @@ export const ViewerToolbar = () => {
   } = useToolContext();
 
   return (
-    <ToolbarPaper>
+    <ToolbarPaper variant="outlined">
       <Stack direction="row" gap={1} px={1}>
         {toolOptions.map(({ name, icon, title }) => (
           <Tooltip title={title} key={`tool-button-${name}`}>

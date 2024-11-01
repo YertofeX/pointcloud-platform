@@ -6,20 +6,22 @@ import { usePointCloudsContext } from "@modules/workspace/contexts/PointCloudsCo
 import { usePermObjectContext } from "@modules/workspace/contexts/PermObjectContext";
 import { useToolContext } from "@modules/workspace/contexts/ToolContext";
 import { CustomPointCloudOctreePicker } from "@modules/workspace/utils/picker/CustomPointCloudOctreePicker";
-import { getBounds } from "@modules/workspace/utils/getBounds";
 import { PolyLineComponent } from "../PolyLine";
 import { calculateCenter } from "@modules/workspace/utils/calculateCenter";
 import { calculateArea } from "@modules/workspace/utils/calculateArea";
 import { Paper, Typography } from "@mui/material";
+import { getTextColor } from "@modules/workspace/utils/getTextColor";
+import { hexToRGBA } from "@modules/workspace/utils/hexToRGBA";
 
 export type PermArea = {
-  id: number;
+  id: string;
   points: Vector3[];
   color: string;
   name: string;
   width: number;
-  visible: boolean;
   bounds: Box3;
+  created: string;
+  updated: string;
 };
 
 type Props = {
@@ -31,8 +33,7 @@ const picker = new CustomPointCloudOctreePicker();
 export const PermAreaComponent = ({ area }: Props) => {
   const { visiblePcos } = usePointCloudsContext();
 
-  const { setPermAreas, highlighted, highlightedType, setEditing } =
-    usePermObjectContext();
+  const { updateObject, highlighted, setEditing } = usePermObjectContext();
 
   const { toolState } = useToolContext();
 
@@ -66,18 +67,10 @@ export const PermAreaComponent = ({ area }: Props) => {
 
   const handleGrabEnd = () => {
     setEditing(false);
-    setPermAreas((permareas) =>
-      permareas.map((cArea) => {
-        if (cArea.id !== area.id) {
-          return cArea;
-        }
-        return {
-          ...cArea,
-          bounds: getBounds(points),
-          points,
-        };
-      })
-    );
+    updateObject({
+      tool: "area",
+      data: { id: area.id, line: points.map(({ x, y, z }) => [x, y, z]) },
+    });
   };
 
   const loopAreaPoints = [...points, points[0]];
@@ -85,13 +78,17 @@ export const PermAreaComponent = ({ area }: Props) => {
   return (
     <>
       <PolyLineComponent
-        visible={!cull && area.visible}
+        visible={!cull}
         onGrab={toolState.name == "area-measure" ? onGrab : undefined}
         onGrabStart={() => setEditing(true)}
         onGrabEnd={handleGrabEnd}
         line={{
           points: loopAreaPoints,
-          width: highlighted === area.id && highlightedType == "area" ? 6 : 3,
+          width:
+            highlighted?.objectId === area.id &&
+            highlighted?.objectType == "area"
+              ? 6
+              : 3,
           color: area.color,
         }}
       />
@@ -104,8 +101,13 @@ export const PermAreaComponent = ({ area }: Props) => {
         }}
         center
       >
-        <Paper sx={{ px: 1 }}>
-          <Typography>
+        <Paper
+          sx={{
+            px: 1,
+            backgroundColor: area.color,
+          }}
+        >
+          <Typography color={getTextColor(hexToRGBA(area.color))}>
             {Math.round(calculateArea(loopAreaPoints) * 100) / 100}&nbsp;m
             <sup>2</sup>
           </Typography>

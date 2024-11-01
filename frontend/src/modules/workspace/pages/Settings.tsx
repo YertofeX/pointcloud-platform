@@ -21,6 +21,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import { useGetUser, useUpdateProjectThumbnail } from "@api/hooks";
 import { ChangeEvent } from "react";
 import { VisuallyHiddenInput } from "@components/VisuallyHiddenInput";
+import { WorkspaceDataDisplay } from "../components/UI/WorkspaceDataDisplay";
 
 export const Settings = () => {
   const { t } = useTranslation();
@@ -47,10 +48,18 @@ export const Settings = () => {
   return (
     <>
       <Stack direction="row" justifyContent="space-between" p={1.25}>
-        <WorkspaceMenu />
+        <Stack direction="row" gap={1}>
+          <WorkspaceMenu />
+          <WorkspaceDataDisplay />
+        </Stack>
         <WorkspaceProfile />
       </Stack>
-      <Container component={Paper} sx={{ py: 2, mt: 1 }} maxWidth="xs">
+      <Container
+        component={Paper}
+        sx={{ py: 2, mt: 1 }}
+        maxWidth="md"
+        variant="outlined"
+      >
         <Typography variant="h2" fontSize={24} fontWeight="bold" gutterBottom>
           {t("project.project-settings")}
         </Typography>

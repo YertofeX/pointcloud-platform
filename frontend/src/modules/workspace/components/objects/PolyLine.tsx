@@ -23,6 +23,9 @@ import { calculateCenter } from "@modules/workspace/utils/calculateCenter";
 import { Paper, Typography } from "@mui/material";
 import { OccludedLine } from "./OccludedLine";
 import { KeepSize } from "./helpers/KeepSize";
+import { hexToRGBA } from "@modules/workspace/utils/hexToRGBA";
+import { getTextColor } from "@modules/workspace/utils/getTextColor";
+import { hexToRGBObject } from "@modules/workspace/utils/hexToRGB";
 
 export type PolyLine = {
   points: Vector3[];
@@ -101,6 +104,8 @@ export const PolyLineComponent = forwardRef(
       (((cursorIndex ?? -1) % line.points.length) + line.points.length) %
       line.points.length;
 
+    const colorRGB = hexToRGBObject(line.color);
+
     return (
       <mesh ref={ref} visible={visible} {...props}>
         {/* Line display */}
@@ -117,7 +122,7 @@ export const PolyLineComponent = forwardRef(
         {line.points.map((point, index) => (
           <KeepSize position={point} key={`${index}`}>
             <Sphere
-              scale={0.02}
+              scale={0.01}
               renderOrder={2}
               onPointerEnter={() => {
                 if (grabbedIndex === null && onGrab !== undefined) {
@@ -173,9 +178,19 @@ export const PolyLineComponent = forwardRef(
                     minWidth: "max-content",
                     userSelect: "none",
                     pointerEvents: "none",
+                    backgroundColor: colorRGB
+                      ? `rgba(${colorRGB.r}, ${colorRGB.g}, ${colorRGB.b}, 0.7)`
+                      : line.color,
                   }}
+                  elevation={0}
                 >
-                  {Math.round(length * 100) / 100} m
+                  <Typography
+                    noWrap
+                    color={getTextColor(hexToRGBA(line.color))}
+                    fontSize={12}
+                  >
+                    {Math.round(length * 100) / 100} m
+                  </Typography>
                 </Paper>
               </Html>
             );
@@ -194,9 +209,10 @@ export const PolyLineComponent = forwardRef(
             sx={{
               px: 1,
               transform: "translateY(-2rem)",
+              backgroundColor: line.color,
             }}
           >
-            <Typography noWrap>
+            <Typography noWrap color={getTextColor(hexToRGBA(line.color))}>
               {formatLength(calculateLength(line.points))}
             </Typography>
           </Paper>
