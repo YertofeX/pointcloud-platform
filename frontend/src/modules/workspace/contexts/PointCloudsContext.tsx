@@ -17,9 +17,13 @@ import { PointCloudData } from "@api/types";
 import { pocketBase } from "@lib/pocketbase";
 import { useGetPointClouds } from "@api/hooks";
 import { useWorkspaceContext } from "../components/WorkspaceContext/WorkspaceContext";
-import { Group } from "three";
+import { Group, Matrix4, Vector3 } from "three";
+import { useOriginContext } from "./OriginContext";
 
-export type PointCloud = PointCloudData & { pco: PointCloudOctree };
+export type PointCloud = PointCloudData & {
+  pco: PointCloudOctree;
+  origin: [number, number, number];
+};
 
 export type PointCloudsContextType = {
   potree: Potree;
@@ -40,6 +44,8 @@ export const usePointCloudsContext = () => useContext(PointCloudsContext);
 const potree = new Potree();
 
 export const PointCloudsProvider = ({ children }: PropsWithChildren) => {
+  const { transform } = useOriginContext();
+
   const pointCloudsRef = useRef<Group>(null);
 
   const {
@@ -74,7 +80,12 @@ export const PointCloudsProvider = ({ children }: PropsWithChildren) => {
     const loadPointClouds = async (pointClouds: PointCloudData[]) => {
       pointClouds.forEach(async (pointCloud) => {
         const pco = await loadPco(pointCloud);
-        setPointClouds((prev) => [...prev, { ...pointCloud, pco }]);
+        const originVec = new Vector3();
+        pco.getWorldPosition(originVec);
+        const { x, y, z } = originVec;
+        const origin: [number, number, number] = [x, y, z];
+        pco.applyMatrix4(new Matrix4().setPosition(transform.clone()));
+        setPointClouds((prev) => [...prev, { ...pointCloud, pco, origin }]);
       });
     };
 
@@ -84,7 +95,7 @@ export const PointCloudsProvider = ({ children }: PropsWithChildren) => {
       pointClouds.forEach(({ pco }) => pco.dispose());
       setPointClouds([]);
     };
-  }, [pointCloudDatas]);
+  }, [pointCloudDatas, transform]);
 
   const visiblePcos = useMemo<PointCloudOctree[]>(
     () => pointClouds.filter(({ visible }) => visible).map(({ pco }) => pco),

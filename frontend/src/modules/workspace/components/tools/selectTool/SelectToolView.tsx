@@ -43,7 +43,6 @@ const SelectToZoom = () => {
             cursorScale
           );
           spaceCursorRef.current.position.set(point.x, point.y, point.z);
-
           api.refresh(spaceCursorRef.current);
           api.fit();
           event.stopPropagation();
