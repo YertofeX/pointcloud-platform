@@ -22,6 +22,7 @@ import { DistanceMeasurement } from "@api/types";
 import { getBounds } from "@modules/workspace/utils/getBounds";
 import { toVec3 } from "@modules/workspace/utils/toVec3";
 import { useMemo } from "react";
+import { useOriginContext } from "@modules/workspace/contexts/OriginContext";
 
 export const DistanceMeasureActions = ({
   id,
@@ -34,6 +35,8 @@ export const DistanceMeasureActions = ({
 
   const { openSnackbar } = useSnackbar();
 
+  const { transform } = useOriginContext();
+
   const { highlighted, setHighlighted, selected, setSelected } =
     usePermObjectContext();
 
@@ -41,7 +44,10 @@ export const DistanceMeasureActions = ({
 
   const { color, line } = data;
 
-  const bounds = useMemo(() => getBounds(line.map(toVec3)), [line]);
+  const bounds = useMemo(
+    () => getBounds(line.map((coords) => toVec3(coords).add(transform))),
+    [line, transform]
+  );
 
   const frame = () => {
     if (!boundsApi) return;

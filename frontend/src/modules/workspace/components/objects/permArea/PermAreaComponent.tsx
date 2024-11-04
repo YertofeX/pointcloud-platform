@@ -12,6 +12,7 @@ import { calculateArea } from "@modules/workspace/utils/calculateArea";
 import { Paper, Typography } from "@mui/material";
 import { getTextColor } from "@modules/workspace/utils/getTextColor";
 import { hexToRGBA } from "@modules/workspace/utils/hexToRGBA";
+import { useOriginContext } from "@modules/workspace/contexts/OriginContext";
 
 export type PermArea = {
   id: string;
@@ -32,6 +33,8 @@ const picker = new CustomPointCloudOctreePicker();
 
 export const PermAreaComponent = ({ area }: Props) => {
   const { visiblePcos } = usePointCloudsContext();
+
+  const { transform } = useOriginContext();
 
   const { updateObject, highlighted, setEditing } = usePermObjectContext();
 
@@ -67,9 +70,15 @@ export const PermAreaComponent = ({ area }: Props) => {
 
   const handleGrabEnd = () => {
     setEditing(false);
+    const reverseTransform = transform.clone().multiplyScalar(-1);
     updateObject({
       tool: "area",
-      data: { id: area.id, line: points.map(({ x, y, z }) => [x, y, z]) },
+      data: {
+        id: area.id,
+        line: points
+          .map((point) => point.clone().add(reverseTransform))
+          .map(({ x, y, z }) => [x, y, z]),
+      },
     });
   };
 

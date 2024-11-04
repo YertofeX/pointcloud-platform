@@ -2,13 +2,14 @@ import { IconButton, Stack, Typography } from "@mui/material";
 import { LayerActionComponentProps } from "../../LayerManager/types";
 import { HighlightableSelectableStack } from "@components/HighlightableSelectableStack";
 import { CropFree as CropFreeIcon, ScatterPlot } from "@mui/icons-material";
-import { BoxGeometry, Mesh, MeshBasicMaterial, Vector3 } from "three";
+import { BoxGeometry, Matrix4, Mesh, MeshBasicMaterial, Vector3 } from "three";
 import { useBoundsContext } from "@modules/workspace/contexts/BoundsContext";
 import { usePermObjectContext } from "@modules/workspace/contexts/PermObjectContext";
 import { PointCloud } from "@modules/workspace/contexts/PointCloudsContext";
 import { EyeIconButton } from "../../LayerManager/LayerHandler/EyeIconButton";
 import { useUpdatePointCloud } from "@api/hooks";
 import { useWorkspaceContext } from "../../WorkspaceContext/WorkspaceContext";
+import { useOriginContext } from "@modules/workspace/contexts/OriginContext";
 
 export const PointcloudActions = ({
   id,
@@ -21,9 +22,11 @@ export const PointcloudActions = ({
     project: { id: projectID },
   } = useWorkspaceContext();
 
+  const { setTransform } = useOriginContext();
+
   const { boundsApi } = useBoundsContext();
 
-  const { pco } = pointCloud;
+  const { pco, origin } = pointCloud;
 
   const { highlighted, setHighlighted, selected, setSelected } =
     usePermObjectContext();
@@ -39,6 +42,9 @@ export const PointcloudActions = ({
   const frame = () => {
     if (!boundsApi) return;
 
+    const [x, y, z] = origin;
+    const transform = new Vector3(x, y, z).multiplyScalar(-1);
+
     const box = pco.pcoGeometry.boundingBox;
     const size = box.getSize(new Vector3());
     const geometry = new BoxGeometry(size.x, size.y, size.z);
@@ -47,14 +53,16 @@ export const PointcloudActions = ({
       wireframe: true,
     });
     const bounds = new Mesh(geometry, material);
-    bounds.position.copy(pco.position);
     bounds.scale.copy(pco.scale);
     bounds.rotation.copy(pco.rotation);
     bounds.raycast = () => false;
+    bounds.position.set(0, 0, 0);
     bounds.position.add(new Vector3(size.x / 2, size.y / 2, size.z / 2));
 
     boundsApi.refresh(bounds);
     boundsApi.fit();
+
+    setTransform(transform);
   };
 
   const handleSelectPointcloud = () => {

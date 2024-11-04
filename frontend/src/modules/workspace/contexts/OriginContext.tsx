@@ -1,11 +1,5 @@
 import { useLocalStorage } from "@mantine/hooks";
-import {
-  createContext,
-  PropsWithChildren,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { createContext, PropsWithChildren, useContext, useState } from "react";
 import { Vector3 } from "three";
 import { useWorkspaceContext } from "../components/WorkspaceContext/WorkspaceContext";
 
@@ -44,10 +38,6 @@ export const OriginProvider = ({ children }: PropsWithChildren) => {
     setLsTransform({ x, y, z });
     setTransform(newTransform);
   };
-
-  useEffect(() => {
-    console.log({ transform });
-  }, [transform]);
 
   return (
     <OriginContext.Provider

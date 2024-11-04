@@ -6,6 +6,7 @@ import { usePermObjectContext } from "@modules/workspace/contexts/PermObjectCont
 import { useToolContext } from "@modules/workspace/contexts/ToolContext";
 import { CustomPointCloudOctreePicker } from "@modules/workspace/utils/picker/CustomPointCloudOctreePicker";
 import { PolyLineComponent } from "../PolyLine";
+import { useOriginContext } from "@modules/workspace/contexts/OriginContext";
 
 export type PermLine = {
   id: string;
@@ -26,6 +27,8 @@ const picker = new CustomPointCloudOctreePicker();
 
 export const PermLineComponent = ({ line }: Props) => {
   const { camera } = useThree();
+
+  const { transform } = useOriginContext();
 
   const { visiblePcos } = usePointCloudsContext();
 
@@ -61,9 +64,15 @@ export const PermLineComponent = ({ line }: Props) => {
 
   const handleGrabEnd = () => {
     setEditing(false);
+    const reverseTransform = transform.clone().multiplyScalar(-1);
     updateObject({
       tool: "line",
-      data: { id: line.id, line: points.map(({ x, y, z }) => [x, y, z]) },
+      data: {
+        id: line.id,
+        line: points
+          .map((point) => point.clone().add(reverseTransform))
+          .map(({ x, y, z }) => [x, y, z]),
+      },
     });
   };
 

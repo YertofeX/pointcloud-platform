@@ -19,6 +19,7 @@ import { AreaMeasurement } from "@api/types";
 import { useMemo } from "react";
 import { getBounds } from "@modules/workspace/utils/getBounds";
 import { toVec3 } from "@modules/workspace/utils/toVec3";
+import { useOriginContext } from "@modules/workspace/contexts/OriginContext";
 
 export const AreaMeasureActions = ({
   id,
@@ -31,6 +32,8 @@ export const AreaMeasureActions = ({
 
   const { openSnackbar } = useSnackbar();
 
+  const { transform } = useOriginContext();
+
   const { highlighted, setHighlighted, selected, setSelected } =
     usePermObjectContext();
 
@@ -38,8 +41,10 @@ export const AreaMeasureActions = ({
 
   const { color, line } = data;
 
-  const bounds = useMemo(() => getBounds(line.map(toVec3)), [line]);
-
+  const bounds = useMemo(
+    () => getBounds(line.map((coords) => toVec3(coords).add(transform))),
+    [line, transform]
+  );
   const frame = () => {
     if (!boundsApi) return;
     if (!bounds) return;
