@@ -118,7 +118,9 @@
     "files": {
       "upload-point-cloud": "Upload point cloud (.las)",
       "delete-file": "Delete file",
-      "no-files-to-display": "No files to display."
+      "no-files-to-display": "No files to display.",
+      "edit-point-cloud": "Edit point cloud",
+      "point-cloud-updated-successfully": "Point cloud updated successfully"
     }
   },
   "dashboard": {

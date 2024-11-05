@@ -31,7 +31,5 @@ onRecordAfterCreateRequest((e) => {
   e.record.set("octree", octree);
   e.record.set("log", log);
 
-  e.record.set("name", "hello there");
-
   $app.dao().saveRecord(e.record);
 }, "pointclouds");

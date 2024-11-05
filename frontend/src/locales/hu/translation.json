@@ -118,7 +118,9 @@
     "files": {
       "upload-point-cloud": "Pontfelhő feltöltése (.las)",
       "delete-file": "Fájl törlése",
-      "no-files-to-display": "Nincsenek megjeleníthető fájlok."
+      "no-files-to-display": "Nincsenek megjeleníthető fájlok.",
+      "edit-point-cloud": "Pontfelhő szerkesztése",
+      "point-cloud-updated-successfully": "Pointfelhő módosítása sikeres"
     }
   },
   "dashboard": {
