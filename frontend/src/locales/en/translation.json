@@ -8,7 +8,8 @@
       "cancel": "Cancel",
       "submit": "Submit",
       "create": "Create",
-      "modify": "Modify"
+      "modify": "Modify",
+      "save": "Save"
     },
     "loading": "Loading..."
   },
@@ -136,7 +137,9 @@
       "profile": "Profile",
       "profile-picture": "Profile picture",
       "change-profile-picture": "Change profile picture",
-      "upload-image": "Upload image"
+      "upload-image": "Upload image",
+      "language": "Language",
+      "modifications-saved": "Modifications have been saved."
     }
   },
   "auth": {

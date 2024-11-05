@@ -19,6 +19,7 @@ import {
 } from "@mui/material";
 import { ChangeEvent } from "react";
 import { useTranslation } from "react-i18next";
+import { ProfileLanguageSelector } from "../components/Profile/ProfileLanguageSelector";
 
 export const UserProfile = () => {
   const { t } = useTranslation();
@@ -86,9 +87,7 @@ export const UserProfile = () => {
           </Stack>
         </Stack>
         <Divider />
-        <Stack alignItems="center">
-          <LanguageSelector />
-        </Stack>
+        <ProfileLanguageSelector />
       </Stack>
     </Container>
   );

@@ -1,12 +1,9 @@
 import { initReactI18next } from "react-i18next";
 import i18n from "i18next";
 
-import { SUPPORTED_LANGUAGES } from "@utils/constants";
-
 import enTranslations from "@locales/en/translation.json";
 import huTranslations from "@locales/hu/translation.json";
-
-export type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number];
+import { SUPPORTED_LANGUAGES, SupportedLanguage } from "@utils/constants/locales";
 
 declare module "i18next" {
   // Extend CustomTypeOptions

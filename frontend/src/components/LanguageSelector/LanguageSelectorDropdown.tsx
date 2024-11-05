@@ -2,9 +2,11 @@ import { useTranslation } from "react-i18next";
 
 import { Menu, MenuItem } from "@mui/material";
 
-import { SupportedLanguage } from "@lib/i18n";
-
-import { LOCALES, SUPPORTED_LANGUAGES } from "@utils/constants";
+import {
+  LOCALES,
+  SUPPORTED_LANGUAGES,
+  SupportedLanguage,
+} from "@utils/constants";
 
 type Props = {
   open: boolean;

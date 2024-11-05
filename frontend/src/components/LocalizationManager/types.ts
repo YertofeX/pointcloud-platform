@@ -1,4 +1,4 @@
-import { SupportedLanguage } from "@lib/i18n";
+import { SupportedLanguage } from "@utils/constants";
 
 export type LocalizationContextType = {
   language: SupportedLanguage;

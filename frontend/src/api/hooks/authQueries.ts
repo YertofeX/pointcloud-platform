@@ -1,4 +1,4 @@
-import { LoginParams, RegisterParams, User } from "@api/types";
+import { LoginParams, RegisterParams, User, UserUpdateParams } from "@api/types";
 import { pocketBase } from "@lib/pocketbase";
 import { queryClient } from "@lib/queryClient";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -19,6 +19,19 @@ export const useGetUser = (props?: { disabled?: boolean }) => {
     retry: false,
   });
 };
+//#endregion
+
+//#region useUpdateUser
+const updateUser = async (data:UserUpdateParams): Promise<User> => {
+  const response = await pocketBase.collection("users").update((pocketBase.authStore.model as User).id, data)
+  return response;
+}
+
+export const useUpdateuser = () => {
+  return useMutation({
+    mutationFn: updateUser,
+  })
+}
 //#endregion
 
 //#region useLogin

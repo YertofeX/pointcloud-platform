@@ -7,7 +7,8 @@
       "cancel": "Mégse",
       "submit": "Küldés",
       "create": "Létrehozás",
-      "modify": "Módosítás"
+      "modify": "Módosítás",
+      "save": "Mentés"
     },
     "loading": "Betöltés..."
   },
@@ -136,7 +137,9 @@
       "profile": "Profil",
       "profile-picture": "Profilkép",
       "change-profile-picture": "Profilkép megváltoztatása",
-      "upload-image": "Kép feltöltése"
+      "upload-image": "Kép feltöltése",
+      "language": "Language",
+      "modifications-saved": "Változtatások elmentve."
     }
   },
   "auth": {
