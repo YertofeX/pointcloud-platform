@@ -4,11 +4,13 @@ import {
   useFrame,
   useThree,
 } from "@react-three/fiber";
-import * as React from "react";
 import {
+  forwardRef,
   ForwardRefExoticComponent,
   PropsWithoutRef,
   RefAttributes,
+  useEffect,
+  useMemo,
 } from "react";
 import {
   Vector3,
@@ -58,10 +60,7 @@ export type OrbitControlsProps = Omit<
 export const DelayedOrbitControls: ForwardRefComponent<
   OrbitControlsProps,
   DelayedOrbitControlsImpl
-> = /* @__PURE__ */ React.forwardRef<
-  DelayedOrbitControlsImpl,
-  OrbitControlsProps
->(
+> = /* @__PURE__ */ forwardRef<DelayedOrbitControlsImpl, OrbitControlsProps>(
   (
     {
       makeDefault,
@@ -94,7 +93,7 @@ export const DelayedOrbitControls: ForwardRefComponent<
     const explDomElement = (domElement ||
       events.connected ||
       gl.domElement) as HTMLElement;
-    const controls = React.useMemo(
+    const controls = useMemo(
       () =>
         new DelayedOrbitControlsImpl(explCamera, target as Vector3 | undefined),
       [explCamera]
@@ -104,7 +103,7 @@ export const DelayedOrbitControls: ForwardRefComponent<
       if (controls.enabled) controls.update();
     }, -1);
 
-    React.useEffect(() => {
+    useEffect(() => {
       if (keyEvents) {
         controls.connect(keyEvents === true ? explDomElement : keyEvents);
       }
@@ -113,7 +112,7 @@ export const DelayedOrbitControls: ForwardRefComponent<
       return () => void controls.dispose();
     }, [keyEvents, explDomElement, regress, controls, invalidate]);
 
-    React.useEffect(() => {
+    useEffect(() => {
       const callback = (e: OrbitControlsChangeEvent) => {
         invalidate();
         if (regress) performance.regress();
@@ -145,7 +144,7 @@ export const DelayedOrbitControls: ForwardRefComponent<
       };
     }, [onChange, onStart, onEnd, controls, invalidate, setEvents, explCamera]);
 
-    React.useEffect(() => {
+    useEffect(() => {
       if (makeDefault) {
         const old = get().controls;
         set({ controls });
