@@ -57,6 +57,7 @@ export const CameraHandler = () => {
           far={9999}
           up={[0, 0, 1]}
           position={initialCamera.position}
+          zoom={10}
           makeDefault
         />
       ) : (
