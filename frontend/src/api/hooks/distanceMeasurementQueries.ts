@@ -4,6 +4,7 @@ import {
   DistanceMeasurementUpdateParams,
   User,
 } from "@api/types";
+import { dayjs } from "@lib/dayjs";
 import { pocketBase } from "@lib/pocketbase";
 import { queryClient } from "@lib/queryClient";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -17,6 +18,11 @@ type ProjectIDProp = {
 type MeasurementIDProp = {
   measurementID: string;
 };
+
+const distanceMeasurementsKey = ({ projectID }: ProjectIDProp) => [
+  QUERY_KEYS.distanceMeasurements,
+  { projectID },
+];
 
 //#region useGetDistanceMeasurements
 const getDistanceMeasurements = async ({
@@ -32,7 +38,7 @@ const getDistanceMeasurements = async ({
 
 export const useGetDistanceMeasurements = ({ projectID }: ProjectIDProp) => {
   return useQuery({
-    queryKey: [QUERY_KEYS.distanceMeasurements, projectID],
+    queryKey: distanceMeasurementsKey({ projectID }),
     queryFn: () => getDistanceMeasurements({ projectID }),
     enabled: Boolean(projectID),
   });
@@ -56,19 +62,47 @@ const createDistanceMeasurement = async ({
 export const useCreateDistanceMeasurement = () => {
   return useMutation({
     mutationFn: createDistanceMeasurement,
-    onSuccess: (response, { projectID }) => {
-      queryClient.setQueriesData<DistanceMeasurement[]>(
-        {
-          queryKey: [QUERY_KEYS.distanceMeasurements, projectID],
-        },
+    onMutate: async ({ projectID, ...data }) => {
+      await queryClient.cancelQueries({
+        queryKey: distanceMeasurementsKey({ projectID }),
+      });
+
+      const previousDistanceMeasurements = queryClient.getQueryData<
+        DistanceMeasurement[] | undefined
+      >(distanceMeasurementsKey({ projectID }));
+
+      queryClient.setQueryData<DistanceMeasurement[]>(
+        distanceMeasurementsKey({ projectID }),
         produce((draft) => {
+          const newMeasurement: DistanceMeasurement = {
+            id: String(Math.random()).split(".")[1],
+            created: dayjs().toISOString(),
+            updated: dayjs().toISOString(),
+            owner: (pocketBase.authStore.model as User).id,
+            project: projectID ?? "",
+            ...data,
+          };
+          console.log({ newMeasurement });
           if (draft === undefined) {
-            draft = [response];
+            draft = [newMeasurement];
           } else {
-            draft.push(response);
+            draft.push(newMeasurement);
           }
         })
       );
+
+      return { previousDistanceMeasurements };
+    },
+    onError: (_, { projectID }, context) => {
+      queryClient.setQueryData<DistanceMeasurement[]>(
+        distanceMeasurementsKey({ projectID }),
+        context?.previousDistanceMeasurements
+      );
+    },
+    onSettled: (_, __, { projectID }) => {
+      queryClient.invalidateQueries({
+        queryKey: distanceMeasurementsKey({ projectID }),
+      });
     },
   });
 };
@@ -85,27 +119,45 @@ const updateDistanceMeasurement = async ({
   const response = await pocketBase
     .collection("distance_measurements")
     .update(measurementID, data);
-
   return response;
 };
 
 export const useUpdateDistanceMeasurement = () => {
   return useMutation({
     mutationFn: updateDistanceMeasurement,
-    onSuccess: (response, { projectID }) => {
-      queryClient.setQueriesData<DistanceMeasurement[]>(
-        {
-          queryKey: [QUERY_KEYS.distanceMeasurements, projectID],
-        },
+    onMutate: async ({ projectID, measurementID, ...data }) => {
+      await queryClient.cancelQueries({
+        queryKey: distanceMeasurementsKey({ projectID }),
+      });
+
+      const previousDistanceMeasurements = queryClient.getQueryData<
+        DistanceMeasurement[] | undefined
+      >(distanceMeasurementsKey({ projectID }));
+
+      queryClient.setQueryData<DistanceMeasurement[]>(
+        distanceMeasurementsKey({ projectID }),
         produce((draft) => {
           if (draft === undefined) return;
           const index = draft.findIndex(
-            (measurement) => measurement.id === response.id
+            (measurement) => measurement.id === measurementID
           );
           if (index < 0) return;
-          draft[index] = response;
+          draft[index] = { ...draft[index], ...data };
         })
       );
+
+      return { previousDistanceMeasurements };
+    },
+    onError: (_, { projectID }, context) => {
+      queryClient.setQueryData<DistanceMeasurement[]>(
+        distanceMeasurementsKey({ projectID }),
+        context?.previousDistanceMeasurements
+      );
+    },
+    onSettled: (_, __, { projectID }) => {
+      queryClient.invalidateQueries({
+        queryKey: distanceMeasurementsKey({ projectID }),
+      });
     },
   });
 };
@@ -124,11 +176,17 @@ const deleteDistanceMeasurement = async ({
 export const useDeleteDistanceMeasurement = () => {
   return useMutation({
     mutationFn: deleteDistanceMeasurement,
-    onSuccess: (_, { measurementID, projectID }) => {
-      queryClient.setQueriesData<DistanceMeasurement[]>(
-        {
-          queryKey: [QUERY_KEYS.distanceMeasurements, projectID],
-        },
+    onMutate: async ({ projectID, measurementID }) => {
+      await queryClient.cancelQueries({
+        queryKey: distanceMeasurementsKey({ projectID }),
+      });
+
+      const previousDistanceMeasurements = queryClient.getQueryData<
+        DistanceMeasurement[] | undefined
+      >(distanceMeasurementsKey({ projectID }));
+
+      queryClient.setQueryData<DistanceMeasurement[]>(
+        distanceMeasurementsKey({ projectID }),
         produce((draft) => {
           if (!draft) return;
           const index = draft.findIndex(
@@ -138,6 +196,19 @@ export const useDeleteDistanceMeasurement = () => {
           draft.splice(index, 1);
         })
       );
+
+      return { previousDistanceMeasurements };
+    },
+    onError: (_, { projectID }, context) => {
+      queryClient.setQueryData<DistanceMeasurement[]>(
+        distanceMeasurementsKey({ projectID }),
+        context?.previousDistanceMeasurements
+      );
+    },
+    onSettled: (_, __, { projectID }) => {
+      queryClient.invalidateQueries({
+        queryKey: distanceMeasurementsKey({ projectID }),
+      });
     },
   });
 };

@@ -63,10 +63,10 @@ export const AreaMeasurementEditForm = ({ measurement, onClose }: Props) => {
             message: t("project.tools.area-measurement-updated-successfully"),
             severity: "success",
           });
-          onClose();
         },
       }
     );
+    onClose();
   };
 
   return (

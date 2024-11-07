@@ -1,6 +1,3 @@
-import { User } from "./authTypes";
-import { Project } from "./projectTypes";
-
 type Coordinates3D = [number, number, number];
 type PolyLine = Coordinates3D[];
 
@@ -10,8 +7,8 @@ type RecordData = {
   updated: string;
 };
 type RelationData = {
-  owner: User;
-  project: Project;
+  owner: string;
+  project: string;
 };
 type MeasurementData = {
   name: string;

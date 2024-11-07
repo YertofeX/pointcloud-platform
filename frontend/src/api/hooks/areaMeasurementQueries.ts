@@ -4,6 +4,7 @@ import {
   AreaMeasurementUpdateParams,
   User,
 } from "@api/types";
+import { dayjs } from "@lib/dayjs";
 import { pocketBase } from "@lib/pocketbase";
 import { queryClient } from "@lib/queryClient";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -17,6 +18,11 @@ type ProjectIDProp = {
 type MeasurementIDProp = {
   measurementID: string;
 };
+
+const areaMeasurementsKey = ({ projectID }: ProjectIDProp) => [
+  QUERY_KEYS.areaMeasurements,
+  { projectID },
+];
 
 //#region useGetAreaMeasurements
 const getAreaMeasurements = async ({
@@ -32,7 +38,7 @@ const getAreaMeasurements = async ({
 
 export const useGetAreaMeasurements = ({ projectID }: ProjectIDProp) => {
   return useQuery({
-    queryKey: [QUERY_KEYS.areaMeasurements, projectID],
+    queryKey: areaMeasurementsKey({ projectID }),
     queryFn: () => getAreaMeasurements({ projectID }),
     enabled: Boolean(projectID),
   });
@@ -55,19 +61,46 @@ const createAreaMeasurement = async ({
 export const useCreateAreaMeasurement = () => {
   return useMutation({
     mutationFn: createAreaMeasurement,
-    onSuccess: (response, { projectID }) => {
-      queryClient.setQueriesData<AreaMeasurement[]>(
-        {
-          queryKey: [QUERY_KEYS.areaMeasurements, projectID],
-        },
+    onMutate: async ({ projectID, ...data }) => {
+      await queryClient.cancelQueries({
+        queryKey: areaMeasurementsKey({ projectID }),
+      });
+
+      const previousAreaMeasurements = queryClient.getQueryData<
+        AreaMeasurement[] | undefined
+      >(areaMeasurementsKey({ projectID }));
+
+      queryClient.setQueryData<AreaMeasurement[]>(
+        areaMeasurementsKey({ projectID }),
         produce((draft) => {
+          const newMeasurement: AreaMeasurement = {
+            id: "-1",
+            created: dayjs().toISOString(),
+            updated: dayjs().toISOString(),
+            owner: (pocketBase.authStore.model as User).id,
+            project: projectID ?? "",
+            ...data,
+          };
           if (draft === undefined) {
-            draft = [response];
+            draft = [newMeasurement];
           } else {
-            draft.push(response);
+            draft.push(newMeasurement);
           }
         })
       );
+
+      return { previousAreaMeasurements };
+    },
+    onError: (_, { projectID }, context) => {
+      queryClient.setQueryData<AreaMeasurement[]>(
+        areaMeasurementsKey({ projectID }),
+        context?.previousAreaMeasurements
+      );
+    },
+    onSettled: (_, __, { projectID }) => {
+      queryClient.invalidateQueries({
+        queryKey: areaMeasurementsKey({ projectID }),
+      });
     },
   });
 };
@@ -84,27 +117,45 @@ const updateAreaMeasurement = async ({
   const response = await pocketBase
     .collection("area_measurements")
     .update(measurementID, data);
-
   return response;
 };
 
 export const useUpdateAreaMeasurement = () => {
   return useMutation({
     mutationFn: updateAreaMeasurement,
-    onSuccess: (response, { projectID }) => {
-      queryClient.setQueriesData<AreaMeasurement[]>(
-        {
-          queryKey: [QUERY_KEYS.areaMeasurements, projectID],
-        },
+    onMutate: async ({ projectID, measurementID, ...data }) => {
+      await queryClient.cancelQueries({
+        queryKey: areaMeasurementsKey({ projectID }),
+      });
+
+      const previousAreaMeasurements = queryClient.getQueryData<
+        AreaMeasurement[] | undefined
+      >(areaMeasurementsKey({ projectID }));
+
+      queryClient.setQueryData<AreaMeasurement[]>(
+        areaMeasurementsKey({ projectID }),
         produce((draft) => {
           if (draft === undefined) return;
           const index = draft.findIndex(
-            (measurement) => measurement.id === response.id
+            (measurement) => measurement.id === measurementID
           );
           if (index < 0) return;
-          draft[index] = response;
+          draft[index] = { ...draft[index], ...data };
         })
       );
+
+      return { previousAreaMeasurements };
+    },
+    onError: (_, { projectID }, context) => {
+      queryClient.setQueryData<AreaMeasurement[]>(
+        areaMeasurementsKey({ projectID }),
+        context?.previousAreaMeasurements
+      );
+    },
+    onSettled: (_, __, { projectID }) => {
+      queryClient.invalidateQueries({
+        queryKey: areaMeasurementsKey({ projectID }),
+      });
     },
   });
 };
@@ -123,11 +174,17 @@ const deleteAreaMeasurement = async ({
 export const useDeleteAreaMeasurement = () => {
   return useMutation({
     mutationFn: deleteAreaMeasurement,
-    onSuccess: (_, { measurementID, projectID }) => {
-      queryClient.setQueriesData<AreaMeasurement[]>(
-        {
-          queryKey: [QUERY_KEYS.areaMeasurements, projectID],
-        },
+    onMutate: async ({ projectID, measurementID }) => {
+      await queryClient.cancelQueries({
+        queryKey: areaMeasurementsKey({ projectID }),
+      });
+
+      const previousAreaMeasurements = queryClient.getQueryData<
+        AreaMeasurement[] | undefined
+      >(areaMeasurementsKey({ projectID }));
+
+      queryClient.setQueryData<AreaMeasurement[]>(
+        areaMeasurementsKey({ projectID }),
         produce((draft) => {
           if (!draft) return;
           const index = draft.findIndex(
@@ -137,6 +194,19 @@ export const useDeleteAreaMeasurement = () => {
           draft.splice(index, 1);
         })
       );
+
+      return { previousAreaMeasurements };
+    },
+    onError: (_, { projectID }, context) => {
+      queryClient.setQueryData<AreaMeasurement[]>(
+        areaMeasurementsKey({ projectID }),
+        context?.previousAreaMeasurements
+      );
+    },
+    onSettled: (_, __, { projectID }) => {
+      queryClient.invalidateQueries({
+        queryKey: areaMeasurementsKey({ projectID }),
+      });
     },
   });
 };

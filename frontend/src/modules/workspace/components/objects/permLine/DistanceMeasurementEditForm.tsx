@@ -68,10 +68,10 @@ export const DistanceMeasurementEditForm = ({
             ),
             severity: "success",
           });
-          onClose();
         },
       }
     );
+    onClose();
   };
 
   return (
