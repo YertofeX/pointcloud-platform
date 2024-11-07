@@ -15,7 +15,7 @@ export type User = {
 export type UserUpdateParams = {
   email?: string;
   language?: SupportedLanguage;
-}
+};
 
 export type LoginParams = {
   name: string;
