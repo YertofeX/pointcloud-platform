@@ -30,7 +30,7 @@ import { LayerData, LayerGroupData } from "../components/LayerManager/types";
 import { useLayerContext } from "../components/LayerManager/LayerContext";
 import { useOriginContext } from "./OriginContext";
 
-export type PermObjectType = "distance" | "area" | "pointcloud";
+export type PermObjectType = "distance" | "area" | "pointCloud";
 
 type PermObjectData = {
   objectId: string;

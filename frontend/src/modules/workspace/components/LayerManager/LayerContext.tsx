@@ -13,7 +13,7 @@ import { DistanceMeasureActions } from "../tools/distanceMeasureTool/DistanceMea
 import { AreaMeasureActions } from "../tools/areaMeasureTool/AreaMeasureActions";
 import { produce } from "immer";
 import { useLocalStorage } from "@mantine/hooks";
-import { PointcloudActions } from "../objects/pointCloud/PointcloudActions";
+import { PointCloudActions } from "../objects/pointCloud/PointCloudActions";
 import { usePointCloudsContext } from "@modules/workspace/contexts/PointCloudsContext";
 
 export type GroupVisibility = {
@@ -127,7 +127,7 @@ export const LayerProvider = ({ children }: PropsWithChildren) => {
   );
 
   const { pointClouds } = usePointCloudsContext();
-  const pointcloudLayers = useMemo<LayerList<PointCloudData>>(
+  const pointCloudLayers = useMemo<LayerList<PointCloudData>>(
     () =>
       pointClouds
         ? (Object.fromEntries(
@@ -138,7 +138,7 @@ export const LayerProvider = ({ children }: PropsWithChildren) => {
                 title: pointCloud.name,
                 visible: pointCloud.visible,
                 data: pointCloud,
-                ActionComponent: PointcloudActions,
+                ActionComponent: PointCloudActions,
               } as LayerData<string, PointCloudData>,
             ])
           ) as LayerList)
@@ -151,7 +151,7 @@ export const LayerProvider = ({ children }: PropsWithChildren) => {
       file: {
         id: "file",
         title: t("project.layers.files"),
-        content: pointcloudLayers,
+        content: pointCloudLayers,
         visible: staticGroupVisibility.file,
       },
       measurement: {
@@ -161,7 +161,7 @@ export const LayerProvider = ({ children }: PropsWithChildren) => {
         visible: staticGroupVisibility.measurement,
       },
     }),
-    [measurementLayerGroups, pointcloudLayers, staticGroupVisibility]
+    [measurementLayerGroups, pointCloudLayers, staticGroupVisibility]
   );
 
   return (

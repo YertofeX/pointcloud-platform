@@ -114,7 +114,7 @@
       "total-length": "Teljes hossz",
       "area": "Terület",
       "circumference": "Kerület",
-      "export-measurement-data": "Export measurement data"
+      "export-measurement-data": "Mérési adatok exportálása"
     },
     "files": {
       "upload-point-cloud": "Pontfelhő feltöltése (.las)",

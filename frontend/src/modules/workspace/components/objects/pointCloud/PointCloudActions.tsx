@@ -2,7 +2,7 @@ import { IconButton, Stack, Typography } from "@mui/material";
 import { LayerActionComponentProps } from "../../LayerManager/types";
 import { HighlightableSelectableStack } from "@components/HighlightableSelectableStack";
 import { CropFree as CropFreeIcon, ScatterPlot } from "@mui/icons-material";
-import { BoxGeometry, Matrix4, Mesh, MeshBasicMaterial, Vector3 } from "three";
+import { BoxGeometry, Mesh, MeshBasicMaterial, Vector3 } from "three";
 import { useBoundsContext } from "@modules/workspace/contexts/BoundsContext";
 import { usePermObjectContext } from "@modules/workspace/contexts/PermObjectContext";
 import { PointCloud } from "@modules/workspace/contexts/PointCloudsContext";
@@ -11,7 +11,7 @@ import { useUpdatePointCloud } from "@api/hooks";
 import { useWorkspaceContext } from "../../WorkspaceContext/WorkspaceContext";
 import { useOriginContext } from "@modules/workspace/contexts/OriginContext";
 
-export const PointcloudActions = ({
+export const PointCloudActions = ({
   id,
   title,
   visible,
@@ -32,10 +32,10 @@ export const PointcloudActions = ({
     usePermObjectContext();
 
   const isHighlighted =
-    highlighted?.objectId === id && highlighted.objectType === "pointcloud";
+    highlighted?.objectId === id && highlighted.objectType === "pointCloud";
 
   const isSelected =
-    selected?.objectId === id && selected.objectType === "pointcloud";
+    selected?.objectId === id && selected.objectType === "pointCloud";
 
   const { mutate: updatePointCloud } = useUpdatePointCloud();
 
@@ -66,7 +66,7 @@ export const PointcloudActions = ({
   };
 
   const handleSelectPointcloud = () => {
-    setSelected({ objectId: id, objectType: "pointcloud" });
+    setSelected({ objectId: id, objectType: "pointCloud" });
   };
 
   const handleVisibilityClick = () => {
@@ -85,7 +85,7 @@ export const PointcloudActions = ({
       alignItems="center"
       gap={2}
       onMouseEnter={() =>
-        setHighlighted({ objectId: id, objectType: "pointcloud" })
+        setHighlighted({ objectId: id, objectType: "pointCloud" })
       }
       onMouseLeave={() => setHighlighted(null)}
       highlighted={isHighlighted}

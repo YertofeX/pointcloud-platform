@@ -34,7 +34,7 @@ export const ObjectDetails = () => {
         );
         if (foundAreaMeasurement) return foundAreaMeasurement;
         break;
-      case "pointcloud":
+      case "pointCloud":
         // TODO
         break;
       default:
@@ -62,7 +62,7 @@ export const ObjectDetails = () => {
             measurement={selectedObject as AreaMeasurement}
           />
         );
-      case "pointcloud":
+      case "pointCloud":
         //TODO
         return null;
     }
