@@ -10,7 +10,7 @@ export const AreaIcon = (props: SvgIconProps) => {
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <g clip-path="url(#clip0_7608_44)">
+        <g clipPath="url(#clip0_7608_44)">
           <path
             d="M13.5 60.5L35.5 11.5L86 40.5L68.5 88L13.5 60.5Z"
             stroke="currentColor"

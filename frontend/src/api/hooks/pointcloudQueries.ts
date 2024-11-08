@@ -19,15 +19,19 @@ type ProjectIDParam = {
 };
 
 //#region useGetPointClouds
-const getPointClouds = async (): Promise<PointCloudData[]> => {
-  const response = pocketBase.collection("pointclouds").getFullList();
+const getPointClouds = async ({
+  projectID,
+}: ProjectIDParam): Promise<PointCloudData[]> => {
+  const response = pocketBase.collection("pointclouds").getFullList({
+    filter: `project.id="${projectID}"`,
+  });
   return response;
 };
 
 export const useGetPointClouds = ({ projectID }: { projectID: string }) => {
   return useQuery({
     queryKey: [QUERY_KEYS.pointClouds, projectID],
-    queryFn: () => getPointClouds(),
+    queryFn: () => getPointClouds({ projectID }),
     enabled: Boolean(projectID),
   });
 };
