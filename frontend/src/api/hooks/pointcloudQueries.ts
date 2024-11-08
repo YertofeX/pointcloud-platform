@@ -107,3 +107,33 @@ export const useUpdatePointCloud = () => {
   });
 };
 //#endregion
+
+//#region useDeletePointCloud
+const deletePointCloud = async ({
+  pointCloudID,
+}: PointCloudIDParam & ProjectIDParam): Promise<boolean> => {
+  const response = await pocketBase
+    .collection("pointclouds")
+    .delete(pointCloudID);
+  return response;
+};
+
+export const useDeletePointCloud = () => {
+  return useMutation({
+    mutationFn: deletePointCloud,
+    onSuccess: (_, { pointCloudID, projectID }) => {
+      queryClient.setQueryData<PointCloudData[]>(
+        [QUERY_KEYS.pointClouds, projectID],
+        produce((draft) => {
+          if (!draft) return;
+          const index = draft.findIndex(
+            (pointCloud) => pointCloud.id === pointCloudID
+          );
+          if (index < 0) return;
+          draft.splice(index, 1);
+        })
+      );
+    },
+  });
+};
+//#endregion

@@ -1,33 +1,17 @@
-import {
-  Box,
-  Container,
-  Divider,
-  IconButton,
-  Modal,
-  Paper,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Container, Divider, Paper, Stack, Typography } from "@mui/material";
 import { useWorkspaceContext } from "../components/WorkspaceContext/WorkspaceContext";
 import { useCreatePointcloud, useGetPointClouds } from "@api/hooks";
 import { ChangeEvent, useState } from "react";
 import LoadingButton from "@mui/lab/LoadingButton";
-import {
-  CalendarMonth as CalendarMonthIcon,
-  CloudUpload as CloudUploadIcon,
-  Delete as DeleteIcon,
-  Edit as EditIcon,
-  FilePresent as FilePresentIcon,
-  ScatterPlot as ScatterPlotIcon,
-} from "@mui/icons-material";
+import { CloudUpload as CloudUploadIcon } from "@mui/icons-material";
 import { VisuallyHiddenInput } from "@components/VisuallyHiddenInput";
 import { useTranslation } from "react-i18next";
 import { WorkspaceMenu } from "../components/UI/WorkspaceMenu";
 import { WorkspaceProfile } from "../components/UI/WorkspaceProfile";
 import { WorkspaceDataDisplay } from "../components/UI/WorkspaceDataDisplay";
-import { dayjs } from "@lib/dayjs";
 import { PointCloudData } from "@api/types";
 import { PointCloudEditForm } from "../Files/PointCloudEditForm";
+import { FileItem } from "../Files/FileItem";
 
 export const Files = () => {
   const { t } = useTranslation();
@@ -98,42 +82,13 @@ export const Files = () => {
               </Stack>
             </Paper>
             <Stack gap={1}>
-              {pointClouds.map((pointCloud) => {
-                const { id, name, raw, created } = pointCloud;
-                return (
-                  <Paper key={id} sx={{ p: 1, ml: 2 }}>
-                    <Stack direction="row" alignItems="center" gap={1}>
-                      <Stack flexGrow={1} gap={1}>
-                        <Stack direction="row" alignItems="center" gap={1}>
-                          <ScatterPlotIcon />
-                          <Typography>{name}</Typography>
-                        </Stack>
-                        <Stack gap={1} ml={4}>
-                          <Stack direction="row" alignItems="center" gap={1}>
-                            <FilePresentIcon fontSize="small" />
-                            <Typography variant="caption">{raw}</Typography>
-                          </Stack>
-                          <Stack direction="row" alignItems="center" gap={1}>
-                            <CalendarMonthIcon fontSize="small" />
-                            <Typography variant="caption">
-                              {dayjs(created).format("L LT")}
-                            </Typography>
-                          </Stack>
-                        </Stack>
-                      </Stack>
-
-                      <IconButton
-                        onClick={() => setEditing({ open: true, pointCloud })}
-                      >
-                        <EditIcon />
-                      </IconButton>
-                      <IconButton>
-                        <DeleteIcon />
-                      </IconButton>
-                    </Stack>
-                  </Paper>
-                );
-              })}
+              {pointClouds.map((pointCloud) => (
+                <FileItem
+                  key={pointCloud.id}
+                  pointCloud={pointCloud}
+                  onEditing={() => setEditing({ open: true, pointCloud })}
+                />
+              ))}
             </Stack>
           </>
         ) : (

@@ -121,7 +121,9 @@
       "delete-file": "Delete file",
       "no-files-to-display": "No files to display.",
       "edit-point-cloud": "Edit point cloud",
-      "point-cloud-updated-successfully": "Point cloud updated successfully"
+      "point-cloud-updated-successfully": "Point cloud updated successfully",
+      "confirm-deletion": "Confirm deletion",
+      "are-you-sure": "Are you sure you want to delete this point cloud?"
     }
   },
   "dashboard": {

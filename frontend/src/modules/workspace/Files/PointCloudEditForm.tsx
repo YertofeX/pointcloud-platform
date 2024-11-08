@@ -111,7 +111,11 @@ const PointCloudEditFormInner = ({ pointCloud, onClose }: InnerProps) => {
           />
         </DialogContent>
         <DialogActions>
-          <LoadingButton type="submit" loading={isUpdatePointCloudPending}>
+          <LoadingButton
+            type="submit"
+            variant="contained"
+            loading={isUpdatePointCloudPending}
+          >
             {t("common.button.modify")}
           </LoadingButton>
         </DialogActions>

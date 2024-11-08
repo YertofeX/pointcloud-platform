@@ -121,7 +121,9 @@
       "delete-file": "Fájl törlése",
       "no-files-to-display": "Nincsenek megjeleníthető fájlok.",
       "edit-point-cloud": "Pontfelhő szerkesztése",
-      "point-cloud-updated-successfully": "Pointfelhő módosítása sikeres"
+      "point-cloud-updated-successfully": "Pointfelhő módosítása sikeres",
+      "confirm-deletion": "Törlés megerősítése",
+      "are-you-sure": "Biztosan törölni szeretné ezt a pontfelhőt?"
     }
   },
   "dashboard": {
