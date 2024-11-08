@@ -32,6 +32,7 @@ import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { DistanceMeasurementEditForm } from "./DistanceMeasurementEditForm";
 import { ExportButton } from "@components/ExportButton";
+import { useLocalization } from "@components/LocalizationManager";
 
 type Props = {
   measurement: DistanceMeasurement;
@@ -40,6 +41,8 @@ type Props = {
 export const DistanceMeasurementDetails = ({ measurement }: Props) => {
   const { t } = useTranslation();
 
+  const { numberFormatter } = useLocalization();
+
   const { id, name, color, line, created, updated } = measurement;
 
   const { setSelected } = usePermObjectContext();
@@ -47,7 +50,7 @@ export const DistanceMeasurementDetails = ({ measurement }: Props) => {
   const [editing, setEditing] = useState<boolean>(false);
 
   const totalLength = useMemo<string>(
-    () => formatLength(calculateLength(line.map(toVec3))),
+    () => `${numberFormatter.format(calculateLength(line.map(toVec3)))} m`,
     [line]
   );
 
@@ -55,8 +58,9 @@ export const DistanceMeasurementDetails = ({ measurement }: Props) => {
     () =>
       line
         .slice(1)
-        .map((coordinates, index) =>
-          formatLength(calculateLength([line[index], coordinates].map(toVec3)))
+        .map(
+          (coordinates, index) =>
+            `${numberFormatter.format(calculateLength([line[index], coordinates].map(toVec3)))} m`
         ),
     [line]
   );

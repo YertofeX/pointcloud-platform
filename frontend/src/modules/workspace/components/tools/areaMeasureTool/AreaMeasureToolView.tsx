@@ -13,10 +13,13 @@ import { calculateCenter } from "@modules/workspace/utils/calculateCenter";
 import { PolyLineComponent } from "../../objects/PolyLine";
 import { Paper } from "@mui/material";
 import { produce } from "immer";
+import { useLocalization } from "@components/LocalizationManager";
 
 const picker = new CustomPointCloudOctreePicker();
 
 export const AreaMeasureToolView = () => {
+  const { numberFormatter } = useLocalization();
+
   const { toolState, setToolState } = useToolContext();
 
   const { commitObject, editing: permObjectEditing } = usePermObjectContext();
@@ -170,7 +173,8 @@ export const AreaMeasureToolView = () => {
                 px: 1,
               }}
             >
-              {Math.round(area * 100) / 100}&nbsp;m<sup>2</sup>
+              {numberFormatter.format(Math.round(area * 100) / 100)}&nbsp;m
+              <sup>2</sup>
             </Paper>
           </Html>
           <PolyLineComponent

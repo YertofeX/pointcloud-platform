@@ -114,6 +114,7 @@
       "total-length": "Teljes hossz",
       "area": "Terület",
       "circumference": "Kerület",
+      "displayed-point-count": "Megjelenített pontok száma",
       "export-measurement-data": "Mérési adatok exportálása"
     },
     "files": {
@@ -143,7 +144,7 @@
       "profile-picture": "Profilkép",
       "change-profile-picture": "Profilkép megváltoztatása",
       "upload-image": "Kép feltöltése",
-      "language": "Language",
+      "language": "Nyelv",
       "modifications-saved": "Változtatások elmentve."
     }
   },

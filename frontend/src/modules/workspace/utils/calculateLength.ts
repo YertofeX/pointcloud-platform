@@ -12,8 +12,8 @@ export const calculateLength = (points: Vector3[]): number => {
     return len;
   }
   return 0;
-}
+};
 
 export const formatLength = (length: number): string => {
   return `${Math.round(length * 100) / 100} m`;
-}
+};

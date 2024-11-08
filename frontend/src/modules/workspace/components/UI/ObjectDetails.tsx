@@ -8,9 +8,12 @@ import { AreaMeasurement, DistanceMeasurement } from "@api/types";
 import { ReactNode } from "react";
 import { DistanceMeasurementDetails } from "../objects/permLine/DistanceMeasurementDetails";
 import { AreaMeasurementDetails } from "../objects/permArea/AreaMeasurementDetails";
+import { PointCloud } from "@modules/workspace/contexts/PointCloudsContext";
+import { PointCloudDetails } from "../objects/pointCloud/PointCloudDetails";
 
 export const ObjectDetails = () => {
-  const { distanceMeasurements, areaMeasurements } = useLayerContext();
+  const { distanceMeasurements, areaMeasurements, pointClouds } =
+    useLayerContext();
   const { selected } = usePermObjectContext();
 
   if (selected === null) return null;
@@ -18,6 +21,7 @@ export const ObjectDetails = () => {
   const getSelectedObject = ():
     | DistanceMeasurement
     | AreaMeasurement
+    | PointCloud
     | null => {
     if (!selected) return null;
 
@@ -35,7 +39,10 @@ export const ObjectDetails = () => {
         if (foundAreaMeasurement) return foundAreaMeasurement;
         break;
       case "pointCloud":
-        // TODO
+        const foundPointCloud = pointClouds.find(
+          (pointCloud) => pointCloud.id === selected.objectId
+        );
+        if (foundPointCloud) return foundPointCloud;
         break;
       default:
         return null;
@@ -45,7 +52,7 @@ export const ObjectDetails = () => {
 
   const getDetailsComponent = (
     selectedObjectType: PermObjectType,
-    selectedObject: DistanceMeasurement | AreaMeasurement
+    selectedObject: DistanceMeasurement | AreaMeasurement | PointCloud
   ): ReactNode => {
     switch (selectedObjectType) {
       case "distance":
@@ -63,8 +70,12 @@ export const ObjectDetails = () => {
           />
         );
       case "pointCloud":
-        //TODO
-        return null;
+        return (
+          <PointCloudDetails
+            key={selectedObject.id}
+            pointCloud={selectedObject as PointCloud}
+          />
+        );
     }
   };
 

@@ -26,6 +26,7 @@ import { KeepSize } from "./helpers/KeepSize";
 import { hexToRGBA } from "@modules/workspace/utils/hexToRGBA";
 import { getTextColor } from "@modules/workspace/utils/getTextColor";
 import { hexToRGBObject } from "@modules/workspace/utils/hexToRGB";
+import { useLocalization } from "@components/LocalizationManager";
 
 export type PolyLine = {
   points: Vector3[];
@@ -68,6 +69,8 @@ export const PolyLineComponent = forwardRef(
     }: Props,
     fref
   ) => {
+    const { numberFormatter } = useLocalization();
+
     visible = visible === undefined || visible;
     const ref = useRef<Mesh>(null!);
     useImperativeHandle(fref, () => ref.current);
@@ -189,7 +192,7 @@ export const PolyLineComponent = forwardRef(
                     color={getTextColor(hexToRGBA(line.color))}
                     fontSize={12}
                   >
-                    {Math.round(length * 100) / 100} m
+                    {`${numberFormatter.format(Math.round(length * 100) / 100)} m`}
                   </Typography>
                 </Paper>
               </Html>
@@ -213,7 +216,7 @@ export const PolyLineComponent = forwardRef(
             }}
           >
             <Typography noWrap color={getTextColor(hexToRGBA(line.color))}>
-              {formatLength(calculateLength(line.points))}
+              {`${numberFormatter.format(calculateLength(line.points))} m`}
             </Typography>
           </Paper>
         </Html>

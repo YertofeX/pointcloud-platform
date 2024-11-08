@@ -33,6 +33,7 @@ import { useTranslation } from "react-i18next";
 import { AreaMeasurementEditForm } from "./AreaMeasurementEditForm";
 import { calculateArea } from "@modules/workspace/utils/calculateArea";
 import { ExportButton } from "@components/ExportButton";
+import { useLocalization } from "@components/LocalizationManager";
 
 type Props = {
   measurement: AreaMeasurement;
@@ -40,6 +41,8 @@ type Props = {
 
 export const AreaMeasurementDetails = ({ measurement }: Props) => {
   const { t } = useTranslation();
+
+  const { numberFormatter } = useLocalization();
 
   const { id, name, color, line, created, updated } = measurement;
 
@@ -53,7 +56,8 @@ export const AreaMeasurementDetails = ({ measurement }: Props) => {
   );
 
   const circumference = useMemo<string>(
-    () => formatLength(calculateLength([...line, line[0]].map(toVec3))),
+    () =>
+      `${numberFormatter.format(calculateLength([...line, line[0]].map(toVec3)))} m`,
     [line]
   );
 
@@ -61,8 +65,9 @@ export const AreaMeasurementDetails = ({ measurement }: Props) => {
     () =>
       [...line, line[0]]
         .slice(1)
-        .map((coordinates, index) =>
-          formatLength(calculateLength([line[index], coordinates].map(toVec3)))
+        .map(
+          (coordinates, index) =>
+            `${numberFormatter.format(calculateLength([line[index], coordinates].map(toVec3)))} m`
         ),
     [line]
   );
@@ -86,7 +91,7 @@ export const AreaMeasurementDetails = ({ measurement }: Props) => {
         <CopyButton
           size="small"
           sx={{ textTransform: "none" }}
-          copyContent={`${area} m2`}
+          copyContent={`${numberFormatter.format(area)} m2`}
         >
           <Typography>
             {area} m<sup>2</sup>

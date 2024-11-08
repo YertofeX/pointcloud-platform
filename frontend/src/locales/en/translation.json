@@ -114,6 +114,7 @@
       "total-length": "Total length",
       "area": "Area",
       "circumference": "Circumference",
+      "displayed-point-count": "Displayed point count",
       "export-measurement-data": "Export measurement data"
     },
     "files": {

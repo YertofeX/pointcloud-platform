@@ -14,7 +14,10 @@ import { AreaMeasureActions } from "../tools/areaMeasureTool/AreaMeasureActions"
 import { produce } from "immer";
 import { useLocalStorage } from "@mantine/hooks";
 import { PointCloudActions } from "../objects/pointCloud/PointCloudActions";
-import { usePointCloudsContext } from "@modules/workspace/contexts/PointCloudsContext";
+import {
+  PointCloud,
+  usePointCloudsContext,
+} from "@modules/workspace/contexts/PointCloudsContext";
 
 export type GroupVisibility = {
   file: boolean;
@@ -28,6 +31,7 @@ type LayerContextType = {
   toggleGroupVisibility: (key: keyof GroupVisibility) => void;
   distanceMeasurements: DistanceMeasurement[];
   areaMeasurements: AreaMeasurement[];
+  pointClouds: PointCloud[];
 };
 
 const LayerContext = createContext<LayerContextType>({
@@ -35,6 +39,7 @@ const LayerContext = createContext<LayerContextType>({
   toggleGroupVisibility: () => {},
   distanceMeasurements: [],
   areaMeasurements: [],
+  pointClouds: [],
 });
 
 export const useLayerContext = () => useContext(LayerContext);
@@ -171,6 +176,7 @@ export const LayerProvider = ({ children }: PropsWithChildren) => {
         toggleGroupVisibility,
         distanceMeasurements: distanceMeasurements ?? [],
         areaMeasurements: areaMeasurements ?? [],
+        pointClouds: pointClouds,
       }}
     >
       {children}
