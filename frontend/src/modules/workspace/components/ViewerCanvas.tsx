@@ -13,6 +13,7 @@ export const ViewerCanvas = () => {
       style={{
         height: "100vh",
         width: "100vw",
+        zIndex: 0,
       }}
     >
       <Lights />
