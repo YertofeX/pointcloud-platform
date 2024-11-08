@@ -32,6 +32,7 @@ import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { AreaMeasurementEditForm } from "./AreaMeasurementEditForm";
 import { calculateArea } from "@modules/workspace/utils/calculateArea";
+import { ExportButton } from "@components/ExportButton";
 
 type Props = {
   measurement: AreaMeasurement;
@@ -65,6 +66,17 @@ export const AreaMeasurementDetails = ({ measurement }: Props) => {
         ),
     [line]
   );
+
+  const exportData = {
+    name,
+    color,
+    area,
+    circumference,
+    points: line,
+    segments,
+    created,
+    updated,
+  };
 
   const details = (
     <>
@@ -127,6 +139,10 @@ export const AreaMeasurementDetails = ({ measurement }: Props) => {
           {`${t("project.details.updated")}: ${dayjs(updated).format("L LT")}`}
         </Typography>
       </Stack>
+      <Divider />
+      <ExportButton fileName={`${name}_export.json`} exportData={exportData}>
+        {t("project.details.export-measurement-data")}
+      </ExportButton>
     </>
   );
 

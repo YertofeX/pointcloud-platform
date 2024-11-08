@@ -31,6 +31,7 @@ import {
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { DistanceMeasurementEditForm } from "./DistanceMeasurementEditForm";
+import { ExportButton } from "@components/ExportButton";
 
 type Props = {
   measurement: DistanceMeasurement;
@@ -59,6 +60,16 @@ export const DistanceMeasurementDetails = ({ measurement }: Props) => {
         ),
     [line]
   );
+
+  const exportData = {
+    name,
+    color,
+    totalLength,
+    points: line,
+    segments,
+    created,
+    updated,
+  };
 
   const details = (
     <>
@@ -108,6 +119,10 @@ export const DistanceMeasurementDetails = ({ measurement }: Props) => {
           {`${t("project.details.updated")}: ${dayjs(updated).format("L LT")}`}
         </Typography>
       </Stack>
+      <Divider />
+      <ExportButton fileName={`${name}_export.json`} exportData={exportData}>
+        {t("project.details.export-measurement-data")}
+      </ExportButton>
     </>
   );
 

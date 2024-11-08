@@ -113,7 +113,8 @@
       "length": "Length",
       "total-length": "Total length",
       "area": "Area",
-      "circumference": "Circumference"
+      "circumference": "Circumference",
+      "export-measurement-data": "Export measurement data"
     },
     "files": {
       "upload-point-cloud": "Upload point cloud (.las)",

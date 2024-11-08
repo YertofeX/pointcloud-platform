@@ -113,7 +113,8 @@
       "length": "Hossz",
       "total-length": "Teljes hossz",
       "area": "Terület",
-      "circumference": "Kerület"
+      "circumference": "Kerület",
+      "export-measurement-data": "Export measurement data"
     },
     "files": {
       "upload-point-cloud": "Pontfelhő feltöltése (.las)",
