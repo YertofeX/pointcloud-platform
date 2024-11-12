@@ -115,7 +115,8 @@
       "area": "Terület",
       "circumference": "Kerület",
       "displayed-point-count": "Megjelenített pontok száma",
-      "export-measurement-data": "Mérési adatok exportálása"
+      "export-measurement-data": "Mérési adatok exportálása",
+      "show-bounding-box": "Befoglaló keret mutatása"
     },
     "files": {
       "upload-point-cloud": "Pontfelhő feltöltése (.las)",
@@ -173,5 +174,42 @@
   "not-found": {
     "page-not-found": "A keresett oldal nem található.",
     "go-back": "Vissza"
+  },
+  "point-cloud-material": {
+    "point-size-type": {
+      "point-size-type": "Pontméret típus",
+      "adaptive": "Adaptív",
+      "attenuated": "Csillapított",
+      "fixed": "Állandó"
+    },
+    "point-shape-type": {
+      "point-shape-type": "Pont alak típus",
+      "circle": "Kör",
+      "paraboloid": "Paraboloid",
+      "square": "Négyzet"
+    },
+    "point-color-type": {
+      "point-color-type": "Pontszín típus",
+      "classification": "Osztályozás",
+      "color": "Szín",
+      "composite": "Összetett",
+      "depth": "Mélység",
+      "elevation": "Magasság",
+      "intensity": "Intenzitás",
+      "intensity-gradient": "Intenzitás átmenet",
+      "lod": "LOD",
+      "normal": "Normális",
+      "phong": "Phong",
+      "point-index": "Pont index",
+      "return-number": "Visszatérési szám",
+      "rgb": "RGB",
+      "rgb-height": "RGB magasság",
+      "source": "Forrás"
+    },
+    "point-opacity-type": {
+      "point-opacity-type": "Pont átlátszatlanság típus",
+      "fixed": "Állandó",
+      "attenuated": "Csillapított"
+    }
   }
 }

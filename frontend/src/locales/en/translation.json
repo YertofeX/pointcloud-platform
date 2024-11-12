@@ -115,7 +115,8 @@
       "area": "Area",
       "circumference": "Circumference",
       "displayed-point-count": "Displayed point count",
-      "export-measurement-data": "Export measurement data"
+      "export-measurement-data": "Export measurement data",
+      "show-bounding-box": "Show bounding box"
     },
     "files": {
       "upload-point-cloud": "Upload point cloud (.las)",
@@ -173,5 +174,42 @@
   "not-found": {
     "page-not-found": "The page you're looking for does not exist.",
     "go-back": "Go back"
+  },
+  "point-cloud-material": {
+    "point-size-type": {
+      "point-size-type": "Point size type",
+      "adaptive": "Adaptive",
+      "attenuated": "Attenuated",
+      "fixed": "Fixed"
+    },
+    "point-shape-type": {
+      "point-shape-type": "Point shape type",
+      "circle": "Circle",
+      "paraboloid": "Paraboloid",
+      "square": "Square"
+    },
+    "point-color-type": {
+      "point-color-type": "Point color type",
+      "classification": "Classification",
+      "color": "Color",
+      "composite": "Composite",
+      "depth": "Depth",
+      "elevation": "Elevation",
+      "intensity": "Intensity",
+      "intensity-gradient": "Intensity gradient",
+      "lod": "LOD",
+      "normal": "Normal",
+      "phong": "Phong",
+      "point-index": "Point index",
+      "return-number": "Return number",
+      "rgb": "RGB",
+      "rgb-height": "RGB height",
+      "source": "Source"
+    },
+    "point-opacity-type": {
+      "point-opacity-type": "Point opacity type",
+      "fixed": "Fixed",
+      "attenuated": "Attenuated"
+    }
   }
 }

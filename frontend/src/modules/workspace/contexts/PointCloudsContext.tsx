@@ -72,7 +72,6 @@ export const PointCloudsProvider = ({ children }: PropsWithChildren) => {
       pco.material.inputColorEncoding = 1;
       pco.material.outputColorEncoding = 1;
       pco.showBoundingBox = false;
-      // pco.pointSizeType = PointSizeType.FIXED;
       pco.name = pointCloud.name;
       return pco;
     };
