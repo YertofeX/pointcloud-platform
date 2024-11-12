@@ -3,7 +3,6 @@ import {
   KeyboardArrowDown as KeyboardArrowDownIcon,
   KeyboardArrowUp as KeyboardArrowUpIcon,
   Person as PersonIcon,
-  Settings as SettingsIcon,
 } from "@mui/icons-material";
 import { Button, ListItemIcon, Menu, MenuItem } from "@mui/material";
 import { useState } from "react";
@@ -34,11 +33,6 @@ export const PageSelector = () => {
       path: "/dashboard/profile",
       name: t("header.profile.profile"),
       icon: <PersonIcon />,
-    },
-    {
-      path: "/dashboard/settings",
-      name: t("header.profile.settings"),
-      icon: <SettingsIcon />,
     },
   ];
 

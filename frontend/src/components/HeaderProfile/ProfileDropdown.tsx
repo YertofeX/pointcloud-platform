@@ -3,12 +3,10 @@ import { useTranslation } from "react-i18next";
 import {
   Logout as LogoutIcon,
   Person as PersonIcon,
-  Settings as SettingsIcon,
 } from "@mui/icons-material";
 import {
   Avatar,
   Box,
-  Chip,
   Divider,
   ListItemIcon,
   ListItemText,
@@ -77,12 +75,6 @@ export const ProfileDropdown = ({ open, onClose, anchorEl }: Props) => {
         </ListItemIcon>
         <ListItemText>{t("header.profile.profile")}</ListItemText>
       </MenuItem>
-      <MenuItem component={Link} to="/dashboard/settings" onClick={onClose}>
-        <ListItemIcon>
-          <SettingsIcon />
-        </ListItemIcon>
-        <ListItemText>{t("header.profile.settings")}</ListItemText>
-      </MenuItem>
       <Divider />
       <MenuItem onClick={handleLogout}>
         <ListItemIcon>
@@ -106,11 +98,4 @@ const DropdownInfoContainer = styled(Paper)({
   margin: "10px",
   marginBottom: "20px",
   // width: "160px",
-});
-
-const ChipContainer = styled(Box)({
-  width: "160px",
-  display: "flex",
-  flexWrap: "wrap",
-  gap: "5px",
 });

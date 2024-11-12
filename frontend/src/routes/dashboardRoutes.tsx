@@ -17,7 +17,4 @@ export const dashboardRoutes: RouteObject[] = [
     path: "profile",
     element: <UserProfile />,
   },
-  {
-    path: "settings",
-  },
 ];
