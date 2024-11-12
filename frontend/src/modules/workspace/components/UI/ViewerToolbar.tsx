@@ -1,4 +1,5 @@
 import { AreaIcon } from "@components/Icons/AreaIcon";
+import { HeightIcon } from "@components/Icons/HeightIcon";
 import { LineStringIcon } from "@components/Icons/LineStringIcon";
 import { PointerIcon } from "@components/Icons/PointerIcon";
 import {
@@ -26,6 +27,11 @@ export const ViewerToolbar = () => {
       name: "area-measure",
       icon: <AreaIcon />,
       title: t("project.tools.area-tooltip"),
+    },
+    {
+      name: "height-measure",
+      icon: <HeightIcon />,
+      title: t("project.tools.height-tooltip"),
     },
   ];
 

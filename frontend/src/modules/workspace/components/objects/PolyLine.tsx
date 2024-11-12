@@ -15,10 +15,7 @@ import {
 } from "@react-three/fiber";
 import { useControlsContext } from "@modules/workspace/contexts/ControlsContext";
 import { useCanvasEvent } from "@modules/workspace/utils/useCanvasEvent";
-import {
-  calculateLength,
-  formatLength,
-} from "@modules/workspace/utils/calculateLength";
+import { calculateLength } from "@modules/workspace/utils/calculateLength";
 import { calculateCenter } from "@modules/workspace/utils/calculateCenter";
 import { Paper, Typography } from "@mui/material";
 import { OccludedLine } from "./OccludedLine";
@@ -40,7 +37,9 @@ type Props = MeshProps & {
   line: PolyLine;
   hasCursor?: boolean;
   cursorIndex?: number;
-  showTotalDistance?: boolean;
+  disableTotalDistanceLabel?: boolean;
+  disableSegmentDistanceLabels?: boolean;
+  opacity?: number;
   firstClick?: () => void;
   onGrab?: (...props: OnGrabParams) => void;
   onGrabStart?: () => void;
@@ -63,7 +62,9 @@ export const PolyLineComponent = forwardRef(
       hasCursor,
       cursorIndex,
       visible,
-      showTotalDistance,
+      opacity,
+      disableTotalDistanceLabel = false,
+      disableSegmentDistanceLabels = false,
       firstClick,
       ...props
     }: Props,
@@ -119,6 +120,7 @@ export const PolyLineComponent = forwardRef(
             color={line.color}
             renderOrder={1}
             depthTest={false}
+            opacity={opacity}
           />
         )}
         {/* Control spheres */}
@@ -159,50 +161,52 @@ export const PolyLineComponent = forwardRef(
               <meshToonMaterial
                 color={hasCursor && index === cursorIndex ? "#f00" : line.color}
                 depthTest={false}
+                opacity={opacity}
               />
             </Sphere>
           </KeepSize>
         ))}
         {/* Lengths */}
-        {intervals(line.points)
-          .filter((points) => calculateLength(points) >= 0.25)
-          .map(([from, to], index) => {
-            const length = calculateLength([from, to]);
-            return (
-              <Html
-                key={`${index}`}
-                position={calculateCenter(from, to)}
-                style={{ display: visible ? "inherit" : "none" }}
-                center
-              >
-                <Paper
-                  sx={{
-                    px: 1,
-                    minWidth: "max-content",
-                    userSelect: "none",
-                    pointerEvents: "none",
-                    backgroundColor: colorRGB
-                      ? `rgba(${colorRGB.r}, ${colorRGB.g}, ${colorRGB.b}, 0.7)`
-                      : line.color,
-                  }}
-                  elevation={0}
+        {!disableSegmentDistanceLabels &&
+          intervals(line.points)
+            .filter((points) => calculateLength(points) >= 0.25)
+            .map(([from, to], index) => {
+              const length = calculateLength([from, to]);
+              return (
+                <Html
+                  key={`${index}`}
+                  position={calculateCenter(from, to)}
+                  style={{ display: visible ? "inherit" : "none" }}
+                  center
                 >
-                  <Typography
-                    noWrap
-                    color={getTextColor(hexToRGBA(line.color))}
-                    fontSize={12}
+                  <Paper
+                    sx={{
+                      px: 1,
+                      minWidth: "max-content",
+                      userSelect: "none",
+                      pointerEvents: "none",
+                      backgroundColor: colorRGB
+                        ? `rgba(${colorRGB.r}, ${colorRGB.g}, ${colorRGB.b}, 0.7)`
+                        : line.color,
+                    }}
+                    elevation={0}
                   >
-                    {`${numberFormatter.format(Math.round(length * 100) / 100)} m`}
-                  </Typography>
-                </Paper>
-              </Html>
-            );
-          })}
+                    <Typography
+                      noWrap
+                      color={getTextColor(hexToRGBA(line.color))}
+                      fontSize={12}
+                    >
+                      {`${numberFormatter.format(Math.round(length * 100) / 100)} m`}
+                    </Typography>
+                  </Paper>
+                </Html>
+              );
+            })}
         {/* Total length */}
         <Html
           position={line.points[line.points.length - 1]}
           style={{
-            display: visible && showTotalDistance ? "inherit" : "none",
+            display: visible && !disableTotalDistanceLabel ? "inherit" : "none",
             userSelect: "none",
             pointerEvents: "none",
           }}

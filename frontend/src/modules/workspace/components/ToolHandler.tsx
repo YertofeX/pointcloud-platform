@@ -3,6 +3,7 @@ import { useToolContext } from "../contexts/ToolContext";
 import { DistanceMeasureToolView } from "./tools/distanceMeasureTool/DistanceMeasureToolView";
 import { SelectToolView } from "./tools/selectTool/SelectToolView";
 import { AreaMeasureToolView } from "./tools/areaMeasureTool/AreaMeasureToolView";
+import { HeightMeasureToolView } from "./tools/heightMeasureTool/HeightMeasureToolView";
 
 export const ToolHandler = () => {
   const { toolState, setTool } = useToolContext();
@@ -17,6 +18,9 @@ export const ToolHandler = () => {
       }
       if (e.key === "a" && toolState.name !== "area-measure") {
         setTool("area-measure");
+      }
+      if (e.key === "h" && toolState.name !== "height-measure") {
+        setTool("height-measure");
       }
     };
 
@@ -33,5 +37,7 @@ export const ToolHandler = () => {
       return <DistanceMeasureToolView />;
     case "area-measure":
       return <AreaMeasureToolView />;
+    case "height-measure":
+      return <HeightMeasureToolView />;
   }
 };

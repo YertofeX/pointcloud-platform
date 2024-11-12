@@ -12,6 +12,10 @@ import {
   DefaultAreaMeasureToolState,
 } from "../components/tools/areaMeasureTool/AreaMeasureToolState";
 import { Vector3 } from "three";
+import {
+  DefaultHeightMeasureToolState,
+  HeightMeasureToolState,
+} from "../components/tools/heightMeasureTool/HeightMeasureToolState";
 
 export type WithPointsStack<T> = T & {
   pointsStack: Vector3[][];
@@ -21,7 +25,8 @@ export type WithPointsStack<T> = T & {
 export type ToolState =
   | SelectToolState
   | DistanceMeasureToolState
-  | AreaMeasureToolState;
+  | AreaMeasureToolState
+  | HeightMeasureToolState;
 
 export type ToolName = ToolState["name"];
 
@@ -52,6 +57,10 @@ export const ToolProvider = ({ children }: PropsWithChildren) => {
         break;
       case "area-measure":
         setToolState(DefaultAreaMeasureToolState);
+        break;
+      case "height-measure":
+        setToolState(DefaultHeightMeasureToolState);
+        break;
     }
   };
 

@@ -87,9 +87,10 @@
       "maintenance": "Maintenance"
     },
     "tools": {
-      "select-tooltip": "Select (s)",
-      "distance-tooltip": "Distance Measure (d)",
-      "area-tooltip": "2D Area Measure (a)",
+      "select-tooltip": "Select (S)",
+      "distance-tooltip": "Distance Measure (D)",
+      "area-tooltip": "2D Area Measure (A)",
+      "height-tooltip": "Height Measure (H)",
       "measuring-tooltip": "Click to continue or double click to finsh",
       "start-measure-tooltip": "Click to measure",
       "distance-measurement-created-successfully": "Distance measurement created successfully",
@@ -97,14 +98,18 @@
       "distance-measurement-deleted-successfully": "Distance measurement deleted successfully",
       "area-measurement-created-successfully": "Area measurement created successfully",
       "area-measurement-updated-successfully": "Area measurement updated successfully",
-      "area-measurement-deleted-successfully": "Area measurement deleted successfully"
+      "area-measurement-deleted-successfully": "Area measurement deleted successfully",
+      "height-measurement-created-successfully": "Height measurement created successfully",
+      "height-measurement-updated-successfully": "Height measurement updated successfully",
+      "height-measurement-deleted-successfully": "Height measurement deleted successfully"
     },
     "layers": {
       "files": "Files",
       "pointclouds": "Pointclouds",
       "measurements": "Measurements",
       "distance-measurements": "Distance measurements",
-      "area-measurements": "Area measurements"
+      "area-measurements": "Area measurements",
+      "height-measurements": "Height measurements"
     },
     "details": {
       "created": "Created",

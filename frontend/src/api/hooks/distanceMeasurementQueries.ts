@@ -82,7 +82,6 @@ export const useCreateDistanceMeasurement = () => {
             project: projectID ?? "",
             ...data,
           };
-          console.log({ newMeasurement });
           if (draft === undefined) {
             draft = [newMeasurement];
           } else {
