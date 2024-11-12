@@ -2,6 +2,7 @@ import { PointCloudData, Project, User } from "@api/types";
 import {
   AreaMeasurement,
   DistanceMeasurement,
+  HeightMeasurement,
 } from "@api/types/measurementTypes";
 import PocketBase, { RecordService } from "pocketbase";
 
@@ -14,6 +15,7 @@ interface TypedPocketBase extends PocketBase {
     idOrName: "distance_measurements"
   ): RecordService<DistanceMeasurement>;
   collection(idOrName: "area_measurements"): RecordService<AreaMeasurement>;
+  collection(idOrName: "height_measurements"): RecordService<HeightMeasurement>;
 }
 
 export const pocketBase = new PocketBase(
