@@ -23,7 +23,6 @@ export const Layer = ({ layer, isDragging, forcedInvisible }: Props) => {
     <StyledPaper
       variant="outlined"
       ref={setNodeRef}
-      isDragging={isDragging}
       transform={transform}
       transition={transition}
     >
@@ -49,7 +48,6 @@ export const Layer = ({ layer, isDragging, forcedInvisible }: Props) => {
 };
 
 const StyledPaper = styled(Paper)<{
-  isDragging?: boolean;
   transform: Transform | null;
   transition: string | undefined;
 }>(({ transform, transition }) => ({
