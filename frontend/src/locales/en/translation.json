@@ -117,6 +117,7 @@
       "segment": "Segment",
       "length": "Length",
       "total-length": "Total length",
+      "height": "Height",
       "area": "Area",
       "circumference": "Circumference",
       "displayed-point-count": "Displayed point count",
