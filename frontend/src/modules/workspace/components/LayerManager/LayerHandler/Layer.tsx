@@ -28,7 +28,12 @@ export const Layer = ({ layer, isDragging, forcedInvisible }: Props) => {
       transition={transition}
     >
       <Stack direction="row" alignItems="center">
-        <DragIndicatorIcon fontSize="small" {...attributes} {...listeners} />
+        <StyledDragIndicatorIcon
+          fontSize="small"
+          {...attributes}
+          {...listeners}
+          isDragging={isDragging}
+        />
         {ActionComponent && (
           <ActionComponent
             id={id}
@@ -43,15 +48,20 @@ export const Layer = ({ layer, isDragging, forcedInvisible }: Props) => {
   );
 };
 
-const StyledPaper = styled(Paper, {
-  shouldForwardProp: (prop) => !["isDragging"].includes(prop.toString()),
-})<{
+const StyledPaper = styled(Paper)<{
   isDragging?: boolean;
   transform: Transform | null;
   transition: string | undefined;
-}>(({ isDragging, transform, transition }) => ({
+}>(({ transform, transition }) => ({
   touchAction: "none",
-  opacity: isDragging ? 0.2 : 1,
   transform: transform ? CSS.Translate.toString(transform) : "none",
   transition,
+}));
+
+const StyledDragIndicatorIcon = styled(DragIndicatorIcon, {
+  shouldForwardProp: (prop) => !["isDragging"].includes(prop.toString()),
+})<{
+  isDragging?: boolean;
+}>(({ isDragging }) => ({
+  cursor: isDragging ? "grabbing" : "grab",
 }));

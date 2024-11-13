@@ -68,14 +68,18 @@ export const LayerGroup = ({
       disableGutters
       expanded={expanded}
       onChange={handleExpand}
-      isDragging={isDragging}
       transform={transform}
       transition={transition}
       elevation={0}
     >
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <Stack direction="row" alignItems="center" gap={1}>
-          <DragIndicatorIcon fontSize="small" {...attributes} {...listeners} />
+          <StyledDragIndicatorIcon
+            fontSize="small"
+            {...attributes}
+            {...listeners}
+            isDragging={isDragging}
+          />
           {expanded ? <FolderOpenIcon /> : <FolderIcon />}
           <Typography sx={{ flexGrow: 1 }}>{title}</Typography>
 
@@ -112,15 +116,19 @@ export const LayerGroup = ({
   );
 };
 
-const StyledAccordion = styled(Accordion, {
+const StyledAccordion = styled(Accordion)<{
+  transform: Transform | null;
+  transition: string | undefined;
+}>(({ transform, transition }) => ({
+  touchAction: "none",
+  transform: transform ? CSS.Translate.toString(transform) : "none",
+  transition,
+}));
+
+const StyledDragIndicatorIcon = styled(DragIndicatorIcon, {
   shouldForwardProp: (prop) => !["isDragging"].includes(prop.toString()),
 })<{
   isDragging?: boolean;
-  transform: Transform | null;
-  transition: string | undefined;
-}>(({ isDragging, transform, transition }) => ({
-  touchAction: "none",
-  opacity: isDragging ? 0.2 : 1,
-  transform: transform ? CSS.Translate.toString(transform) : "none",
-  transition,
+}>(({ isDragging }) => ({
+  cursor: isDragging ? "grabbing" : "grab",
 }));
