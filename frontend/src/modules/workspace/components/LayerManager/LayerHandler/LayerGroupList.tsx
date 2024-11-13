@@ -126,17 +126,6 @@ export const LayerGroupList = <T extends string>({
               />
             );
           })}
-          <DragOverlay>
-            {activeLayerGroup && (
-              <LayerGroup
-                layerGroup={layerGroups[activeLayerGroup]}
-                expanded={false}
-                handleExpand={() => {}}
-                forcedInvisible={forcedInvisible}
-                onVisibilityChange={() => {}}
-              />
-            )}
-          </DragOverlay>
         </SortableContext>
       </DndContext>
     </Box>

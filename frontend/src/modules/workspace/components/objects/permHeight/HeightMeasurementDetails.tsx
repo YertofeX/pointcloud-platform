@@ -1,6 +1,5 @@
-import { DistanceMeasurement } from "@api/types";
+import { HeightMeasurement } from "@api/types";
 import { CopyButton } from "@components/CopyButton";
-import { CopyIconButton } from "@components/CopyIconButton";
 import { dayjs } from "@lib/dayjs";
 import { usePermObjectContext } from "@modules/workspace/contexts/PermObjectContext";
 import { calculateLength } from "@modules/workspace/utils/calculateLength";
@@ -11,63 +10,46 @@ import {
   Edit,
   Polyline as PolylineIcon,
 } from "@mui/icons-material";
-import {
-  Box,
-  Divider,
-  IconButton,
-  Paper,
-  Stack,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-} from "@mui/material";
+import { Box, Divider, IconButton, Stack, Typography } from "@mui/material";
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { DistanceMeasurementEditForm } from "./DistanceMeasurementEditForm";
 import { ExportButton } from "@components/ExportButton";
 import { useLocalization } from "@components/LocalizationManager";
+import { HeightMeasurementEditForm } from "./HeightMeasurementEditForm";
+import { Vector3 } from "three";
 
 type Props = {
-  measurement: DistanceMeasurement;
+  measurement: HeightMeasurement;
 };
 
-export const DistanceMeasurementDetails = ({ measurement }: Props) => {
+export const HeightMeasurementDetails = ({ measurement }: Props) => {
   const { t } = useTranslation();
 
   const { numberFormatter } = useLocalization();
 
-  const { id, name, color, line, created, updated } = measurement;
+  const { name, color, line, created, updated } = measurement;
 
   const { setSelected } = usePermObjectContext();
 
   const [editing, setEditing] = useState<boolean>(false);
 
-  const totalLength = useMemo<string>(
-    () => `${numberFormatter.format(calculateLength(line.map(toVec3)))} m`,
-    [line]
-  );
+  const height = useMemo<string>(() => {
+    // first vec3 is the lower point
+    const orderedPoints = line.map(toVec3).toSorted((a, b) => a.z - b.z);
 
-  const segments = useMemo<string[]>(
-    () =>
-      line
-        .slice(1)
-        .map(
-          (coordinates, index) =>
-            `${numberFormatter.format(calculateLength([line[index], coordinates].map(toVec3)))} m`
-        ),
-    [line]
-  );
+    const points = [
+      new Vector3(orderedPoints[1].x, orderedPoints[1].y, orderedPoints[0].z),
+      orderedPoints[1],
+    ];
+
+    return `${numberFormatter.format(calculateLength(points))} m`;
+  }, [line]);
 
   const exportData = {
     name,
     color,
-    totalLength,
+    height,
     points: line,
-    segments,
     created,
     updated,
   };
@@ -76,37 +58,11 @@ export const DistanceMeasurementDetails = ({ measurement }: Props) => {
     <>
       <Stack direction="row" alignItems="center" gap={1}>
         <PolylineIcon fontSize="small" />
-        <Typography>{`${t("project.details.total-length")}:`}</Typography>
-        <CopyButton sx={{ textTransform: "none" }} copyContent={totalLength}>
-          {totalLength}
+        <Typography>{`${t("project.details.height")}:`}</Typography>
+        <CopyButton sx={{ textTransform: "none" }} copyContent={height}>
+          {height}
         </CopyButton>
       </Stack>
-      <TableContainer component={Paper}>
-        <Table size="small">
-          <TableHead>
-            <TableRow>
-              <TableCell>{t("project.details.segment")}</TableCell>
-              <TableCell>{t("project.details.length")}</TableCell>
-              <TableCell />
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {segments.map((segment, index) => (
-              <TableRow key={`${id}-segmentrow-${index}`}>
-                <TableCell>{index + 1}</TableCell>
-                <TableCell>{segment}</TableCell>
-                <TableCell>
-                  <CopyIconButton
-                    copyContent={segment}
-                    iconButtonProps={{ size: "small" }}
-                    iconProps={{ fontSize: "small" }}
-                  />
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
       <Divider />
       <Stack direction="row" alignItems="center" gap={1}>
         <CalendarMonth fontSize="small" />
@@ -128,7 +84,7 @@ export const DistanceMeasurementDetails = ({ measurement }: Props) => {
   );
 
   const editForm = (
-    <DistanceMeasurementEditForm
+    <HeightMeasurementEditForm
       measurement={measurement}
       onClose={() => setEditing(false)}
     />

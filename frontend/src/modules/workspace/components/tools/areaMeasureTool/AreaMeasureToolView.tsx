@@ -193,6 +193,7 @@ export const AreaMeasureToolView = () => {
             }
             hasCursor={cursorPos !== null}
             cursorIndex={cursorIndex}
+            disableTotalDistanceLabel
           />
         </>
       )}

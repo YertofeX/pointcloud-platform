@@ -64,7 +64,7 @@ export const OccludedLine = forwardRef(({ ...props }: Props, fref) => {
         depthTest={false}
         renderOrder={1}
         onBeforeCompile={onBeforeCompile}
-      ></Line>
+      />
     </mesh>
   );
 });

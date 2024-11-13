@@ -100,15 +100,6 @@ export const LayerList = ({
                 />
               );
             })}
-          <DragOverlay>
-            {activeLayer && (
-              <Layer
-                layer={layers[activeLayer]}
-                forcedInvisible={forcedInvisible}
-                onVisibilityChange={() => {}}
-              />
-            )}
-          </DragOverlay>
         </SortableContext>
       </DndContext>
     </Box>

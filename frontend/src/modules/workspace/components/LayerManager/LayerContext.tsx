@@ -5,9 +5,14 @@ import { useTranslation } from "react-i18next";
 import {
   AreaMeasurement,
   DistanceMeasurement,
+  HeightMeasurement,
   PointCloudData,
 } from "@api/types";
-import { useGetAreaMeasurements, useGetDistanceMeasurements } from "@api/hooks";
+import {
+  useGetAreaMeasurements,
+  useGetDistanceMeasurements,
+  useGetHeightMeasurements,
+} from "@api/hooks";
 import { useWorkspaceContext } from "../WorkspaceContext/WorkspaceContext";
 import { DistanceMeasureActions } from "../tools/distanceMeasureTool/DistanceMeasureActions";
 import { AreaMeasureActions } from "../tools/areaMeasureTool/AreaMeasureActions";
@@ -18,6 +23,7 @@ import {
   PointCloud,
   usePointCloudsContext,
 } from "@modules/workspace/contexts/PointCloudsContext";
+import { HeightMeasureActions } from "../tools/heightMeasureTool/HeightMeasureActions";
 
 export type GroupVisibility = {
   file: boolean;
@@ -31,6 +37,7 @@ type LayerContextType = {
   toggleGroupVisibility: (key: keyof GroupVisibility) => void;
   distanceMeasurements: DistanceMeasurement[];
   areaMeasurements: AreaMeasurement[];
+  heightMeasurements: HeightMeasurement[];
   pointClouds: PointCloud[];
 };
 
@@ -39,6 +46,7 @@ const LayerContext = createContext<LayerContextType>({
   toggleGroupVisibility: () => {},
   distanceMeasurements: [],
   areaMeasurements: [],
+  heightMeasurements: [],
   pointClouds: [],
 });
 
@@ -58,6 +66,7 @@ export const LayerProvider = ({ children }: PropsWithChildren) => {
       measurement: true,
       "distance-measure": true,
       "area-measure": true,
+      "height-measure": true,
     },
   });
 
@@ -111,6 +120,26 @@ export const LayerProvider = ({ children }: PropsWithChildren) => {
     [areaMeasurements]
   );
 
+  const { data: heightMeasurements } = useGetHeightMeasurements({ projectID });
+  const heightMeasureLayers = useMemo<LayerList<HeightMeasurement>>(
+    () =>
+      heightMeasurements
+        ? Object.fromEntries(
+            heightMeasurements.map((measurement) => [
+              measurement.id,
+              {
+                id: measurement.id,
+                title: measurement.name,
+                visible: measurement.visible,
+                data: measurement,
+                ActionComponent: HeightMeasureActions,
+              } as LayerData<string, HeightMeasurement>,
+            ])
+          )
+        : {},
+    [heightMeasurements]
+  );
+
   const measurementLayerGroups = useMemo<
     LayerGroupList<Exclude<ToolName, "select">>
   >(
@@ -127,8 +156,19 @@ export const LayerProvider = ({ children }: PropsWithChildren) => {
         visible: staticGroupVisibility["area-measure"],
         content: areaMeasureLayers,
       },
+      "height-measure": {
+        id: "height-measure",
+        title: t("project.layers.height-measurements"),
+        visible: staticGroupVisibility["height-measure"],
+        content: heightMeasureLayers,
+      },
     }),
-    [distanceMeasureLayers, areaMeasureLayers, staticGroupVisibility]
+    [
+      distanceMeasureLayers,
+      areaMeasureLayers,
+      heightMeasureLayers,
+      staticGroupVisibility,
+    ]
   );
 
   const { pointClouds } = usePointCloudsContext();
@@ -176,6 +216,7 @@ export const LayerProvider = ({ children }: PropsWithChildren) => {
         toggleGroupVisibility,
         distanceMeasurements: distanceMeasurements ?? [],
         areaMeasurements: areaMeasurements ?? [],
+        heightMeasurements: heightMeasurements ?? [],
         pointClouds: pointClouds,
       }}
     >

@@ -23,8 +23,13 @@ export type DistanceMeasurement = DefaultMeasurementProps;
 
 export type AreaMeasurement = DefaultMeasurementProps;
 
+export type HeightMeasurement = DefaultMeasurementProps;
+
 export type DistanceMeasurementCreateParams = MeasurementData;
 export type DistanceMeasurementUpdateParams = Partial<MeasurementData>;
 
 export type AreaMeasurementCreateParams = MeasurementData;
 export type AreaMeasurementUpdateParams = Partial<MeasurementData>;
+
+export type HeightMeasurementCreateParams = MeasurementData;
+export type HeightMeasurementUpdateParams = Partial<MeasurementData>;
