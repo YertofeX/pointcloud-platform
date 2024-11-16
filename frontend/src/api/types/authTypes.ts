@@ -1,3 +1,5 @@
+import { SupportedLanguage } from "@utils/constants";
+
 export type User = {
   id: string;
   created: string;
@@ -7,6 +9,12 @@ export type User = {
   emailVisibility: boolean;
   verified: boolean;
   avatar: string;
+  language: SupportedLanguage;
+};
+
+export type UserUpdateParams = {
+  email?: string;
+  language?: SupportedLanguage;
 };
 
 export type LoginParams = {

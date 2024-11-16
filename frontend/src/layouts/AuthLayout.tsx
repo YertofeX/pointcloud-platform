@@ -24,7 +24,7 @@ export const AuthLayout = () => {
             color="textDisabled"
             align="center"
           >
-            {t("header.title")}
+            {t("title")}
           </Typography>
         </Grid2>
         <Grid2 size={1}>

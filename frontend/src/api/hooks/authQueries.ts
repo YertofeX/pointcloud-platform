@@ -1,4 +1,9 @@
-import { LoginParams, RegisterParams, User } from "@api/types";
+import {
+  LoginParams,
+  RegisterParams,
+  User,
+  UserUpdateParams,
+} from "@api/types";
 import { pocketBase } from "@lib/pocketbase";
 import { queryClient } from "@lib/queryClient";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -17,6 +22,21 @@ export const useGetUser = (props?: { disabled?: boolean }) => {
     queryKey: [QUERY_KEYS.user],
     enabled: !props || !props.disabled,
     retry: false,
+  });
+};
+//#endregion
+
+//#region useUpdateUser
+const updateUser = async (data: UserUpdateParams): Promise<User> => {
+  const response = await pocketBase
+    .collection("users")
+    .update((pocketBase.authStore.model as User).id, data);
+  return response;
+};
+
+export const useUpdateuser = () => {
+  return useMutation({
+    mutationFn: updateUser,
   });
 };
 //#endregion
@@ -55,8 +75,9 @@ export const useLogout = () => {
 
 //#region useRegister
 const register = async (data: RegisterParams): Promise<User> => {
-  const response = await pocketBase.collection("users").create(data);
-  console.log({ response });
+  const response = await pocketBase
+    .collection("users")
+    .create({ language: "en", ...data });
   return response;
 };
 
@@ -85,7 +106,10 @@ export const useUpdateProfilePicture = () => {
   return useMutation({
     mutationFn: updateProfilePicture,
     onSuccess: (response) => {
-      queryClient.setQueriesData({ queryKey: [QUERY_KEYS.user] }, response);
+      queryClient.setQueriesData<User>(
+        { queryKey: [QUERY_KEYS.user] },
+        response
+      );
     },
   });
 };

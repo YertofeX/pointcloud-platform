@@ -1,5 +1,6 @@
 import { useGetUser, useUpdateProfilePicture } from "@api/hooks";
 import { LanguageSelector } from "@components/LanguageSelector";
+import { VisuallyHiddenInput } from "@components/VisuallyHiddenInput";
 import { pocketBase } from "@lib/pocketbase";
 import {
   CloudUpload as CloudUploadIcon,
@@ -14,11 +15,11 @@ import {
   Divider,
   Paper,
   Stack,
-  styled,
   Typography,
 } from "@mui/material";
 import { ChangeEvent } from "react";
 import { useTranslation } from "react-i18next";
+import { ProfileLanguageSelector } from "../components/Profile/ProfileLanguageSelector";
 
 export const UserProfile = () => {
   const { t } = useTranslation();
@@ -86,22 +87,8 @@ export const UserProfile = () => {
           </Stack>
         </Stack>
         <Divider />
-        <Stack alignItems="center">
-          <LanguageSelector />
-        </Stack>
+        <ProfileLanguageSelector />
       </Stack>
     </Container>
   );
 };
-
-const VisuallyHiddenInput = styled("input")({
-  clip: "rect(0 0 0 0)",
-  clipPath: "inset(50%)",
-  height: 1,
-  overflow: "hidden",
-  position: "absolute",
-  bottom: 0,
-  left: 0,
-  whiteSpace: "nowrap",
-  width: 1,
-});

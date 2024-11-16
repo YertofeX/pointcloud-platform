@@ -17,23 +17,32 @@ export type Project = {
   id: string;
   name: string;
   description: string;
+  favorite: boolean;
   state: ProjectState;
   type: ProjectType;
   owner: User;
+  thumbnail: string;
   created: string;
   updated: string;
 };
 
 export type ProjectCreateParams = Omit<
   Project,
-  "id" | "owner" | "created" | "updated"
+  "id" | "owner" | "thumbnail" | "created" | "updated"
 > & {
   owner: string;
 };
 
 export type ProjectUpdateParams = Omit<
   Project,
-  "owner" | "created" | "updated"
+  "owner" | "thumbnail" | "created" | "updated"
 > & {
   owner: string;
+};
+
+export type ProjectListFilter = {
+  name?: string;
+  onlyFavorite?: boolean;
+  states?: ProjectState[];
+  types?: ProjectType[];
 };

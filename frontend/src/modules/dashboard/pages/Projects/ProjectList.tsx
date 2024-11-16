@@ -1,11 +1,23 @@
-import { Container, Grid2, Paper } from "@mui/material";
+import { Container, Grid2, Paper, Typography } from "@mui/material";
 import { SkeletonProjectList } from "../../components/Projects/SkeletonProjectList";
 import { ProjectListHeader } from "../../components/Projects/ProjectListHeader";
 import { useGetProjects } from "@api/hooks";
 import { ProjectListItem } from "../../components/Projects/ProjectListItem";
+import { useTranslation } from "react-i18next";
+import { useSearchParams } from "react-router-dom";
+import { ProjectState, ProjectType } from "@api/types";
 
 export const ProjectList = () => {
-  const { data: projects } = useGetProjects();
+  const { t } = useTranslation();
+
+  const [searchParams] = useSearchParams();
+
+  const { data: projects } = useGetProjects({
+    name: searchParams.get("name") ?? undefined,
+    onlyFavorite: searchParams.get("starred") === "true",
+    states: searchParams.getAll("state") as ProjectState[],
+    types: searchParams.getAll("type") as ProjectType[],
+  });
 
   return (
     <>
@@ -14,12 +26,14 @@ export const ProjectList = () => {
         {!projects ? (
           <SkeletonProjectList />
         ) : projects.length === 0 ? (
-          "no projects to display todo"
+          <Typography textAlign="center">
+            {t("dashboard.projects.no-projects")}
+          </Typography>
         ) : (
           <Grid2 container spacing={2} columns={2}>
             {projects.map((project) => (
               <Grid2
-                size={{ md: 1, xs: 2 }}
+                size={{ lg: 1, xs: 2 }}
                 key={project.id}
                 justifyContent="start"
                 alignItems="start"

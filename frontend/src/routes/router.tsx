@@ -6,12 +6,15 @@ import { authRoutes } from "./authRoutes";
 import { RootLayout } from "@layouts/RootLayout";
 import { dashboardRoutes } from "./dashboardRoutes";
 import { DashboardModule } from "@modules/dashboard/DashboardModule";
+import { workspaceRoutes } from "./workspaceRoutes";
+import { MissingPageLayout } from "@layouts/MissingPageLayout";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <SuspenseLayout />,
     children: [
+      { path: "404", element: <MissingPageLayout /> },
       {
         element: <RootLayout />,
         children: [
@@ -20,7 +23,11 @@ export const router = createBrowserRouter([
             element: <DashboardModule />,
             children: dashboardRoutes,
           },
-          { path: "workspace", element: <WorkspaceModule /> },
+          {
+            path: "projects/:id",
+            element: <WorkspaceModule />,
+            children: workspaceRoutes,
+          },
         ],
       },
       {

@@ -5,9 +5,10 @@ import { LocalizationProvider as MUILocalizationProvider } from "@mui/x-date-pic
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 import { changeDayjsLocale } from "@lib/dayjs";
-import { changeI18nLanguage, i18n, SupportedLanguage } from "@lib/i18n";
+import { changeI18nLanguage, i18n } from "@lib/i18n";
 
 import { LocalizationContext } from "./LocalizationContext";
+import { SupportedLanguage } from "@utils/constants";
 
 export const LocalizationProvider = ({ children }: PropsWithChildren) => {
   const [language, setLanguageState] = useState<SupportedLanguage>("en");

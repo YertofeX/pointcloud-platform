@@ -1,4 +1,5 @@
 {
+  "title": "Pointcloud Platform",
   "common": {
     "button": {
       "yes": "Yes",
@@ -7,9 +8,13 @@
       "cancel": "Cancel",
       "submit": "Submit",
       "create": "Create",
-      "modify": "Modify"
+      "modify": "Modify",
+      "save": "Save"
     },
     "loading": "Loading..."
+  },
+  "misc": {
+    "copied-to-clipboard": "Copied to clipboard!"
   },
   "form": {
     "autocomplete": {
@@ -18,7 +23,6 @@
     }
   },
   "header": {
-    "title": "Pointcloud Platform",
     "profile": {
       "profile": "Profile",
       "settings": "Settings",
@@ -59,9 +63,16 @@
     "back-to-projects": "Back to projects",
     "project-created-successfully": "Project created successfully",
     "project-updated-successfully": "Project updated successfully",
+    "loading-project": "Loading project...",
+    "project-viewer": "Project viewer",
+    "project-settings": "Project settings",
+    "project-files": "Project files",
+    "change-thumbnail": "Change thumbnail",
+    "outliner": "Outliner",
     "props": {
       "name": "Name",
       "description": "Description",
+      "color": "Color",
       "state": "State",
       "type": "Type"
     },
@@ -74,6 +85,53 @@
     "types": {
       "construction": "Construction",
       "maintenance": "Maintenance"
+    },
+    "tools": {
+      "select-tooltip": "Select (S)",
+      "distance-tooltip": "Distance Measure (D)",
+      "area-tooltip": "2D Area Measure (A)",
+      "height-tooltip": "Height Measure (H)",
+      "measuring-tooltip": "Click to continue or double click to finsh",
+      "start-measure-tooltip": "Click to measure",
+      "distance-measurement-created-successfully": "Distance measurement created successfully",
+      "distance-measurement-updated-successfully": "Distance measurement updated successfully",
+      "distance-measurement-deleted-successfully": "Distance measurement deleted successfully",
+      "area-measurement-created-successfully": "Area measurement created successfully",
+      "area-measurement-updated-successfully": "Area measurement updated successfully",
+      "area-measurement-deleted-successfully": "Area measurement deleted successfully",
+      "height-measurement-created-successfully": "Height measurement created successfully",
+      "height-measurement-updated-successfully": "Height measurement updated successfully",
+      "height-measurement-deleted-successfully": "Height measurement deleted successfully"
+    },
+    "layers": {
+      "files": "Files",
+      "pointclouds": "Pointclouds",
+      "measurements": "Measurements",
+      "distance-measurements": "Distance measurements",
+      "area-measurements": "Area measurements",
+      "height-measurements": "Height measurements"
+    },
+    "details": {
+      "created": "Created",
+      "updated": "Updated",
+      "segment": "Segment",
+      "length": "Length",
+      "total-length": "Total length",
+      "height": "Height",
+      "area": "Area",
+      "circumference": "Circumference",
+      "displayed-point-count": "Displayed point count",
+      "export-measurement-data": "Export measurement data",
+      "show-bounding-box": "Show bounding box"
+    },
+    "files": {
+      "upload-point-cloud": "Upload point cloud (.las)",
+      "delete-file": "Delete file",
+      "no-files-to-display": "No files to display.",
+      "edit-point-cloud": "Edit point cloud",
+      "point-cloud-updated-successfully": "Point cloud updated successfully",
+      "confirm-deletion": "Confirm deletion",
+      "are-you-sure": "Are you sure you want to delete this point cloud?"
     }
   },
   "dashboard": {
@@ -85,13 +143,16 @@
         "starred": "Favourites",
         "state": "State",
         "type": "Type"
-      }
+      },
+      "no-projects": "There are no projects to display."
     },
     "profile": {
       "profile": "Profile",
       "profile-picture": "Profile picture",
       "change-profile-picture": "Change profile picture",
-      "upload-image": "Upload image"
+      "upload-image": "Upload image",
+      "language": "Language",
+      "modifications-saved": "Modifications have been saved."
     }
   },
   "auth": {
@@ -115,5 +176,46 @@
       "could-not-create-account": "Could not create account with current credentials"
     },
     "logout-successful": "You're now logged out"
+  },
+  "not-found": {
+    "page-not-found": "The page you're looking for does not exist.",
+    "go-back": "Go back"
+  },
+  "point-cloud-material": {
+    "point-size-type": {
+      "point-size-type": "Point size type",
+      "adaptive": "Adaptive",
+      "attenuated": "Attenuated",
+      "fixed": "Fixed"
+    },
+    "point-shape-type": {
+      "point-shape-type": "Point shape type",
+      "circle": "Circle",
+      "paraboloid": "Paraboloid",
+      "square": "Square"
+    },
+    "point-color-type": {
+      "point-color-type": "Point color type",
+      "classification": "Classification",
+      "color": "Color",
+      "composite": "Composite",
+      "depth": "Depth",
+      "elevation": "Elevation",
+      "intensity": "Intensity",
+      "intensity-gradient": "Intensity gradient",
+      "lod": "LOD",
+      "normal": "Normal",
+      "phong": "Phong",
+      "point-index": "Point index",
+      "return-number": "Return number",
+      "rgb": "RGB",
+      "rgb-height": "RGB height",
+      "source": "Source"
+    },
+    "point-opacity-type": {
+      "point-opacity-type": "Point opacity type",
+      "fixed": "Fixed",
+      "attenuated": "Attenuated"
+    }
   }
 }
