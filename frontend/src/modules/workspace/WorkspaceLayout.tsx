@@ -1,6 +1,7 @@
 import {
   useGetAreaMeasurements,
   useGetDistanceMeasurements,
+  useGetHeightMeasurements,
   useGetProject,
 } from "@api/hooks";
 import { LogoLoader } from "@components/LogoLoader";
@@ -8,7 +9,7 @@ import { useTranslation } from "react-i18next";
 import { Navigate, Outlet, useParams } from "react-router-dom";
 import { WorkspaceContextProvider } from "./components/WorkspaceContext/WorkspaceContextProvider";
 
-export const WorkspaceModule = () => {
+export const WorkspaceLayout = () => {
   const { t } = useTranslation();
 
   const { id } = useParams<{ id: string }>();
@@ -20,8 +21,15 @@ export const WorkspaceModule = () => {
     projectID: id,
   });
   const { data: areaMeasurements } = useGetAreaMeasurements({ projectID: id });
+  const { data: heightMeasurements } = useGetHeightMeasurements({
+    projectID: id,
+  });
 
-  const measurements = [distanceMeasurements, areaMeasurements];
+  const measurements = [
+    distanceMeasurements,
+    areaMeasurements,
+    heightMeasurements,
+  ];
 
   if (!id) return <Navigate to="/dashboard/projects" />;
 

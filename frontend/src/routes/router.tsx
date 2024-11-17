@@ -1,6 +1,6 @@
 import { AuthLayout } from "@layouts/AuthLayout";
 import { SuspenseLayout } from "@layouts/SuspenseLayout";
-import { WorkspaceModule } from "@modules/workspace/WorkspaceModule";
+import { WorkspaceLayout } from "@modules/workspace/WorkspaceLayout";
 import { createBrowserRouter } from "react-router-dom";
 import { authRoutes } from "./authRoutes";
 import { RootLayout } from "@layouts/RootLayout";
@@ -25,7 +25,7 @@ export const router = createBrowserRouter([
           },
           {
             path: "projects/:id",
-            element: <WorkspaceModule />,
+            element: <WorkspaceLayout />,
             children: workspaceRoutes,
           },
         ],
