@@ -3,10 +3,7 @@ import { CopyButton } from "@components/CopyButton";
 import { CopyIconButton } from "@components/CopyIconButton";
 import { dayjs } from "@lib/dayjs";
 import { usePermObjectContext } from "@modules/workspace/contexts/PermObjectContext";
-import {
-  calculateLength,
-  formatLength,
-} from "@modules/workspace/utils/calculateLength";
+import { calculateLength } from "@modules/workspace/utils/calculateLength";
 import { toVec3 } from "@modules/workspace/utils/toVec3";
 import {
   CalendarMonth,

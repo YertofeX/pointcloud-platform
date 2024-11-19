@@ -4,6 +4,7 @@ import {
   ControlledError,
   ControlledTextField,
 } from "@components/ControlledForm";
+import { PointcloudPlatformLogoColor } from "@components/Icons/PointcloudPlatformLogoColor";
 import { useSnackbar } from "@components/SnackbarManager";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { yup } from "@lib/yup";
@@ -132,97 +133,118 @@ export const Register = () => {
 
   return (
     <Container component={Paper} maxWidth="xs" sx={{ p: 2 }}>
-      <Typography variant="h2" fontSize={24} fontWeight="bold" mb={2}>
-        {t("auth.register.register")}
-      </Typography>
-      <Stack direction="row" gap={1}>
-        <Typography variant="body2">
-          {t("auth.register.already-have-an-account")}
-        </Typography>
-        <Link variant="body2" component={RouterLink} to="/login">
-          {t("auth.login.login")}
-        </Link>
-      </Stack>
-      <FormProvider {...form}>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <ControlledTextField
-            name="email"
-            label={t("auth.props.email")}
-            maxLength={255}
-            requiredStar
-          />
-          <ControlledTextField
-            name="username"
-            label={t("auth.props.name")}
-            maxLength={255}
-            requiredStar
-          />
-          <ControlledTextField
-            name="password"
-            label={t("auth.props.password")}
-            type={showPassword ? "text" : "password"}
-            slotProps={{
-              input: {
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      onClick={() => setShowPassword((prev) => !prev)}
-                      onMouseDown={(e) => e.preventDefault()}
-                      onMouseUp={(e) => e.preventDefault()}
-                      edge="end"
-                      size="small"
-                    >
-                      {showPassword ? (
-                        <VisibilityOff fontSize="small" />
-                      ) : (
-                        <Visibility fontSize="small" />
-                      )}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              },
-            }}
-            maxLength={255}
-            requiredStar
-          />
-          <ControlledTextField
-            name="passwordConfirm"
-            label={t("auth.props.confirm-password")}
-            type={showConfirmPassword ? "text" : "password"}
-            slotProps={{
-              input: {
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      onClick={() => setShowConfirmPassword((prev) => !prev)}
-                      onMouseDown={(e) => e.preventDefault()}
-                      onMouseUp={(e) => e.preventDefault()}
-                      edge="end"
-                      size="small"
-                    >
-                      {showConfirmPassword ? (
-                        <VisibilityOff fontSize="small" />
-                      ) : (
-                        <Visibility fontSize="small" />
-                      )}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              },
-            }}
-            maxLength={255}
-            requiredStar
-          />
-          <ControlledError />
-          <LoadingButton
-            type="submit"
-            variant="contained"
-            loading={isRegisterPending || isLoginPending}
+      <Stack gap={2}>
+        <Stack
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+          gap={2}
+          my={2}
+        >
+          <PointcloudPlatformLogoColor sx={{ width: 66, height: 66 }} />
+          <Typography
+            variant="h1"
+            fontSize={32}
+            fontWeight="900"
+            fontFamily="Red Hat Display Variable"
+            flexWrap="wrap"
+            width={170}
           >
-            {t("auth.register.register")}
-          </LoadingButton>
-        </form>
-      </FormProvider>
+            {t("title")}
+          </Typography>
+        </Stack>
+        <Typography variant="h2" fontSize={24} fontWeight="bold" mb={2}>
+          {t("auth.register.register")}
+        </Typography>
+        <Stack direction="row" gap={1}>
+          <Typography variant="body2">
+            {t("auth.register.already-have-an-account")}
+          </Typography>
+          <Link variant="body2" component={RouterLink} to="/login">
+            {t("auth.login.login")}
+          </Link>
+        </Stack>
+        <FormProvider {...form}>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <ControlledTextField
+              name="email"
+              label={t("auth.props.email")}
+              maxLength={255}
+              requiredStar
+            />
+            <ControlledTextField
+              name="username"
+              label={t("auth.props.name")}
+              maxLength={255}
+              requiredStar
+            />
+            <ControlledTextField
+              name="password"
+              label={t("auth.props.password")}
+              type={showPassword ? "text" : "password"}
+              slotProps={{
+                input: {
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        onClick={() => setShowPassword((prev) => !prev)}
+                        onMouseDown={(e) => e.preventDefault()}
+                        onMouseUp={(e) => e.preventDefault()}
+                        edge="end"
+                        size="small"
+                      >
+                        {showPassword ? (
+                          <VisibilityOff fontSize="small" />
+                        ) : (
+                          <Visibility fontSize="small" />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                },
+              }}
+              maxLength={255}
+              requiredStar
+            />
+            <ControlledTextField
+              name="passwordConfirm"
+              label={t("auth.props.confirm-password")}
+              type={showConfirmPassword ? "text" : "password"}
+              slotProps={{
+                input: {
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        onClick={() => setShowConfirmPassword((prev) => !prev)}
+                        onMouseDown={(e) => e.preventDefault()}
+                        onMouseUp={(e) => e.preventDefault()}
+                        edge="end"
+                        size="small"
+                      >
+                        {showConfirmPassword ? (
+                          <VisibilityOff fontSize="small" />
+                        ) : (
+                          <Visibility fontSize="small" />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                },
+              }}
+              maxLength={255}
+              requiredStar
+            />
+            <ControlledError />
+            <LoadingButton
+              type="submit"
+              variant="contained"
+              loading={isRegisterPending || isLoginPending}
+            >
+              {t("auth.register.register")}
+            </LoadingButton>
+          </form>
+        </FormProvider>
+      </Stack>
     </Container>
   );
 };

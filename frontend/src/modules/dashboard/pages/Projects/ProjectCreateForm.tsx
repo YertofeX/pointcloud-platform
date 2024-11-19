@@ -77,6 +77,7 @@ export const ProjectCreateForm = () => {
         description,
         state: state.value,
         type: type.value,
+        favorite: false,
       },
       {
         onSuccess: () => {

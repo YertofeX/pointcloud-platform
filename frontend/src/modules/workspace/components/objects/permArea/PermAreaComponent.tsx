@@ -100,6 +100,7 @@ export const PermAreaComponent = ({ area }: Props) => {
               : 3,
           color: area.color,
         }}
+        disableTotalDistanceLabel
       />
       <Html
         position={calculateCenter(...points)}

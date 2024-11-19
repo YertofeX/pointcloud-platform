@@ -12,6 +12,7 @@ export const WorkspaceContext = createContext<WorkspaceContextType>({
     description: "",
     state: "preparation",
     type: "construction",
+    favorite: false,
     owner: {
       id: "",
       username: "",
@@ -21,6 +22,7 @@ export const WorkspaceContext = createContext<WorkspaceContextType>({
       avatar: "",
       created: "",
       updated: "",
+      language: "en",
     },
     thumbnail: "",
     created: "",

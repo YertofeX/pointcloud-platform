@@ -26,5 +26,23 @@ export default defineConfig({
     environment: "jsdom",
     globals: true,
     setupFiles: "./src/tests/setup.ts",
+    // https://github.com/wobsoriano/vitest-canvas-mock
+    deps: {
+      optimizer: {
+        web: {
+          include: ["vitest-canvas-mock"],
+        },
+      },
+    },
+    poolOptions: {
+      threads: {
+        singleThread: true,
+      },
+    },
+    environmentOptions: {
+      jsdom: {
+        resources: "usable",
+      },
+    },
   },
 });

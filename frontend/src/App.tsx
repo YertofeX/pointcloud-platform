@@ -5,7 +5,6 @@ import { ThemeProvider } from "@components/ThemeManager";
 import { LocalizationProvider } from "@components/LocalizationManager";
 import { queryClient } from "@lib/queryClient.ts";
 import { SnackbarProvider } from "@components/SnackbarManager";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 export const App = () => {
   return (
@@ -13,10 +12,7 @@ export const App = () => {
       <ThemeProvider>
         <LocalizationProvider>
           <SnackbarProvider>
-            <>
-              <RouterProvider router={router} />
-              <ReactQueryDevtools />
-            </>
+            <RouterProvider router={router} />
           </SnackbarProvider>
         </LocalizationProvider>
       </ThemeProvider>

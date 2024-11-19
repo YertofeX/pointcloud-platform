@@ -137,7 +137,7 @@ export const ControlledAutocomplete = <T, O>({
       }
       disabled={disabled}
       multiple={multiple}
-      onChange={(event, selected) => {
+      onChange={(_, selected) => {
         onChange(selected);
       }}
       onInputChange={(ev, search) => {

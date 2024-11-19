@@ -3,11 +3,10 @@ import { useState } from "react";
 import { Translate as TranslateIcon } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
 
-import { SupportedLanguage } from "@lib/i18n";
-
 import { useLocalization } from "@components/LocalizationManager";
 
 import { LanguageSelectorDropdown } from "./LanguageSelectorDropdown";
+import { SupportedLanguage } from "@utils/constants";
 
 export const LanguageSelector = () => {
   const { setLanguage } = useLocalization();
