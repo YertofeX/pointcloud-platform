@@ -3,7 +3,11 @@ import i18n from "i18next";
 
 import enTranslations from "@locales/en/translation.json";
 import huTranslations from "@locales/hu/translation.json";
-import { SUPPORTED_LANGUAGES, SupportedLanguage } from "@utils/constants/locales";
+import jpTranslations from "@locales/jp/translation.json";
+import {
+  SUPPORTED_LANGUAGES,
+  SupportedLanguage,
+} from "@utils/constants/locales";
 
 declare module "i18next" {
   // Extend CustomTypeOptions
@@ -23,6 +27,7 @@ declare module "i18next" {
 const resources = {
   en: { translation: enTranslations },
   hu: { translation: huTranslations },
+  jp: { translation: jpTranslations },
 };
 
 i18n.use(initReactI18next).init({

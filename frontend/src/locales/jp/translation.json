@@ -1,0 +1,218 @@
+{
+  "title": "Pointcloud Platform",
+  "common": {
+    "button": {
+      "yes": "はい",
+      "no": "いいえ",
+      "accept": "承知する",
+      "cancel": "キャンセル",
+      "submit": "提出する",
+      "create": "作成する",
+      "modify": "変更する",
+      "save": "保存する"
+    },
+    "loading": "ローディング中..."
+  },
+  "misc": {
+    "copied-to-clipboard": "クリップボードにコピーされました!"
+  },
+  "form": {
+    "autocomplete": {
+      "loading": "ローディング中...",
+      "no-options": "オプションはありません"
+    }
+  },
+  "header": {
+    "profile": {
+      "profile": "プロフィール",
+      "settings": "設定",
+      "logout": "ログアウト"
+    }
+  },
+  "locale": {
+    "en": "英語",
+    "hu": "ハンガリー語",
+    "jp": "日本語"
+  },
+  "error": {
+    "form": {
+      "field_invalid": "フィールドが無効です",
+      "field_required": "フィールドが必須です",
+      "field_too_long": "入力値が長すぎます",
+      "field_too_short": "入力値が短すぎます",
+      "field_too_big": "入力値が大きすぎます",
+      "field_too_small": "入力値が小さすぎます",
+      "too_few_items_in_list": "選択したオプションが少なすぎます",
+      "too_many_items_in_list": "選択したオプションが多すぎます",
+      "email_format_invalid": "メール形式が無効です",
+      "invalid_phone_number": "電話番号が無効です",
+      "invalid_project_name": "プロジェクト名が無効です",
+      "invalid_url": "URLが無効です",
+      "passwords_equal": "パスワードが一致する必要があります",
+      "validation_invalid_email": "メールが無効か、すでに使用されています",
+      "validation_invalid_username": "ユーザー名が無効か、すでに使用されています"
+    }
+  },
+  "project": {
+    "projects": "プロジェクト",
+    "create-new": "プロジェクトを作成する",
+    "edit": "プロジェクトを変更する",
+    "back-to-projects": "プロジェクトリストに戻る",
+    "project-created-successfully": "プロジェクトが作成されました",
+    "project-updated-successfully": "プロジェクトが変更されました",
+    "loading-project": "プロジェクトが読み込み中...",
+    "project-viewer": "プロジェクトビューアー ",
+    "project-settings": "プロジェクト設定",
+    "project-files": "プロジェクトファイル",
+    "change-thumbnail": "サムネイルを変更する",
+    "outliner": "アウトライナー",
+    "props": {
+      "name": "ネーム",
+      "description": "説明",
+      "color": "色",
+      "state": "状態",
+      "type": "種類"
+    },
+    "states": {
+      "active": "アクティブ",
+      "preparation": "準備中",
+      "pending": "保留中",
+      "archived": "アーカイブ済み"
+    },
+    "types": {
+      "construction": "工事",
+      "maintenance": "メンテナンス"
+    },
+    "tools": {
+      "select-tooltip": "セレクト (S)",
+      "distance-tooltip": "距離測定 (D)",
+      "area-tooltip": "2D 面積測定 (A)",
+      "height-tooltip": "高さ測定 (H)",
+      "measuring-tooltip": "クリックして続行するか、ダブルクリックして終了します",
+      "start-measure-tooltip": "クリックして測定します",
+      "distance-measurement-created-successfully": "距離測定が作成されました",
+      "distance-measurement-updated-successfully": "距離測定が変更されました",
+      "distance-measurement-deleted-successfully": "距離測定が削除されました",
+      "area-measurement-created-successfully": "面積測定が作成されました",
+      "area-measurement-updated-successfully": "面積測定が変更されました",
+      "area-measurement-deleted-successfully": "面積測定が削除されました",
+      "height-measurement-created-successfully": "高さ測定が作成されました",
+      "height-measurement-updated-successfully": "高さ測定が変更されました",
+      "height-measurement-deleted-successfully": "高さ測定が削除されました"
+    },
+    "layers": {
+      "files": "ファイル",
+      "pointclouds": "点群",
+      "measurements": "測定",
+      "distance-measurements": "距離測定",
+      "area-measurements": "面積測定",
+      "height-measurements": "高さ測定"
+    },
+    "details": {
+      "created": "作成日時",
+      "updated": "変更日時",
+      "segment": "セグメント",
+      "length": "長さ",
+      "total-length": "全長",
+      "height": "高さ",
+      "area": "面積",
+      "circumference": "周",
+      "displayed-point-count": "表示ポイント数",
+      "export-measurement-data": "測定データをエクスポートする",
+      "show-bounding-box": "バウンディングボックスを表示する"
+    },
+    "files": {
+      "upload-point-cloud": "点群をアップロードする (.las)",
+      "delete-file": "ファイル削除",
+      "no-files-to-display": "表示するファイルがありません",
+      "edit-point-cloud": "点群変更",
+      "point-cloud-updated-successfully": "点群が変更されました",
+      "confirm-deletion": "削除確認",
+      "are-you-sure": "この点群を削除してもよろしいですか?"
+    }
+  },
+  "dashboard": {
+    "projects": {
+      "filters": {
+        "filter": "フィルター",
+        "clear": "クリア",
+        "name": "プロジェクト名",
+        "starred": "スター付き",
+        "state": "状態",
+        "type": "種類"
+      },
+      "no-projects": "表示するプロジェクトがありません"
+    },
+    "profile": {
+      "profile": "プロフィール",
+      "profile-picture": "プロフィール写真",
+      "change-profile-picture": "プロフィール写真を変更する",
+      "upload-image": "写真をアップロードする",
+      "language": "言語",
+      "modifications-saved": "変更が保存されました"
+    }
+  },
+  "auth": {
+    "props": {
+      "name-or-email": "ユーザー名またはメール",
+      "name": "ユーザー名",
+      "email": "メール",
+      "password": "パスワード",
+      "confirm-password": "パスワード認証"
+    },
+    "login": {
+      "login": "ログイン",
+      "dont-have-an-account": "アカウントをお持ちでない場合は",
+      "login-successful": "ログインしました",
+      "could-not-log-in": "現在のデータではログインできませんでした"
+    },
+    "register": {
+      "register": "登録",
+      "already-have-an-account": "アカウントをお持ち場合は",
+      "registration-successful": "登録が完了しました",
+      "could-not-create-account": "現在のデータでは登録できませんでした"
+    },
+    "logout-successful": "ログアウトしました"
+  },
+  "not-found": {
+    "page-not-found": "探しているページは存在しません",
+    "go-back": "戻る"
+  },
+  "point-cloud-material": {
+    "point-size-type": {
+      "point-size-type": "ポイントサイズタイプ",
+      "adaptive": "アダプティブ",
+      "attenuated": "減衰",
+      "fixed": "固定"
+    },
+    "point-shape-type": {
+      "point-shape-type": "ポイント形状タイプ",
+      "circle": "丸",
+      "paraboloid": "放物面",
+      "square": "四角"
+    },
+    "point-color-type": {
+      "point-color-type": "ポイント色タイプ",
+      "classification": "分類",
+      "color": "色",
+      "composite": "複合",
+      "depth": "奥行き",
+      "elevation": "標高",
+      "intensity": "強度",
+      "intensity-gradient": "強度勾配",
+      "lod": "LOD",
+      "normal": "法線",
+      "phong": "Phong",
+      "point-index": "ポイントインデックス",
+      "return-number": "リターン数",
+      "rgb": "RGB",
+      "rgb-height": "RGB高さ",
+      "source": "ソース"
+    },
+    "point-opacity-type": {
+      "point-opacity-type": "ポイント不透明度タイプ",
+      "fixed": "固定",
+      "attenuated": "減衰"
+    }
+  }
+}
