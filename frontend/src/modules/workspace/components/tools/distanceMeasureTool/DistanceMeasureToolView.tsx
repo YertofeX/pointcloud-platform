@@ -129,7 +129,6 @@ export const DistanceMeasureToolView = () => {
             width: 3,
           }}
           hasCursor={cursorPos !== null}
-          showTotalDistance
         />
       )}
     </mesh>

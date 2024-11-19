@@ -15,7 +15,7 @@ export const LocalizationProvider = ({ children }: PropsWithChildren) => {
 
   const setLanguage = (newLanguage: SupportedLanguage) => {
     changeI18nLanguage(newLanguage);
-    changeDayjsLocale(newLanguage);
+    changeDayjsLocale(newLanguage === "jp" ? "ja" : newLanguage);
     setLanguageState(newLanguage);
   };
 

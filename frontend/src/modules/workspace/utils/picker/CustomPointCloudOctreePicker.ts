@@ -19,8 +19,8 @@ import { ClipMode, PointCloudMaterial, PointColorType } from "potree-core";
 import { PointCloudOctree } from "potree-core";
 import { PointCloudOctreeNode } from "potree-core";
 import { PickPoint, PointCloudHit } from "potree-core";
-import { clamp } from "three/src/math/MathUtils";
 import { CustomPointCloudMaterial } from "./CustomPointCloudMaterial";
+import { clamp } from "three/src/math/MathUtils.js";
 
 /**
  * Copied from the potree-core source code to fix picking points
@@ -47,7 +47,10 @@ export interface PickParams {
    * @param renterTarget
    *    The render target used for picking.
    */
-  onBeforePickRender: (material: CustomPointCloudMaterial, renterTarget: WebGLRenderTarget) => void;
+  onBeforePickRender: (
+    material: CustomPointCloudMaterial,
+    renterTarget: WebGLRenderTarget
+  ) => void;
 }
 
 interface IPickState {
@@ -97,7 +100,11 @@ export class CustomPointCloudOctreePicker {
     const pixelRatio = renderer.getPixelRatio();
     const width = Math.ceil(renderer.domElement.clientWidth * pixelRatio);
     const height = Math.ceil(renderer.domElement.clientHeight * pixelRatio);
-    CustomPointCloudOctreePicker.updatePickRenderTarget(this.pickState, width, height);
+    CustomPointCloudOctreePicker.updatePickRenderTarget(
+      this.pickState,
+      width,
+      height
+    );
 
     const pixelPosition = CustomPointCloudOctreePicker.helperVec3; // Use helper vector to prevent extra allocations.
 
@@ -139,7 +146,12 @@ export class CustomPointCloudOctreePicker {
     pickMaterial.clearVisibleNodeTextureOffsets();
 
     // Read back image and decode hit point
-    const pixels = CustomPointCloudOctreePicker.readPixels(renderer, x, y, pickWndSize);
+    const pixels = CustomPointCloudOctreePicker.readPixels(
+      renderer,
+      x,
+      y,
+      pickWndSize
+    );
     const hit = CustomPointCloudOctreePicker.findHit(pixels, pickWndSize);
     return CustomPointCloudOctreePicker.getPickPoint(hit, renderedNodes);
   }
@@ -186,7 +198,11 @@ export class CustomPointCloudOctreePicker {
         continue;
       }
 
-      CustomPointCloudOctreePicker.updatePickMaterial(pickMaterial, octree.material, params);
+      CustomPointCloudOctreePicker.updatePickMaterial(
+        pickMaterial,
+        octree.material,
+        params
+      );
       pickMaterial.updateMaterial(octree, nodes, camera, renderer);
 
       if (params.onBeforePickRender) {
@@ -210,7 +226,10 @@ export class CustomPointCloudOctreePicker {
     return renderedNodes;
   }
 
-  private static nodesOnRay(octree: PointCloudOctree, ray: Ray): PointCloudOctreeNode[] {
+  private static nodesOnRay(
+    octree: PointCloudOctree,
+    ray: Ray
+  ): PointCloudOctreeNode[] {
     const nodesOnRay: PointCloudOctreeNode[] = [];
 
     const rayClone = ray.clone();
@@ -297,7 +316,9 @@ export class CustomPointCloudOctreePicker {
     } else {
       pickMaterial.clipMode = nodeMaterial.clipMode;
       pickMaterial.setClipBoxes(
-        nodeMaterial.clipMode === ClipMode.CLIP_OUTSIDE ? nodeMaterial.clipBoxes : []
+        nodeMaterial.clipMode === ClipMode.CLIP_OUTSIDE
+          ? nodeMaterial.clipBoxes
+          : []
       );
     }
   }
@@ -307,12 +328,16 @@ export class CustomPointCloudOctreePicker {
     width: number,
     height: number
   ): void {
-    if (pickState.renderTarget.width === width && pickState.renderTarget.height === height) {
+    if (
+      pickState.renderTarget.width === width &&
+      pickState.renderTarget.height === height
+    ) {
       return;
     }
 
     pickState.renderTarget.dispose();
-    pickState.renderTarget = CustomPointCloudOctreePicker.makePickRenderTarget();
+    pickState.renderTarget =
+      CustomPointCloudOctreePicker.makePickRenderTarget();
     pickState.renderTarget.setSize(width, height);
   }
 
@@ -324,7 +349,10 @@ export class CustomPointCloudOctreePicker {
     });
   }
 
-  private static findHit(pixels: Uint8Array, pickWndSize: number): PointCloudHit | null {
+  private static findHit(
+    pixels: Uint8Array,
+    pickWndSize: number
+  ): PointCloudHit | null {
     const ibuffer = new Uint32Array(pixels.buffer);
 
     // Find closest hit inside pixelWindow boundaries
@@ -334,7 +362,8 @@ export class CustomPointCloudOctreePicker {
       for (let v = 0; v < pickWndSize; v++) {
         const offset = u + v * pickWndSize;
         const distance =
-          Math.pow(u - (pickWndSize - 1) / 2, 2) + Math.pow(v - (pickWndSize - 1) / 2, 2);
+          Math.pow(u - (pickWndSize - 1) / 2, 2) +
+          Math.pow(v - (pickWndSize - 1) / 2, 2);
 
         const pcIndex = pixels[4 * offset + 3];
         pixels[4 * offset + 3] = 0;
@@ -352,7 +381,10 @@ export class CustomPointCloudOctreePicker {
     return hit;
   }
 
-  private static getPickPoint(hit: PointCloudHit | null, nodes: RenderedNode[]): PickPoint | null {
+  private static getPickPoint(
+    hit: PointCloudHit | null,
+    nodes: RenderedNode[]
+  ): PickPoint | null {
     if (!hit) {
       return null;
     }
@@ -377,9 +409,19 @@ export class CustomPointCloudOctreePicker {
 
       // tslint:disable-next-line:prefer-switch
       if (property === "position") {
-        CustomPointCloudOctreePicker.addPositionToPickPoint(point, hit, values, points);
+        CustomPointCloudOctreePicker.addPositionToPickPoint(
+          point,
+          hit,
+          values,
+          points
+        );
       } else if (property === "normal") {
-        CustomPointCloudOctreePicker.addNormalToPickPoint(point, hit, values, points);
+        CustomPointCloudOctreePicker.addNormalToPickPoint(
+          point,
+          hit,
+          values,
+          points
+        );
       } else if (property === "indices") {
         // TODO
       } else {
@@ -416,7 +458,9 @@ export class CustomPointCloudOctreePicker {
     points: Points
   ): void {
     const normal = new Vector3().fromBufferAttribute(values, hit.pIndex);
-    const normal4 = new Vector4(normal.x, normal.y, normal.z, 0).applyMatrix4(points.matrixWorld);
+    const normal4 = new Vector4(normal.x, normal.y, normal.z, 0).applyMatrix4(
+      points.matrixWorld
+    );
     normal.set(normal4.x, normal4.y, normal4.z);
 
     point.normal = normal;

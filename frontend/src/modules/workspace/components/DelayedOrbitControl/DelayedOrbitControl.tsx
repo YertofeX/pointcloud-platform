@@ -133,13 +133,19 @@ export const DelayedOrbitControls: ForwardRefComponent<
           });
       };
 
+      //@ts-ignore
       controls.addEventListener("change", callback);
+      //@ts-ignore
       controls.addEventListener("start", onStartCb);
+      //@ts-ignore
       controls.addEventListener("end", onEndCb);
 
       return () => {
+        //@ts-ignore
         controls.removeEventListener("start", onStartCb);
+        //@ts-ignore
         controls.removeEventListener("end", onEndCb);
+        //@ts-ignore
         controls.removeEventListener("change", callback);
       };
     }, [onChange, onStart, onEnd, controls, invalidate, setEvents, explCamera]);

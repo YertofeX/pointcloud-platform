@@ -1,5 +1,4 @@
 import { useGetUser, useUpdateProfilePicture } from "@api/hooks";
-import { LanguageSelector } from "@components/LanguageSelector";
 import { VisuallyHiddenInput } from "@components/VisuallyHiddenInput";
 import { pocketBase } from "@lib/pocketbase";
 import {

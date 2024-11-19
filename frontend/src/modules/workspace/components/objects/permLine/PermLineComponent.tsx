@@ -91,7 +91,6 @@ export const PermLineComponent = ({ line }: Props) => {
             : 3,
         color: line.color,
       }}
-      showTotalDistance
     />
   );
 };

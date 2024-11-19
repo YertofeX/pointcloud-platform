@@ -6,7 +6,9 @@ import { SupportedLanguage } from "@utils/constants";
 export const useLocalization = () => {
   const { language, setLanguage } = useContext(LocalizationContext);
 
-  const getLocalizationByLanguage = (l: SupportedLanguage) => {
+  const getLocalizationByLanguage = (
+    l: SupportedLanguage
+  ): Intl.LocalesArgument => {
     switch (l) {
       case "en":
         return "en-IN";

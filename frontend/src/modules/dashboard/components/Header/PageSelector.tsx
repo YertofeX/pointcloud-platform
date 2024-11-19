@@ -66,7 +66,7 @@ export const PageSelector = () => {
         endIcon={open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
         onClick={handleButtonClick}
         fullWidth
-        sx={{ width: 140 }}
+        sx={{ width: 160 }}
       >
         {navigation[selectedIndex].name}
       </Button>
@@ -81,7 +81,7 @@ export const PageSelector = () => {
             key={path.replace("/", "-")}
             selected={index === selectedIndex}
             onClick={() => handleMenuItemClick(index)}
-            sx={{ width: 140 }}
+            sx={{ width: 160 }}
           >
             <ListItemIcon>{icon}</ListItemIcon>
             {name}

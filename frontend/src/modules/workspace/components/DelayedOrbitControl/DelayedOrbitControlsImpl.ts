@@ -210,6 +210,7 @@ class OrbitControls extends EventDispatcher {
       scope.object.zoom = scope.zoom0;
       scope.object.updateProjectionMatrix();
 
+      // @ts-ignore
       scope.dispatchEvent(changeEvent);
 
       scope.update();
@@ -423,6 +424,7 @@ class OrbitControls extends EventDispatcher {
           lastPosition.distanceToSquared(scope.object.position) > EPS ||
           8 * (1 - lastQuaternion.dot(scope.object.quaternion)) > EPS
         ) {
+          // @ts-ignore
           scope.dispatchEvent(changeEvent);
 
           lastPosition.copy(scope.object.position);
@@ -947,6 +949,7 @@ class OrbitControls extends EventDispatcher {
         );
       }
 
+      // @ts-ignore
       scope.dispatchEvent(endEvent);
 
       state = STATE.NONE;
@@ -1023,6 +1026,7 @@ class OrbitControls extends EventDispatcher {
         if (dx * dx + dy * dy >= 4) {
           // 2 pixels
           scope.moving = null;
+          // @ts-ignore
           scope.dispatchEvent(startEvent);
         } else {
           return;
@@ -1058,10 +1062,12 @@ class OrbitControls extends EventDispatcher {
 
       event.preventDefault();
 
+      // @ts-ignore
       scope.dispatchEvent(startEvent);
 
       handleMouseWheel(event);
 
+      // @ts-ignore
       scope.dispatchEvent(endEvent);
     }
 
@@ -1121,6 +1127,7 @@ class OrbitControls extends EventDispatcher {
       }
 
       if (state !== STATE.NONE) {
+        // @ts-ignore
         scope.dispatchEvent(startEvent);
       }
     }
@@ -1216,6 +1223,7 @@ class MapControls extends OrbitControls {
     object: PerspectiveCamera | OrthographicCamera,
     domElement?: HTMLElement
   ) {
+    // @ts-ignore
     super(object, domElement);
 
     this.screenSpacePanning = false; // pan orthogonal to world-space direction camera.up

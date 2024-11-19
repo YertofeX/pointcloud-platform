@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+// @ts-ignore
 import { IUniform, Shader } from "three";
 
 type ShaderPart = {
