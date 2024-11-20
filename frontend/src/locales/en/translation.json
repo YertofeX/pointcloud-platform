@@ -122,7 +122,7 @@
       "show-bounding-box": "Show bounding box"
     },
     "files": {
-      "upload-point-cloud": "Upload point cloud (.las)",
+      "upload-point-cloud": "Upload point cloud (.las/.laz)",
       "delete-file": "Delete file",
       "no-files-to-display": "No files to display.",
       "edit-point-cloud": "Edit point cloud",

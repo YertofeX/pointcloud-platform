@@ -122,7 +122,7 @@
       "show-bounding-box": "Befoglaló keret mutatása"
     },
     "files": {
-      "upload-point-cloud": "Pontfelhő feltöltése (.las)",
+      "upload-point-cloud": "Pontfelhő feltöltése (.las/.laz)",
       "delete-file": "Fájl törlése",
       "no-files-to-display": "Nincsenek megjeleníthető fájlok.",
       "edit-point-cloud": "Pontfelhő szerkesztése",

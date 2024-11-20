@@ -122,7 +122,7 @@
       "show-bounding-box": "バウンディングボックスを表示する"
     },
     "files": {
-      "upload-point-cloud": "点群をアップロードする (.las)",
+      "upload-point-cloud": "点群をアップロードする (.las/.laz)",
       "delete-file": "ファイル削除",
       "no-files-to-display": "表示するファイルがありません",
       "edit-point-cloud": "点群変更",
