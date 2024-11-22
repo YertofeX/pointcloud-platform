@@ -67,7 +67,6 @@ yup.addMethod(yup.mixed, "validDate", function validDate(message) {
 });
 // #endregion
 
-// TODO: add custom error message to custom methods
 yup.setLocale({
   mixed: {
     default: "error.form.field_invalid",

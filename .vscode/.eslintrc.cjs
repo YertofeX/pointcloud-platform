@@ -81,7 +81,6 @@ module.exports = {
       },
     ],
     "simple-import-sort/exports": "error",
-    // TODO: Turn "import/no-unresolved" on and solve eslint unresolved import problem
     "import/no-unresolved": "off",
     "no-param-reassign": "off",
     "no-nested-ternary": "off",

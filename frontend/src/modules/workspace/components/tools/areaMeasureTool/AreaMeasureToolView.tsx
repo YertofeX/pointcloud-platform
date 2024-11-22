@@ -122,8 +122,6 @@ export const AreaMeasureToolView = () => {
         if (commitedPoints.length >= 3) {
           event.stopPropagation();
           commitObject("area-measure", commitedPoints);
-        } else {
-          //TODO: Alert
         }
       },
       [pointsStack, stackIndex]

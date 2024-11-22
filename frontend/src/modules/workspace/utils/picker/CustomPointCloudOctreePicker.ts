@@ -423,7 +423,6 @@ export class CustomPointCloudOctreePicker {
           points
         );
       } else if (property === "indices") {
-        // TODO
       } else {
         if (values.itemSize === 1) {
           point[property] = values.array[hit.pIndex];
