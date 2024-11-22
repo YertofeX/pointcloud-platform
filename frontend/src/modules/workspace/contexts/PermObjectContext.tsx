@@ -166,7 +166,7 @@ export const PermObjectProvider = ({ children }: PropsWithChildren) => {
     [measurementGroup.visible, areaMeasureGroup, transform]
   );
 
-  const permHeights = useMemo<PermArea[]>(
+  const permHeights = useMemo<PermHeight[]>(
     () =>
       measurementGroup.visible && heightMeasureGroup.visible
         ? Object.entries(heightMeasureGroup.content)
