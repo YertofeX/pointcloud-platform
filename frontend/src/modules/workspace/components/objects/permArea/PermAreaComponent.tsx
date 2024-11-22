@@ -13,6 +13,7 @@ import { Paper, Typography } from "@mui/material";
 import { getTextColor } from "@modules/workspace/utils/getTextColor";
 import { hexToRGBA } from "@modules/workspace/utils/hexToRGBA";
 import { useOriginContext } from "@modules/workspace/contexts/OriginContext";
+import { useLocalization } from "@components/LocalizationManager";
 
 export type PermArea = {
   id: string;
@@ -35,6 +36,8 @@ export const PermAreaComponent = ({ area }: Props) => {
   const { visiblePcos } = usePointCloudsContext();
 
   const { transform } = useOriginContext();
+
+  const { numberFormatter } = useLocalization();
 
   const { updateObject, highlighted, setEditing } = usePermObjectContext();
 
@@ -118,7 +121,10 @@ export const PermAreaComponent = ({ area }: Props) => {
           }}
         >
           <Typography color={getTextColor(hexToRGBA(area.color))}>
-            {Math.round(calculateArea(loopAreaPoints) * 100) / 100}&nbsp;m
+            {numberFormatter.format(
+              Math.round(calculateArea(loopAreaPoints) * 100) / 100
+            )}
+            &nbsp;m
             <sup>2</sup>
           </Typography>
         </Paper>
