@@ -1,6 +1,5 @@
 import {
   PointCloudOctree,
-  PointColorType,
   PointShape,
   PointSizeType,
   Potree,

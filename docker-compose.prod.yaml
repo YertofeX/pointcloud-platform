@@ -1,0 +1,20 @@
+name: pointcloud-platform-backend
+services:
+  pocketbase:
+    build: backend
+    volumes:
+      - pocketbase_data:/pb/pb_data
+    deploy:
+      resources:
+        limits:
+          cpus: "4"
+          memory: 8G
+  frontend:
+    build: 
+      dockerfile: prod/Dockerfile
+      context: frontend
+    ports:
+      - 8181:80
+
+volumes:
+  pocketbase_data:
