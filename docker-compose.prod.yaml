@@ -1,4 +1,4 @@
-name: pointcloud-platform-backend
+name: pointcloud-platform
 services:
   pocketbase:
     build: backend
