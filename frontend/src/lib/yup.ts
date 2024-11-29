@@ -56,11 +56,8 @@ yup.addMethod(yup.mixed, "dayjs", function dayjs(message) {
 
 yup.addMethod(yup.mixed, "validDate", function validDate(message) {
   return this.test("validDate", message, function validate(value) {
-    if (!value) {
-      return true;
-    }
-    if (!isDayjs(value)) {
-      return true;
+    if (!value || !isDayjs(value)) {
+      return this.createError({ message: message });
     }
     return value.isValid();
   });
