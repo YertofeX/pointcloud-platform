@@ -68,7 +68,7 @@ export const PointCloudsProvider = ({ children }: PropsWithChildren) => {
           `${pocketBase.getFileUrl(pointCloud, pointCloud.metadata).split("metadata.json")[0]}${url}`
       );
       pco.material.size = PointSizeType.ADAPTIVE;
-      pco.material.shape = PointShape.SQUARE;
+      pco.material.shape = PointShape.PARABOLOID;
       pco.material.inputColorEncoding = 1;
       pco.material.outputColorEncoding = 1;
       pco.showBoundingBox = false;
