@@ -1,7 +1,7 @@
 <div align="center">
 	
 ![Pointcloud Platform logo](/frontend/src/assets/pointcloud-platform-text-logo-dark.svg#gh-dark-mode-only)
-![Pointcloud Platform logo](/frontend/src/assets/pointcloud-platform-text-logo-light.svg#gh-dark-mode-only)
+![Pointcloud Platform logo](/frontend/src/assets/pointcloud-platform-text-logo-light.svg#gh-light-mode-only)
 
 </div>
 
